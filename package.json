@@ -1,0 +1,26 @@
+{
+  "name": "meeting",
+  "version": "0.0.1",
+  "description": "A meeting board with WebRTC integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pgryko/meeting.git"
+  },
+  "keywords": [
+    "Meeting",
+    "board",
+    "WebRTC",
+    "Video",
+    "Conferencing"
+  ],
+  "author": "Piotr Gryko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pgryko/meeting/issues"
+  },
+  "homepage": "https://github.com/pgryko/meeting#readme"
+}
