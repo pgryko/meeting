@@ -1,5 +1,6 @@
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -20,6 +21,7 @@ module.exports = {
           inject: 'body',
           filename: 'index.html'
         }),
+        new ExtractTextPlugin('app.css'),
   ] : [
     new HtmlWebpackPlugin({
           template: 'src/static/html_templates/index.tpl.html',
@@ -27,6 +29,7 @@ module.exports = {
           inject: 'body',
           filename: 'index.html'
         }),
+        new ExtractTextPlugin('app.css'),
   ],
 
   module: {
