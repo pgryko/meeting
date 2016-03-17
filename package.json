@@ -4,9 +4,10 @@
   "description": "A meeting board with WebRTC integration",
   "main": "build/index.js",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:dev": "webpack-dev-server --inline --content-base build/ --history-api-fallback",
-    "start:prod": "npm run build && node server.bundle.js",
+    "//" : ["start", "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:dev", "webpack-dev-server --inline --content-base build/ --history-api-fallback",
+    "start:prod", "npm run build && nodemon build/server/server.bundle.js"],
+    "start": "npm run build && nodemon build/server/server.bundle.js",
     "build:client": "webpack",
     "build:server": "webpack --config webpack.server.config.js",
     "build": "npm run build:client && npm run build:server",
