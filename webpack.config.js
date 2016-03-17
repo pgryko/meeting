@@ -1,6 +1,8 @@
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin'); //Currently used to copy static assets such as css and images. At a later stage CSS should be optimised durring build
+
 
 module.exports = {
   entry: './src/index.js',
@@ -21,7 +23,10 @@ module.exports = {
           inject: 'body',
           filename: 'index.html'
         }),
-        new ExtractTextPlugin('app.css'),
+    new CopyWebpackPlugin([
+      { from: 'src/static/css', to: 'build/client/css'},
+      { from: 'src/static/img', to: 'img'},
+    ]),
   ] : [
     new HtmlWebpackPlugin({
           template: 'src/static/html_templates/index.tpl.html',
@@ -29,7 +34,10 @@ module.exports = {
           inject: 'body',
           filename: 'index.html'
         }),
-        new ExtractTextPlugin('app.css'),
+    new CopyWebpackPlugin([
+      { from: 'src/static/css', to: 'css'},
+      { from: 'src/static/img', to: 'img'},
+    ]),
   ],
 
   module: {
