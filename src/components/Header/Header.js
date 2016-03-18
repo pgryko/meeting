@@ -16,15 +16,17 @@ import Navigation from '../Navigation';
 function Header() {
   return (
     <div className={s.root}>
+    <Navigation className={s.nav} />
       <div className={s.container}>
-        <Navigation className={s.nav} />
         <Link className={s.brand} to="/">
-          <img src={require('./logo-small.png')}  alt="React" />
+          {/*<img src={require('./logo-small.png')}  alt="React" />*/}
           {/*<span className={s.brandTxt}>Unipart</span>*/}
         </Link>
         <div className={s.banner}>
+          <div >
           <h1 className={s.bannerTitle}>Unipart CommCell</h1>
           <p className={s.bannerDesc}>Communication Made Easy</p>
+          </div>
         </div>
       </div>
     </div>

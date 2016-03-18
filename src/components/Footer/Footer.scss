@@ -10,10 +10,11 @@
 @import '../variables.scss';
 
 .root {
-  background: #333;
   color: #fff;
-  position:absolute;
   bottom:0;
+  box-sizing: border-box;
+  background-color: rgb(33, 33, 33);
+  text-align: center;
 }
 
 .container {
