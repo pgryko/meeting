@@ -16,6 +16,7 @@ function Home({ news }) {
     <div className={s.root}>
       <div className={s.container}>
         <h1 className={s.title}>Description of Meeting Project</h1>
+        {/*Display list of projects got from database */}
         {/*<ul className={s.news}>
           {news.map((item, index) => (
             <li key={index} className={s.newsItem}>
