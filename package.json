@@ -7,14 +7,18 @@
     "//" : ["start", "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:dev", "webpack-dev-server --inline --content-base build/ --history-api-fallback",
     "start:prod", "npm run build && nodemon build/server/server.bundle.js"],
-    "start": "npm run build && nodemon build/server/server.bundle.js",
-    "build:client": "webpack",
-    "build:server": "webpack --config webpack.server.config.js",
+    "start": "npm run clean && npm run build && nodemon build/server/server.bundle.js",
+    "build:client": "webpack --progress --colors",
+    "watch:client": "webpack --progress --colors --watch",
+    "build:server": "webpack --config webpack.server.config.js --colors",
+    "watch:server": "webpack --config webpack.server.config.js --colors --watch",
     "build": "npm run build:client && npm run build:server",
+    "clean": "rm -r build/*",
     "test": "npm run coverage",
     "test-unit": "mocha --compilers js:babel-core/register test/unit/**/*.spec.js",
     "test-unit-watch": "mocha --watch --compilers js:babel-core/register test/unit/**/*.spec.js",
-    "coverage": "babel-node node_modules/.bin/babel-istanbul cover _mocha -- --timeout 30000 test/**/*.spec.js"
+    "coverage": "babel-node node_modules/.bin/babel-istanbul cover _mocha -- --timeout 30000 test/**/*.spec.js",
+    "build:watch": "parallelshell 'npm run watch:client' 'npm run watch:server'"
   },
   "repository": {
     "type": "git",
