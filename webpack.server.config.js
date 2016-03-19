@@ -6,7 +6,7 @@ module.exports = {
   entry: path.resolve(__dirname, 'src/server.js'),
 
   output: {
-    filename: 'build/server/server.bundle.js'
+    filename: 'build/server.bundle.js'
   },
 
   target: 'node',

@@ -11,7 +11,9 @@ var app = express()
 app.use(compression())
 
 // serve our static stuff like index.css
-app.use(express.static(path.join(__dirname, 'build/client')))
+app.use(express.static('build/client'))
+
+console.log(path.join(__dirname, 'client'));
 
 // send all requests to index.html so browserHistory works
 app.get('*', (req, res) => {
@@ -35,8 +37,6 @@ function renderPage(appHtml) {
     <!doctype html public="storage">
     <html>
     <meta charset=utf-8/>
-    <title>My First React Router App</title>
-    <link rel=stylesheet href=/index.css>
     <div id=app>${appHtml}</div>
     <script src="/bundle.js"></script>
    `
