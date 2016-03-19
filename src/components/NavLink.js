@@ -7,4 +7,3 @@ export default React.createClass({
     return <Link {...this.props} activeClassName="active"/>
   }
 })
-
