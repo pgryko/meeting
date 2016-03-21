@@ -12,7 +12,7 @@
       "start:prod",
       "npm run build && nodemon build/server.bundle.js"
     ],
-    "start": "npm run clean && npm run build && nodemon build/server.bundle.js",
+    "start": "npm run build && nodemon build/server.bundle.js",
     "build:client": "webpack --progress --colors",
     "watch:client": "webpack --progress --colors --watch",
     "build:server": "webpack --config webpack.server.config.js --colors",
@@ -55,7 +55,8 @@
     "flow-bin": "^0.22.1",
     "html-webpack-plugin": "^2.10.0",
     "mocha": "^2.4.5",
-    "nock": "^7.2.2"
+    "nock": "^7.2.2",
+    "parallelshell": "^2.0.0"
   },
   "dependencies": {
     "babel-preset-react": "^6.5.0",
