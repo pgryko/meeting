@@ -5,7 +5,6 @@ import About from '../components/About'
 import Repos from '../components/Repos'
 import Repo from '../components/Repo'
 import Home from '../components/Home'
-import RaisedButton from 'material-ui/lib/raised-button';
 
 
 module.exports = (
