@@ -2,7 +2,14 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin'); //Currently used to copy static assets such as css and images. At a later stage CSS should be optimised durring build
+const path = require('path')
+const autoprefixer = require('autoprefixer')
 
+const sassLoaders = [
+  'css-loader',
+  'postcss-loader',
+  'sass-loader?indentedSyntax=sass&includePaths[]=' + path.resolve(__dirname, './src/static/sass/')
+]
 
 module.exports = {
   entry: './src/index.js',
@@ -24,9 +31,12 @@ module.exports = {
           filename: 'index.html'
         }),
     new CopyWebpackPlugin([
-      { from: 'src/static/css', to: 'build/client/css'},
+      // { from: 'src/static/css', to: 'build/client/css'},
       { from: 'src/static/img', to: 'img'},
     ]),
+    new ExtractTextPlugin('css/style.css', {
+    allChunks: true
+    }),
   ] : [
     new HtmlWebpackPlugin({
           template: 'src/static/html_templates/index.tpl.html',
@@ -35,15 +45,31 @@ module.exports = {
           filename: 'index.html'
         }),
     new CopyWebpackPlugin([
-      { from: 'src/static/css', to: 'css'},
+      // { from: 'src/static/css', to: 'css'},
       { from: 'src/static/img', to: 'img'},
     ]),
+    new ExtractTextPlugin('css/style.css', {
+    allChunks: true
+    }),
   ],
-
+  postcss: [
+  autoprefixer({
+    browsers: ['last 2 versions']
+  })
+  ],
+  resolve: {
+    extensions: ['', '.js', '.sass','.scss'],
+    root: [path.join(__dirname, './src')]
+  },
+  sassLoader: {
+  includePaths: [path.resolve(__dirname, "./src/static/sass")]
+},
   module: {
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' },
-      { test: /\.css$/, exclude: /node_modules/, loader: "style-loader!css-loader" }
+      { test: /\.css$/, exclude: /node_modules/, loader: "style-loader!css-loader" },
+      { test: /\.scss$/, exclude: /node_modules/, loader: ExtractTextPlugin.extract('style-loader', sassLoaders.join('!')) },
+      {test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, exclude: /node_modules/, loader: 'url'}
     ]
   }
 }
