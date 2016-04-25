@@ -6,36 +6,40 @@ export default React.createClass({
   render() {
     return (
       <div>
-      <!-- Navbar -->
-          <!-- Add class ".navbar-sticky" to make navbar stuck when it hits the top of the page. Another modifier class is: "navbar-fullwidth" to stretch navbar and make it occupy 100% of the page width. The screen width at which navbar collapses can be controlled through the variable "$nav-collapse" in sass/variables.scss -->
+      {/* Navbar */}
+          {/* Add class ".navbar-sticky" to make navbar stuck when it hits the top of the page. Another modifier class is: "navbar-fullwidth" to stretch navbar and make it occupy 100% of the page width. The screen width at which navbar collapses can be controlled through the variable "$nav-collapse" in sass/variables.scss */}
           <header class="navbar navbar-sticky">
 
-            <!-- Toolbar -->
+            {/*<!-- Toolbar -->*/}
             <div class="topbar">
               <div class="container">
                 <a href="index.html" class="site-logo">
-                  <img src="img/logo.png" alt="Nucleus">
-                </a><!-- .site-logo -->
+                  <img src="img/logo.png" alt="Nucleus"/>
+                </a>
+                {/*<!-- .site-logo -->*/}
 
-                <!-- Mobile Menu Toggle -->
+                {/*<!-- Mobile Menu Toggle -->*/}
                 <div class="nav-toggle"><span></span></div>
 
                 <div class="toolbar">
                   <a href="#" class="text-sm" data-toggle="modal" data-target="#loginModal">Sign up</a>
                   <a href="#" class="btn btn-sm btn-default btn-icon-right waves-effect waves-light" data-toggle="modal" data-target="#loginModal">Log In <i class="icon-head"></i></a>
-                  <!-- <a href="shopping-cart.html" class="cart-btn"><i class="icon-bag"></i></a> -->
                   <div class="search-btn">
                     <i class="icon-search"></i>
                     <form method="post" class="search-box">
-                      <input type="text" class="form-control input-sm" placeholder="Search">
+                      <input type="text" class="form-control input-sm" placeholder="Search"/>
                       <button type="submit"><i class="icon-search"></i></button>
                     </form>
-                  </div><!-- .search-btn -->
-                </div><!-- .toolbar -->
-              </div><!-- .container -->
-            </div><!-- .topbar -->
+                  </div>
+                  {/*<!-- .search-btn -->*/}
+                </div>
+                {/*<!-- .toolbar -->*/}
+              </div>
+              {/*<!-- .container -->*/}
+            </div>
+            {/*<!-- .topbar -->*/}
 
-            <!-- Main Navigation -->
+            {/*<!-- Main Navigation -->*/}
             <div class="container">
               <nav class="main-navigation">
                 <ul class="menu">
@@ -52,7 +56,7 @@ export default React.createClass({
                         <li><a href="home-seo.html">SEO Services Landing</a></li>
                       </ul>
                       <div class="content">
-                        <img src="img/menu-banner.png" alt="Image">
+                        <img src="img/menu-banner.png" alt="Image"/>
                       </div>
                     </div>
                   </li>
@@ -114,9 +118,12 @@ export default React.createClass({
                       <li><a href="elements.html">Elements</a></li>
                     </ul>
                   </li>
-                </ul><!-- .menu -->
-              </nav><!-- .main-navigation -->
-            </div><!-- .container -->
+                </ul>
+                {/*<!-- .menu -->*/}
+              </nav>
+              {/*<!-- .main-navigation -->*/}
+            </div>
+            {/*<!-- .container -->*/}
             <div class="social-bar mobile-socials">
               <a href="#" class="sb-skype">
                 <i class="fa fa-skype"></i>
@@ -128,7 +135,8 @@ export default React.createClass({
                 <i class="fa fa-twitter"></i>
               </a>
             </div>
-          </header><!-- .navbar -->
+          </header>
+          {/*<!-- .navbar -->*/}
 
       </div>
     )

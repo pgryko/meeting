@@ -48,7 +48,7 @@ module.exports = {
       // { from: 'src/static/css', to: 'css'},
       { from: 'src/static/img', to: 'img'},
     ]),
-    new ExtractTextPlugin('css/style.css', {
+    new ExtractTextPlugin('css/index.css', {
     allChunks: true
     }),
   ],
