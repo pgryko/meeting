@@ -9,6 +9,7 @@ import Home from '../components/Home'
 
 
 module.exports = (
+  //The Header contains the main menu links and will always show on each page
   <Route path="/" component={Header}>
     <IndexRoute component={Home}/>
     <Route path="/repos" component={Repos}>
