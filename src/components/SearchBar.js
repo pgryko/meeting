@@ -26,13 +26,6 @@ export default class SearchBar extends React.Component {
         }
     }
 
-    onChangeDate(event) {
-        if (this.props.onRequestChange) {
-            var date = moment(event,"MM-DD-YYYY");
-            this.props.onRequestChange(date.format());
-        }
-    }
-
     componentDidMount() {
         this.focusInput();
     }
@@ -48,7 +41,7 @@ export default class SearchBar extends React.Component {
               <div className="search-btn">
                 <i className="icon-search"></i>
                 {/*OnClick search-box should have open added on it*/}
-                <form method="post" className="search-box">
+                <form method="post" className="search-box open">
                   <input
                     type="text"
                     className="form-control input-sm" placeholder="Search"
@@ -62,14 +55,11 @@ export default class SearchBar extends React.Component {
             );
         } else {
             return (
-                <div className="search-btn">
+                <div className="search-btn"
+                onClick={() => {
+                                    this.setState({isOpen: true});
+                                }}>
                   <i className="icon-search"></i>
-                  {/*OnClick search-box should have open added on it*/}
-                  <form method="post" className="search-box"
-                  onClick={() => {
-                      this.setState({isOpen: true});
-                  }}>
-                  </form>
                 </div>
             );
         }
