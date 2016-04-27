@@ -13,8 +13,6 @@ app.use(compression())
 // serve our static stuff like index.css
 app.use(express.static('build/client'))
 
-console.log(path.join(__dirname, 'client'));
-
 // send all requests to index.html so browserHistory works
 app.get('*', (req, res) => {
   match({ routes, location: req.url }, (err, redirect, props) => {
