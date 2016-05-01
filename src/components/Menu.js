@@ -50,15 +50,11 @@ export default React.createClass({
                 </li>
                 <li className="menu-item-has-children">
                   <a href="#">Help</a>
-                  <ul className="sub-menu">
-                    <li><a href="help-general.html">Help Center General</a></li>
-                    <li><a href="help-topic.html">Help Center Topic</a></li>
-                  </ul>
                 </li>
                 <li className="menu-item-has-children">
-                  <a href="#">Pages</a>
+                  <a href="#">About Us</a>
                   <ul className="sub-menu">
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="about.html">The Unipart Digital Team</a></li>
                     <li><a href="contacts.html">Contacts</a></li>
                   </ul>
                 </li>
