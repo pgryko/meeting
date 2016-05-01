@@ -8,5 +8,12 @@
     "quotes": [2, "single"],  // returns error when double quotes is used
     "semi": [2, "always"],  // returns error when you forget a semicolon
     "sort-vars": 0,  // does not care if your variables aren't ordered alphabetically
-    }
+    },
+    "extends": "eslint-config-airbnb",
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "plugins": [
+        "react"
+    ]
 }

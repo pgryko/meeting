@@ -58,7 +58,8 @@ module.exports = {
   })
   ],
   resolve: {
-    extensions: ['', '.js', '.sass','.scss'],
+    modulesDirectories: ['node_modules'],
+    extensions: ['', '.js', '.jsx', '.sass','.scss'],
     root: [path.join(__dirname, './src')]
   },
   sassLoader: {
@@ -67,6 +68,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' },
+      { test: /\.jsx$/, loader: 'jsx-loader?harmony' },
       { test: /\.css$/, exclude: /node_modules/, loader: "style-loader!css-loader" },
       { test: /\.scss$/, exclude: /node_modules/, loader: ExtractTextPlugin.extract('style-loader', sassLoaders.join('!')) },
       {test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, exclude: /node_modules/, loader: 'url'}
