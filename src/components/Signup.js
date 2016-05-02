@@ -2,6 +2,6 @@ import React from 'react'
 
 export default class Contacts extends React.Component {
   render() {
-    return <div>Login </div>;
+    return <div>Signup </div>;
   }
 }

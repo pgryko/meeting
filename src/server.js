@@ -17,12 +17,14 @@ function renderPage(appHtml) {
     <!doctype html public="storage">
     <html>
     <meta charset=utf-8/>
+    <title>Unipart Digital Comm Cell</title>
     <link rel=stylesheet href=/css/index.css>
+    <link rel="icon" href="/img/favicon.ico?v=2" />
+
     <div id=app>${appHtml}</div>
     <script src="/bundle.js"></script>
    `;
 }
-
 
 // send all requests to index.html so browserHistory works
 app.get('*', (req, res) => {

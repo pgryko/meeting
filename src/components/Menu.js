@@ -1,5 +1,6 @@
 import React from 'react'
 import SearchBar from './SearchBar'
+import MenuItem from './MenuItem'
 import {Link} from 'react-router'
 // import Form from './Form'
 
@@ -18,9 +19,9 @@ export default React.createClass({
           {/*<!-- Toolbar -->*/}
           <div className="topbar">
             <div className="container">
-              <a href="index.html" className="site-logo">
+              <Link to="/" className="site-logo">
                 <img src="img/logo.png" alt="Unipart Digital Comm Cell"/>
-              </a>
+              </Link>
               {/*<!-- .site-logo -->*/}
 
 
@@ -44,11 +45,11 @@ export default React.createClass({
           <div className="container">
             <nav className="main-navigation">
               <ul className="menu">
-                <li className="current-menu-item menu-item-has-children">
-                  <Link to="/">Home</Link>
+                <li>
+                  <MenuItem to="/">Home</MenuItem>
                 </li>
-                <li className="menu-item">
-                  <Link to="/features">Features</Link>
+                <li >
+                  <MenuItem to="/features">Features</MenuItem>
                 </li>
                 <li className="menu-item-has-children">
                   <Link to="/help">Help</Link>
