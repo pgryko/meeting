@@ -45,22 +45,10 @@ export default React.createClass({
           <div className="container">
             <nav className="main-navigation">
               <ul className="menu">
-                <li>
-                  <MenuItem to="/">Home</MenuItem>
-                </li>
-                <li >
+                  <MenuItem onlyActiveOnIndex={false} index={true} to="/">Home</MenuItem>
                   <MenuItem to="/features">Features</MenuItem>
-                </li>
-                <li className="menu-item-has-children">
-                  <Link to="/help">Help</Link>
-                </li>
-                <li className="menu-item-has-children">
-                  <Link to="/about">About Us</Link>
-                  <ul className="sub-menu">
-                    <li><Link to="/about">The Unipart Digital Team</Link></li>
-                    <li><Link to="/contacts">Contacts</Link></li>
-                  </ul>
-                </li>
+                  <MenuItem to="/help">Help</MenuItem>
+                  <MenuItem to="/about">About Us</MenuItem>
               </ul>
               {/*<!-- .menu -->*/}
             </nav>
