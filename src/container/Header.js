@@ -6,7 +6,10 @@ import Menu from '../components/Menu'
 export default React.createClass({
   render() {
     return (
-      <Menu/>
+      <div>
+        <Menu/>
+        {this.props.children}
+      </div>
     )
   }
 });

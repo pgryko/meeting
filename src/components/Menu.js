@@ -1,5 +1,6 @@
 import React from 'react'
 import SearchBar from './SearchBar'
+import {Link} from 'react-router'
 // import Form from './Form'
 
 export default React.createClass({
@@ -18,9 +19,10 @@ export default React.createClass({
           <div className="topbar">
             <div className="container">
               <a href="index.html" className="site-logo">
-                <img src="img/logo.png" alt="Nucleus"/>
+                <img src="img/logo.png" alt="Unipart Digital Comm Cell"/>
               </a>
               {/*<!-- .site-logo -->*/}
+
 
               {/*<!-- Mobile Menu Toggle -->*/}
               <div className="nav-toggle"><span></span></div>
@@ -43,19 +45,19 @@ export default React.createClass({
             <nav className="main-navigation">
               <ul className="menu">
                 <li className="current-menu-item menu-item-has-children">
-                  <a href="#">Home</a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li className="menu-item">
-                  <a href="#">Features</a>
+                  <Link to="/features">Features</Link>
                 </li>
                 <li className="menu-item-has-children">
-                  <a href="#">Help</a>
+                  <Link to="/help">Help</Link>
                 </li>
                 <li className="menu-item-has-children">
-                  <a href="#">About Us</a>
+                  <Link to="/about">About Us</Link>
                   <ul className="sub-menu">
-                    <li><a href="about.html">The Unipart Digital Team</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
+                    <li><Link to="/about">The Unipart Digital Team</Link></li>
+                    <li><Link to="/contacts">Contacts</Link></li>
                   </ul>
                 </li>
               </ul>

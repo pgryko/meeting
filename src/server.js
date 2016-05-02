@@ -17,6 +17,7 @@ function renderPage(appHtml) {
     <!doctype html public="storage">
     <html>
     <meta charset=utf-8/>
+    <link rel=stylesheet href=/css/index.css>
     <div id=app>${appHtml}</div>
     <script src="/bundle.js"></script>
    `;
