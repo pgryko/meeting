@@ -71,6 +71,7 @@ module.exports = {
       { test: /\.jsx$/, loader: 'jsx-loader?harmony' },
       { test: /\.css$/, exclude: /node_modules/, loader: "style-loader!css-loader" },
       { test: /\.scss$/, exclude: /node_modules/, loader: ExtractTextPlugin.extract('style-loader', sassLoaders.join('!')) },
+      { test: /\.gif$/, loader: "file-loader" },
       {test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, exclude: /node_modules/, loader: 'url'}
     ]
   }
