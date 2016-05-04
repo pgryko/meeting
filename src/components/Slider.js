@@ -1,27 +1,4 @@
 import React from 'react'
-import Slider from 'react-slick'
-
-export default class SimpleSlider extends React.Component{
-  render () {
-    var settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
-    return (
-      <Slider {...settings}>
-        <div><h3>1</h3></div>
-        <div><h3>2</h3></div>
-        <div><h3>3</h3></div>
-        <div><h3>4</h3></div>
-        <div><h3>5</h3></div>
-        <div><h3>6</h3></div>
-      </Slider>
-    );
-  }
-};
 
 // export default class Contacts extends React.Component {
 //   render() {
@@ -46,3 +23,23 @@ export default class SimpleSlider extends React.Component{
 //     </div>
 //   }
 // }
+
+var Carousel = require('nuka-carousel');
+
+const App = React.createClass({
+  mixins: [Carousel.ControllerMixin],
+  render() {
+    return (
+      <Carousel>
+        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide1"/>
+        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide2"/>
+        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide3"/>
+        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide4"/>
+        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide5"/>
+        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"/>
+      </Carousel>
+    )
+  }
+});
+
+module.exports = App;
