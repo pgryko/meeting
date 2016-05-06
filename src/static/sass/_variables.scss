@@ -201,13 +201,13 @@ $widget-tags-hover-bg:							darken($widget-tags-bg, 10%);
 //== Navbar / Logo
 //
 
-$navbar-zindex: 					$zindex-modal - 100;
+$navbar-zindex: 					$zindex-modal - 1000;
 $navbar-bg: 							#fff;
 $navbar-tool-btn-size: 		$btn-sm-height;
 $navbar-tool-btn-color: 	$brand-default;
 $navbar-tool-btn-border:  1px solid $hr-border;
 
-$logo-width: 							138px;
+$logo-width: 							250px;
 
 $navi-border: 							1px solid $hr-border;
 $navi-bg: 									#fff;
@@ -378,7 +378,7 @@ $footer-copyright-font-size:			$font-size-small;
 $post-tile-bg: 												#fff;
 $post-tile-border: 										1px solid $gray-lighter;
 $post-title-font-size: 								$font-size-h4;
-$post-meta-font-size: 								$font-size-small;	
+$post-meta-font-size: 								$font-size-small;
 $post-meta-color: 										$gray-light;
 $post-meta-icon-color: 								$link-hover-color;
 $post-meta-icon-size: 								floor($font-size-base * 0.6875); // 11px
