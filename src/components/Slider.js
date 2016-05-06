@@ -30,7 +30,9 @@ const App = React.createClass({
   mixins: [Carousel.ControllerMixin],
   render() {
     return (
-      <Carousel>
+      <Carousel
+        ref="carousel"
+        slidesToScroll="auto">
         <img src="/img/sliders/slider_1.jpg"/>
         <img src="/img/sliders/slider_2.jpg"/>
         <img src="/img/sliders/slider_3.jpg"/>
