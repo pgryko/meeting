@@ -35,6 +35,7 @@ const App = React.createClass({
   },
 
   render() {
+    self = this;
     return (
       <Carousel
         slidesToScroll={'auto'}

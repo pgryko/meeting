@@ -1,9 +1,11 @@
-var fs = require('fs')
-var path = require('path')
+var fs = require('fs');
+var path = require('path');
 
 module.exports = {
 
-  entry: path.resolve(__dirname, 'src/server.js'),
+  context: path.join(__dirname, "..", "src"),
+
+  entry:'./server.js',
 
   output: {
     filename: 'build/server.bundle.js'
@@ -12,7 +14,7 @@ module.exports = {
   target: 'node',
 
   // keep node_module paths out of the bundle
-  externals: fs.readdirSync(path.resolve(__dirname, 'node_modules')).concat([
+  externals: fs.readdirSync(path.resolve(__dirname, '..', 'node_modules')).concat([
     'react-dom/server'
   ]).reduce(function (ext, mod) {
     ext[mod] = 'commonjs ' + mod;
