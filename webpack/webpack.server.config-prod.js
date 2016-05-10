@@ -8,7 +8,8 @@ module.exports = {
   entry:'./server.js',
 
   output: {
-    filename: 'build/server.bundle.js'
+    path: path.join(__dirname, '..', 'build'),
+    filename: 'server.bundle.js'
   },
 
   target: 'node',

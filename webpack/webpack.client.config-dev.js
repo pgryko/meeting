@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin'); //Currently used to copy static assets such as css and images. At a later stage CSS should be optimised durring build
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 const sassLoaders = [
   'css-loader',
@@ -12,28 +13,31 @@ const sassLoaders = [
 ];
 
 module.exports = {
-  entry: './src/index.js',
-
+  entry: {
+    app: ['./src/index.js', hotMiddlewareScript]
+  },
   output: {
-    path: 'build/client',
+    path: path.join(__dirname, '..', 'build', 'client'),
     filename: 'bundle.js',
     publicPath: '/'
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/static/html_templates/index.tpl.html',
-      path: 'build/client',
+      template: path.join(__dirname, '..', 'src', 'static','html_templates','index.tpl.html'),
+      path: path.join(__dirname, '..', 'build', 'client'),
       inject: 'body',
       filename: 'index.html'
     }),
     new CopyWebpackPlugin([
       // { from: 'src/static/css', to: 'css'},
-      { from: 'src/static/img', to: 'img'},
+      { from: path.join(__dirname, '..', 'src', 'static','img'), to: path.join(__dirname, '..', 'build', 'client','img')}
     ]),
     new ExtractTextPlugin('css/index.css', {
       allChunks: true
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin()
   ],
   postcss: [
     autoprefixer({

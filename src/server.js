@@ -4,10 +4,23 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import routes from './routes/Routes';
+import webpack from 'webpack';
+import webpackDevConfig from '../webpack/webpack.client.config-dev';
+import { ENV } from '../config/appconfig';
 
 const app = module.exports = express();
 
 app.use(compression());
+
+
+if (ENV === 'development') {
+  const compiler = webpack(webpackDevConfig);
+
+  app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: false, publicPath: webpackDevConfig.output.publicPath
+  }));
+}
+
 
 // serve our static stuff like index.css
 app.use(express.static('build/client'));
