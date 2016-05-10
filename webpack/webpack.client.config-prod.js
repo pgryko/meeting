@@ -11,6 +11,10 @@ const sassLoaders = [
   'sass-loader?indentedSyntax=sass&includePaths[]=' + path.resolve(__dirname, './src/static/sass/')
 ];
 
+/*
+ Webpack Production configuration file for client
+ */
+
 module.exports = {
   entry: './src/index.js',
 
@@ -21,8 +25,13 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({
           template: 'src/static/html_templates/index.tpl.html',

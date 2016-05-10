@@ -1,6 +1,10 @@
 var fs = require('fs');
 var path = require('path');
 
+/*
+ Webpack Production configuration file for server
+ */
+
 module.exports = {
 
   context: path.join(__dirname, "..", "src"),
