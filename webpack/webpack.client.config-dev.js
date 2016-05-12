@@ -17,7 +17,7 @@ const sassLoaders = [
 
 module.exports = {
   entry: {
-    app: ['./src/index.js']
+    app: ['./src/client/index.js']
   },
   output: {
     path: path.join(__dirname, '..', 'build', 'client'),
@@ -28,14 +28,14 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '..', 'src', 'static','html_templates','index.tpl.html'),
+      template: path.join(__dirname, '..', 'src','client', 'static','html_templates','index.tpl.html'),
       path: path.join(__dirname, '..', 'build', 'client'),
       inject: 'body',
       filename: 'index.html'
     }),
     new CopyWebpackPlugin([
       // { from: 'src/static/css', to: 'css'},
-      { from: path.join(__dirname, '..', 'src', 'static','img'), to: path.join(__dirname, '..', 'build', 'client','img')}
+      { from: path.join(__dirname, '..', 'src','client', 'static','img'), to: path.join(__dirname, '..', 'build', 'client','img')}
     ]),
     new ExtractTextPlugin('css/index.css', {
       allChunks: true
@@ -52,7 +52,7 @@ module.exports = {
     root: [path.join(__dirname, './src')]
   },
   sassLoader: {
-    includePaths: [path.resolve(__dirname, "./src/static/sass")]
+    includePaths: [path.resolve(__dirname, "./src/client/static/sass")]
   },
   module: {
     loaders: [

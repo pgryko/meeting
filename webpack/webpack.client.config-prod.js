@@ -8,7 +8,7 @@ const autoprefixer = require('autoprefixer');
 const sassLoaders = [
   'css-loader',
   'postcss-loader',
-  'sass-loader?indentedSyntax=sass&includePaths[]=' + path.resolve(__dirname, './src/static/sass/')
+  'sass-loader?indentedSyntax=sass&includePaths[]=' + path.resolve(__dirname, './src/client/static/sass/')
 ];
 
 /*
@@ -16,7 +16,7 @@ const sassLoaders = [
  */
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/client/index.js',
 
   output: {
     path: path.join(__dirname, '..', 'build', 'client'),
@@ -34,16 +34,16 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({
-          template: 'src/static/html_templates/index.tpl.html',
+          template: 'src/client/static/html_templates/index.tpl.html',
           path: 'build/client',
           inject: 'body',
           filename: 'index.html'
         }),
     new CopyWebpackPlugin([
       // { from: 'src/static/css', to: 'build/client/css'},
-      { from: 'src/static/img', to: 'img'}
+      { from: 'src/client/static/img', to: 'img'}
     ]),
-    new ExtractTextPlugin('css/style.css', {
+    new ExtractTextPlugin('css/index.css', {
     allChunks: true
     })
   ],
@@ -58,7 +58,7 @@ module.exports = {
     root: [path.join(__dirname, './src')]
   },
   sassLoader: {
-  includePaths: [path.resolve(__dirname, "./src/static/sass")]
+  includePaths: [path.resolve(__dirname, "./src/client/static/sass")]
 },
   module: {
     loaders: [
