@@ -4,7 +4,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import routes from '../client/routes/Routes';
-import { ENV } from '../config/appconfig';
+import { ENV } from './config/appConfig';
 
 const app = module.exports = express();
 
