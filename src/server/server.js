@@ -5,6 +5,7 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import routes from '../client/routes/Routes';
 import { ENV } from './config/appConfig';
+import { connect } from './db';
 
 const app = module.exports = express();
 
