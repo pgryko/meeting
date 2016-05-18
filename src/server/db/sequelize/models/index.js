@@ -17,7 +17,13 @@ if (dbUrl) {
 
 //import models to Sequelize
 
-db[]
+import tokens from './tokens';
+import topics from './topics';
+import users from './users';
+
+db[tokens.name] = tokens;
+db[topics.name] = topics;
+db[users.name] = users;
 
 // fs
 //   .readdirSync(__dirname)

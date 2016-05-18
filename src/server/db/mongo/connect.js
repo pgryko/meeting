@@ -22,6 +22,9 @@ export default () => {
 
   // Register schema as mongoose model
 
+  require('./models/topics');
+  require('./models/user');
+
   // const modelPath = path.join(__dirname, 'models');
   // fs.readdirSync(modelPath).forEach((file) => {
   //   if (~file.indexOf('.js')) require(`${modelPath}/${file}`);
