@@ -11,6 +11,13 @@ const app = module.exports = express();
 
 app.use(compression());
 
+/*
+ * Database-specific setup
+ * - connect to MongoDB using mongoose
+ * - register mongoose Schema
+ */
+connect();
+
 
 if (ENV === 'development') {
 console.log("Server running in development mode")

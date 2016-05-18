@@ -21,8 +21,9 @@ export default () => {
   mongoose.connection.on('disconnected', connect);
 
   // Register schema as mongoose model
-  const modelPath = path.join(__dirname, 'models');
-  fs.readdirSync(modelPath).forEach((file) => {
-    if (~file.indexOf('.js')) require(`${modelPath}/${file}`);
-  });
+
+  // const modelPath = path.join(__dirname, 'models');
+  // fs.readdirSync(modelPath).forEach((file) => {
+  //   if (~file.indexOf('.js')) require(`${modelPath}/${file}`);
+  // });
 };
