@@ -1,10 +1,10 @@
-import fs from 'fs';
+// import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import sequelizeConfig from '../sequelize_config';
 import { ENV } from '../../../config/appConfig';
 const config = sequelizeConfig[ENV];
-const basename = path.basename(module.filename);
+// const basename = path.basename(module.filename);
 const db = {};
 let sequelize;
 
@@ -15,8 +15,7 @@ if (dbUrl) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-//import models to Sequelize
-
+/* import models to Sequelize */
 import tokens from './tokens';
 import topics from './topics';
 import users from './users';
