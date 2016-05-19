@@ -1,8 +1,8 @@
 module.exports = {
   development: {
-    username: process.env.PGUSER || 'root',
-    password: null,
-    database: 'react_webpack_node_development',
+    username: process.env.PGUSER || 'commcell',
+    password: 'development',
+    database: 'commcell',
     host: '127.0.0.1',
     dialect: 'postgres'
   },

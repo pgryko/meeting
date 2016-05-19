@@ -28,6 +28,7 @@
     "react-router": "^2.0.1",
     "react-tap-event-plugin": "^1.0.0",
     "sequelize": "^3.23.0",
+    "sequelize-cli": "^2.4.0",
     "style-loader": "^0.13.0",
     "validator": "^5.2.0"
   },
@@ -90,6 +91,7 @@
     "coverage": "babel-node node_modules/.bin/babel-istanbul cover _mocha -- --timeout 30000 test/**/*.spec.js",
     "start": "parallelshell 'npm run watch:client:dev' 'npm run watch:server:dev' 'cross-env NODE_ENV=development nodemon build/server.bundle.js' ",
     "prod": "npm run build:prod && node build/server.bundle.js",
+    "sequelize": "node_modules/.bin/sequelize",
     "test": "npm run coverage",
     "test-unit": "mocha --compilers js:babel-core/register test/unit/**/*.spec.js",
     "test-unit-watch": "mocha --watch --compilers js:babel-core/register test/unit/**/*.spec.js",
