@@ -8,10 +8,8 @@ export default React.createClass({
 
         {/*<!-- Help Search -->*/}
         <form method="get" className="help-search">
-          {/*<input type="text" className="form-control" placeholder="Search Help Center">
+          <input type="text" className="form-control" placeholder="Search Help Center"/>
             <button type="submit" className="waves-effect waves-light"><i className="icon-search"></i></button>
-            </input>
-            */}
         </form>{/*<!-- .help-search -->*/}
 
         {/*<!-- Topics -->*/}
