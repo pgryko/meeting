@@ -1,5 +1,27 @@
 import React from 'react'
 
+class Teammate extends React.Component {
+
+  constructor(props) {
+    //  call super() to pass the props to React.Component.
+    super(props);
+  }
+
+
+  render() {
+    return (
+      <div>
+        {this.props}
+      </div>
+    );
+  }
+}
+
+Teammate.PropTypes = {
+  imgURL: React.PropTypes.string,
+  email: React.PropTypes.string
+};
+
 export default React.createClass({
   render() {
     return (
@@ -20,11 +42,12 @@ export default React.createClass({
                       <img src="img/team/04.jpg" alt="Team"/>
                     </div>
                     <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus,
+                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
+                        natus,
                         reiciendis vel exercitationem error.</p>
                       <div className="social-bar">
                         <a href="#" className="sb-skype" data-toggle="tooltip" title="Skype">
-                          <i className="fa fa-skype"></i>
+                          <i className="fa sb-email"></i>
                         </a>
                         <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
                           <i className="fa fa-facebook"></i>
@@ -49,7 +72,8 @@ export default React.createClass({
                       <img src="img/team/05.jpg" alt="Team"/>
                     </div>
                     <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus,
+                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
+                        natus,
                         reiciendis vel exercitationem error.</p>
                       <div className="social-bar">
                         <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
@@ -78,7 +102,8 @@ export default React.createClass({
                       <img src="img/team/06.jpg" alt="Team"/>
                     </div>
                     <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus,
+                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
+                        natus,
                         reiciendis vel exercitationem error.</p>
                       <div className="social-bar">
                         <a href="#" className="sb-stackoverflow" data-toggle="tooltip" title="Stack Overflow">
@@ -107,11 +132,12 @@ export default React.createClass({
                       <img src="img/team/07.jpg" alt="Team"/>
                     </div>
                     <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus,
+                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
+                        natus,
                         reiciendis vel exercitationem error.</p>
                       <div className="social-bar">
                         <a href="#" className="sb-skype" data-toggle="tooltip" title="Skype">
-                          <i className="fa fa-skype"></i>
+                          <i className="fa sb-email"></i>
                         </a>
                         <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
                           <i className="fa fa-facebook"></i>
@@ -139,7 +165,8 @@ export default React.createClass({
                       <img src="img/team/08.jpg" alt="Team"/>
                     </div>
                     <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus,
+                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
+                        natus,
                         reiciendis vel exercitationem error.</p>
                       <div className="social-bar">
                         <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
@@ -168,7 +195,8 @@ export default React.createClass({
                       <img src="img/team/09.jpg" alt="Team"/>
                     </div>
                     <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus,
+                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
+                        natus,
                         reiciendis vel exercitationem error.</p>
                       <div className="social-bar">
                         <a href="#" className="sb-stackoverflow" data-toggle="tooltip" title="Stack Overflow">
@@ -197,14 +225,15 @@ export default React.createClass({
                       <img src="img/team/10.jpg" alt="Team"/>
                     </div>
                     <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus,
+                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
+                        natus,
                         reiciendis vel exercitationem error.</p>
                       <div className="social-bar">
-                        <a href="#" className="sb-skype" data-toggle="tooltip" title="Skype">
-                          <i className="fa fa-skype"></i>
+                        <a href="#" className="sb-skype" data-toggle="tooltip" title="Email">
+                          <i className="fa fa-envelope"></i>
                         </a>
-                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
-                          <i className="fa fa-facebook"></i>
+                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Mobile">
+                          <i className="fa fa-mobile"></i>
                         </a>
                         <a href="#" className="sb-twitter" data-toggle="tooltip" title="Twitter">
                           <i className="fa fa-twitter"></i>
@@ -228,9 +257,12 @@ export default React.createClass({
                   He who works with his hands and his head is a craftsman.
                   He who works with his hands and his head and his heart is an artist.</p>
                 <cite>Louis Nizer</cite>
-              </blockquote>{/*<!-- block quote -->*/}
-            </div>{/*<!-- .col-md-10.col-md-offset-1 -->*/}
-          </div>{/*<!-- .row -->*/}
+              </blockquote>
+              {/*<!-- block quote -->*/}
+            </div>
+            {/*<!-- .col-md-10.col-md-offset-1 -->*/}
+          </div>
+          {/*<!-- .row -->*/}
           <p>Its that last part that is hard to bridge for a lot of engineers.
             The thing that did it for me was sitting through a LOT of formal usability studies.
             Seeing folks actually use an application you made, where they make mistakes, get stuck,
