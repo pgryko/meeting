@@ -58,7 +58,7 @@ export default React.createClass({
                 <a href="" className="image-box">
                   <img src="img/help-center/05.png" alt="Topic"/>
                     <div className="ib-text">
-                      <h3 className="ib-title">Hardvare upgardes</h3>
+                      <h3 className="ib-title">Hardware</h3>
                     </div>
                 </a>
               </div>
@@ -77,7 +77,7 @@ export default React.createClass({
               <div className="row">
                 <div className="col-sm-4">
                   <ul className="list-featured">
-                    <li><a href="" className="no-border">Common WordPress Installation</a></li>
+                    <li><a href="" className="no-border">Common Questions 1</a></li>
                     <li><a href="" className="no-border">How Do I Check Item Compatibility?</a></li>
                     <li><a href="" className="no-border">Item Installation Guide &amp; Help Documentation</a></li>
                     <li><a href="" className="no-border">Manage account</a></li>
@@ -85,7 +85,7 @@ export default React.createClass({
                 </div>
                 <div className="col-sm-4">
                   <ul className="list-featured">
-                    <li><a href="" className="no-border">How do I share folders with other?</a></li>
+                    <li><a href="" className="no-border">How do I share files with other people?</a></li>
                     <li><a href="" className="no-border">How Do I Check Item Compatibility?</a></li>
                     <li><a href="" className="no-border">Item Installation Guide &amp; Help Documentation</a></li>
                     <li><a href="" className="no-border">Manage account</a></li>
@@ -93,7 +93,7 @@ export default React.createClass({
                 </div>
                 <div className="col-sm-4">
                   <ul className="list-featured">
-                    <li><a href="" className="no-border">How do I link to a file or folder?</a></li>
+                    <li><a href="" className="no-border">How do I download a file?</a></li>
                     <li><a href="" className="no-border">How Do I Check Item Compatibility?</a></li>
                     <li><a href="" className="no-border">Item Installation Guide &amp; Help Documentation</a></li>
                     <li><a href="" className="no-border">Manage account</a></li>
