@@ -12,7 +12,7 @@
       root: "/var/www/{{ domain }}"
       file: "service.js"
       daemon: "/usr/bin/forever"
-      daemon_opts: "start /var/www/{{ domain }}/service.js"
+      daemon_opts: "start --uid commcell --killSignal=SIGTERM /usr/bin/nodemon --exitcrash /var/www/{{ domain }}/service.js"
       pidfile: "/var/run/commcell_daemon.pid"
 
   tasks:
@@ -24,8 +24,8 @@
         - curl
       become: yes
 
-    - name: add nodejs 6.x source
-      shell: curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    - name: add nodejs 5.x source
+      shell: curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
 
     - name: install nodejs
       apt: name={{ item }} update_cache=yes state=latest
@@ -37,6 +37,10 @@
 
     - name: "Install forever (to run Node.js app)."
       npm: name=forever global=yes state=present
+      become: yes
+
+    - name: "Install Nodemon (to run Node.js app)."
+      npm: name=nodemon global=yes state=present
       become: yes
 
     # - name: create virtual host file
