@@ -1,29 +1,39 @@
 import React from 'react'
 // import auth from '../utils/auth'
 
+class DashBoardItem extends React.Component {
+  render() {
+    return <div className="grid-item apps">
+        <a href="#" className="portfolio-item">
+          <div className="thumbnail waves-effect waves-light">
+            <img src={this.props.image} alt={this.props.title}/>
+          </div>
+          <h3 className="portfolio-title">{this.props.title}</h3>
+        </a>
+      </div>;
+  }
+}
+
 export default React.createClass({
   render() {
     // const token = auth.getToken();
-    const token = "token";
+    const token = "Our latest works";
 
     return (
       <div>
-        <h1>Dashboard</h1>
-        <p>You made it!</p>
-        <p>{token}</p>
         {/*<!-- Content --> */}
         <section className="container">
           <h2 className="block-title text-center">
-            Portfolio Standard
-            <small>Our latest works</small>
+            Dashboard
+            <small>{token}</small>
           </h2>
 
           {/*<!-- Filters --> */}
           <div className="text-center padding-top">
             <ul className="nav-filters space-bottom-2x text-center">
               <li className="active"><a href="#" data-filter="*">Show All</a></li>
-              <li><a href="#" data-filter=".apps">Apps</a></li>
-              <li><a href="#" data-filter=".identity">Identity Design</a></li>
+              <li><a href="#" data-filter=".apps">Recent</a></li>
+              <li><a href="#" data-filter=".identity">Art Room</a></li>
             </ul>{/*<!-- .nav-filters --> */}
           </div>
 
@@ -32,65 +42,13 @@ export default React.createClass({
             <div className="grid-sizer"></div>
             <div className="gutter-sizer"></div>
 
-            {/*<!-- Portfolio Item --> */}
-            <div className="grid-item apps">
-              <a href="#" className="portfolio-item">
-                <div className="thumbnail waves-effect waves-light">
-                  <img src="img/portfolio/01.jpg" alt="Portfolio"/>
-                </div>
-                <h3 className="portfolio-title">Mobile App</h3>
-              </a>
-            </div>{/*<!-- .grid-item.apps --> */}
+            <DashBoardItem image="img/portfolio/01.jpg" title="CommCell 1" />
+            <DashBoardItem image="img/portfolio/02.jpg" title="CommCell 2" />
+            <DashBoardItem image="img/portfolio/03.jpg" title="CommCell 3" />
+            <DashBoardItem image="img/portfolio/04.jpg" title="CommCell 4" />
+            <DashBoardItem image="img/portfolio/05.jpg" title="CommCell 5" />
+            <DashBoardItem image="img/portfolio/06.jpg" title="CommCell 6" />
 
-            {/*<!-- Portfolio Item --> */}
-            <div className="grid-item identity">
-              <a href="#" className="portfolio-item">
-                <div className="thumbnail waves-effect waves-light">
-                  <img src="img/portfolio/02.jpg" alt="Portfolio"/>
-                </div>
-                <h3 className="portfolio-title">Identity Design</h3>
-              </a>
-            </div>{/*<!-- .grid-item.identity --> */}
-
-            {/*<!-- Portfolio Item --> */}
-            <div className="grid-item identity">
-              <a href="#" className="portfolio-item">
-                <div className="thumbnail waves-effect waves-light">
-                  <img src="img/portfolio/03.jpg" alt="Portfolio"/>
-                </div>
-                <h3 className="portfolio-title">Package Design</h3>
-              </a>
-            </div>{/*<!-- .grid-item.identity --> */}
-
-            {/*<!-- Portfolio Item --> */}
-            <div className="grid-item apps">
-              <a href="#" className="portfolio-item">
-                <div className="thumbnail waves-effect waves-light">
-                  <img src="img/portfolio/04.jpg" alt="Portfolio"/>
-                </div>
-                <h3 className="portfolio-title">App Prototype</h3>
-              </a>
-            </div>{/*<!-- .grid-item.apps --> */}
-
-            {/*<!-- Portfolio Item --> */}
-            <div className="grid-item identity">
-              <a href="#" className="portfolio-item">
-                <div className="thumbnail waves-effect waves-light">
-                  <img src="img/portfolio/05.jpg" alt="Portfolio"/>
-                </div>
-                <h3 className="portfolio-title">Stationery Design</h3>
-              </a>
-            </div>{/*<!-- .grid-item.identity --> */}
-
-            {/*<!-- Portfolio Item --> */}
-            <div className="grid-item apps">
-              <a href="#" className="portfolio-item">
-                <div className="thumbnail waves-effect waves-light">
-                  <img src="img/portfolio/06.jpg" alt="Portfolio"/>
-                </div>
-                <h3 className="portfolio-title">Watch App</h3>
-              </a>
-            </div>{/*<!-- .grid-item.apps --> */}
           </div>{/*<!-- .isotope-masonry-grid --> */}
 
           {/*<!-- Load More Button --> */}
