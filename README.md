@@ -31,6 +31,29 @@ Run your Postgres server
 postgres -D /usr/local/var/postgres
 Setup your postgres database
 
-createuser root
-createdb react_webpack_node_development # or test/production
+#Postgres Ubuntu installation instructions
+
+- Install postgres
+sudo apt-get install postgresql postgresql-contrib
+
+- Change to user postgress
+sudo su - postgres
+
+- login to postgres
+psql
+
+- Create commcell role
+CREATE ROLE commcell WITH LOGIN PASSWORD 'development';
+
+- Create DB
+CREATE DATABASE commcell;
+
+- Grant privliages
+grant all privileges on database commcell to commcell;
+
+- Exit postgress
+\q
+exit
+
+- Run sequelize migrations
 npm run sequelize db:migrate
