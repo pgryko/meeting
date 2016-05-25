@@ -6,19 +6,19 @@ import Home from '../components/Home';
 import Features from '../components/Features';
 import Help from '../components/Help';
 import Contacts from '../components/Contacts';
-import auth from '../utils/auth';
+// import auth from '../utils/auth';
 import Login from '../components/Login';
 import Logout from '../components/Logout';
 import Dashboard from '../components/DashBoard';
 
 
 function requireAuth(nextState, replace) {
-  if (!auth.loggedIn()) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
-    })
-  }
+  // if (!auth.loggedIn()) {
+  //   replace({
+  //     pathname: '/login',
+  //     state: { nextPathname: nextState.location.pathname }
+  //   })
+  // }
 }
 
 module.exports = (

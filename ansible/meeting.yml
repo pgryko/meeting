@@ -12,7 +12,7 @@
       root: "/var/www/{{ domain }}"
       file: "service.js"
       daemon: "/usr/bin/forever"
-      daemon_opts: "start --uid commcell --killSignal=SIGTERM /usr/bin/nodemon --exitcrash /var/www/{{ domain }}/service.js"
+      daemon_opts: "start --uid commcell --killSignal=SIGTERM /usr/bin/nodemon --exitcrash /var/www/{{ domain }}/server/service.js"
       pidfile: "/var/run/commcell_daemon.pid"
 
   tasks:

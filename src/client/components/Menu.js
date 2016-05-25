@@ -49,6 +49,7 @@ export default React.createClass({
                   <MenuItem to="/features">Features</MenuItem>
                   <MenuItem to="/help">Help</MenuItem>
                   <MenuItem to="/about">About Us</MenuItem>
+                  <MenuItem to="/dashboard">Dashboard</MenuItem>
               </ul>
               {/*<!-- .menu -->*/}
             </nav>
