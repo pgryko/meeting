@@ -19,9 +19,7 @@ export default React.createClass({
           {/*<!-- Toolbar -->*/}
           <div className="topbar">
             <div className="container">
-              <Link to="/" className="site-logo">
-                <img src="img/logo.png" alt="Unipart Digital Comm Cell"/>
-              </Link>
+                <img  className="site-logo" src="/img/logo.png" alt="Unipart Digital Comm Cell"/>
               {/*<!-- .site-logo -->*/}
 
 
@@ -29,9 +27,9 @@ export default React.createClass({
               <div className="nav-toggle"><span></span></div>
 
               <div className="toolbar">
-                <a href="#" className="text-sm" data-toggle="modal" data-target="#loginModal">Sign up</a>
-                <a href="#" className="btn btn-sm btn-default btn-icon-right waves-effect waves-light"
-                   data-toggle="modal" data-target="#loginModal">Log In <i className="icon-head" /></a>
+                <Link to="#" className="text-sm" data-toggle="modal" data-target="#loginModal">Sign up</Link>
+                <Link to="#" className="btn btn-sm btn-default btn-icon-right waves-effect waves-light"
+                   data-toggle="modal" data-target="#loginModal">Log In <i className="icon-head" /></Link>
                 <SearchBar/>
                 {/*<!-- .search-btn -->*/}
               </div>
