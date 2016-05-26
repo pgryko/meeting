@@ -30,7 +30,7 @@ module.exports = (
       <Route path="features" component={Features}/>
       <Route path="help">
         <IndexRoute component={Help} />
-        <Route path="topic" component={HelpTopic}/>
+        <Route path=":topicID" component={HelpTopic}/>
       </Route>
       <Route path="about" component={About}/>
       <Route path="contacts" component={Contacts}/>
