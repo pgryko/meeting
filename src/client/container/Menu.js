@@ -1,6 +1,6 @@
 import React from 'react'
-import SearchBar from './SearchBar'
-import MenuItem from './MenuItem'
+import SearchBar from '../components/SearchBar'
+import MenuItem from '../components/MenuItem'
 import {Link} from 'react-router'
 // import Form from './Form'
 

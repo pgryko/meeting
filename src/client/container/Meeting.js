@@ -1,7 +1,8 @@
 import React from 'react'
-import Slider from './Slider'
 export default React.createClass({
   render() {
-    return <Slider/>
+    return <div>
+      Meeting Container
+    </div>
   }
 })

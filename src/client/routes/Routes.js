@@ -1,15 +1,15 @@
 import React from 'react';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
-import About from '../components/About';
+import About from '../container/About';
 import Header from '../container/Header'
-import Home from '../components/Home';
-import Features from '../components/Features';
-import Help from '../components/Help';
-import Contacts from '../components/Contacts';
+import Home from '../container/Home';
+import Features from '../container/Features';
+import Help from '../container/Help';
+import Contacts from '../container/Contacts';
 // import auth from '../utils/auth';
 import Login from '../components/Login';
 import Logout from '../components/Logout';
-import Dashboard from '../components/DashBoard';
+import Dashboard from '../container/DashBoard';
 
 
 function requireAuth(nextState, replace) {
