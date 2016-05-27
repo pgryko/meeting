@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 // import auth from '../utils/auth'
 
 class DashBoardItem extends React.Component {
@@ -13,8 +14,59 @@ class DashBoardItem extends React.Component {
       </div>;
   }
 }
+/*
 
-export default React.createClass({
+Note to self, ideally we wil want to retrieve a list of dashboard items and pass them onto components,
+something along these lines
+
+** A key is required for generating dom from loops**
+
+ createListItem: function(user) {
+   return (
+     <li key={user.id}>
+      <Link to="{'/users/' + user.id}">{user.name}</Link>
+     </li>
+   );
+   }
+ });
+
+ class DashBoardList extends React.Component{
+   render: function() {
+   return (
+     <ul className="user-list">
+     {this.props.users.map(this.createListItem)}
+     </ul>
+   );
+ }
+ };
+
+ */
+
+
+export default class DashBoard extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      dashboards: [],
+      pollInterval: 2000
+    }
+  }
+
+  loadCommentsFromServer() {
+    axios.get('/path/to/user-api').then( response => {
+      this.setState({dashboards: response.data})
+    });
+  }
+
+
+
+  componentDidMount() {
+    this.loadCommentsFromServer();
+    setInterval(this.loadCommentsFromServer.bind(this), this.state.pollInterval);
+  }
+
+
   render() {
     // const token = auth.getToken();
     const token = "Our latest works";
@@ -64,4 +116,4 @@ export default React.createClass({
       </div>
     )
   }
-})
+}

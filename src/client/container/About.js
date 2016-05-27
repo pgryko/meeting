@@ -1,28 +1,83 @@
 import React from 'react'
 
-class Teammate extends React.Component {
 
-  constructor(props) {
-    //  call super() to pass the props to React.Component.
-    super(props);
+var teamDetails = [
+  {name: "Richard Neill",
+    email: "richard.neil@unipart.io",
+    imgURL: "img/team/Richard_Neill.jpg",
+    title: "Chief Digital Officer at Unipart Logistics",
+    description: "Responsible for the digital team; we solve problems and have a strong focus on open-source software",
+    divider: ""
+  },
+  {name: "Piotr Gryko",
+    email: "piotr.gryko@unipart.io",
+    imgURL: "img/team/Piotr_Gryko.jpg",
+    title: "Software engineer at Unipart Logistics",
+    description: "Responsible for the Digital Comm Cell",
+    divider: ""
+  },
+  {name: "Calantha Coulton",
+    email: "Calantha.Coulton@unipart.io",
+    imgURL: "img/team/Calantha_Coulton.jpg",
+    title: "Developer at Unipart Logistics",
+    description: "Digital Comm Cell development",
+    divider: ""
+  },
+  {name: "Steve Marvell",
+    email: "Steve.Marvell@unipart.io",
+    imgURL: "img/team/Steve_Marvell.jpg",
+    title: "Systems Architect at Unipart Logistics",
+    description: "Responsible for hardware and infrastructure",
+    divider: ""
+  },
+  {name: "Nataliia Bobrova",
+    email: "nataliia.bobrova@unipart.io",
+    imgURL: "img/team/Nataliia_Bobrova.jpg",
+    title: "Graphic designer at Unipart Logistics",
+    description: "Responsible for the design of the digital Comm Cell",
+    divider: ""
   }
-
-
-  render() {
-    return (
-      <div>
-        {this.props}
-      </div>
-    );
-  }
-}
-
-Teammate.PropTypes = {
-  imgURL: React.PropTypes.string,
-  email: React.PropTypes.string
-};
+];
 
 export default React.createClass({
+
+  Teammate: function(person,index) {
+    
+
+    return (
+      <div key={person.name}>
+        <div className="col-lg-3 col-sm-6">
+          <div className="teammate-1 text-center">
+            <div className="thumbnail">
+              <div className="flipper">
+                <div className="front">
+                  <img src={person.imgURL} alt={person.name}/>
+                </div>
+                <div className="back">
+                  <p className="padding-top">{person.description}</p>
+                  <div className="social-bar">
+                    <a href={person.email} className="sb-skype" data-toggle="tooltip" title="Skype">
+                      <i className="fa sb-email"></i>
+                    </a>
+                    <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
+                      <i className="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" className="sb-twitter" data-toggle="tooltip" title="Twitter">
+                      <i className="fa fa-twitter"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 className="teammate-name">{person.name}</h3>
+            <p>{person.title}</p>
+          </div>
+        </div>
+      </div>
+    );
+
+  },
+
   render() {
     return (
       <div>
@@ -34,218 +89,10 @@ export default React.createClass({
           </h2>
           <div className="row padding-top">
             {/*<!-- Teammate -->*/}
-            <div className="col-lg-3 col-sm-6">
-              <div className="teammate-1 text-center">
-                <div className="thumbnail">
-                  <div className="flipper">
-                    <div className="front">
-                      <img src="img/team/04.jpg" alt="Team"/>
-                    </div>
-                    <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-                        natus,
-                        reiciendis vel exercitationem error.</p>
-                      <div className="social-bar">
-                        <a href="#" className="sb-skype" data-toggle="tooltip" title="Skype">
-                          <i className="fa sb-email"></i>
-                        </a>
-                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
-                          <i className="fa fa-facebook"></i>
-                        </a>
-                        <a href="#" className="sb-twitter" data-toggle="tooltip" title="Twitter">
-                          <i className="fa fa-twitter"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="teammate-name">Lil Huston</h3>
-                <p>Co-founder &amp; CEO</p>
-              </div>
-            </div>
+            {teamDetails.map(this.Teammate) }
+
             {/*<!-- Teammate -->*/}
-            <div className="col-lg-3 col-sm-6">
-              <div className="teammate-1 text-center">
-                <div className="thumbnail">
-                  <div className="flipper">
-                    <div className="front">
-                      <img src="img/team/05.jpg" alt="Team"/>
-                    </div>
-                    <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-                        natus,
-                        reiciendis vel exercitationem error.</p>
-                      <div className="social-bar">
-                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
-                          <i className="fa fa-facebook"></i>
-                        </a>
-                        <a href="#" className="sb-dribbble" data-toggle="tooltip" title="Dribbble">
-                          <i className="fa fa-dribbble"></i>
-                        </a>
-                        <a href="#" className="sb-behance" data-toggle="tooltip" title="Behance">
-                          <i className="fa fa-behance"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="teammate-name">Amy Rollhouse</h3>
-                <p>Co-founder &amp; CTO</p>
-              </div>
-            </div>
-            {/*<!-- Teammate -->*/}
-            <div className="col-lg-3 col-sm-6">
-              <div className="teammate-1 text-center">
-                <div className="thumbnail">
-                  <div className="flipper">
-                    <div className="front">
-                      <img src="img/team/06.jpg" alt="Team"/>
-                    </div>
-                    <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-                        natus,
-                        reiciendis vel exercitationem error.</p>
-                      <div className="social-bar">
-                        <a href="#" className="sb-stackoverflow" data-toggle="tooltip" title="Stack Overflow">
-                          <i className="fa fa-stack-overflow"></i>
-                        </a>
-                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
-                          <i className="fa fa-facebook"></i>
-                        </a>
-                        <a href="#" className="sb-google-plus" data-toggle="tooltip" title="Google Plus">
-                          <i className="fa fa-google-plus"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="teammate-name">Josh</h3>
-                <p>VP of Infrastructure</p>
-              </div>
-            </div>
-            {/*<!-- Teammate -->*/}
-            <div className="col-lg-3 col-sm-6">
-              <div className="teammate-1 text-center">
-                <div className="thumbnail">
-                  <div className="flipper">
-                    <div className="front">
-                      <img src="img/team/07.jpg" alt="Team"/>
-                    </div>
-                    <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-                        natus,
-                        reiciendis vel exercitationem error.</p>
-                      <div className="social-bar">
-                        <a href="#" className="sb-skype" data-toggle="tooltip" title="Skype">
-                          <i className="fa sb-email"></i>
-                        </a>
-                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
-                          <i className="fa fa-facebook"></i>
-                        </a>
-                        <a href="#" className="sb-twitter" data-toggle="tooltip" title="Twitter">
-                          <i className="fa fa-twitter"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="teammate-name">Kim Kurdasha</h3>
-                <p>General Counsel</p>
-              </div>
-            </div>
-          </div>
-          {/*<!-- .row -->*/}
-          <div className="row">
-            {/*<!-- Teammate -->*/}
-            <div className="col-lg-3 col-sm-6">
-              <div className="teammate-1 text-center">
-                <div className="thumbnail">
-                  <div className="flipper">
-                    <div className="front">
-                      <img src="img/team/08.jpg" alt="Team"/>
-                    </div>
-                    <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-                        natus,
-                        reiciendis vel exercitationem error.</p>
-                      <div className="social-bar">
-                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
-                          <i className="fa fa-facebook"></i>
-                        </a>
-                        <a href="#" className="sb-dribbble" data-toggle="tooltip" title="Dribbble">
-                          <i className="fa fa-dribbble"></i>
-                        </a>
-                        <a href="#" className="sb-behance" data-toggle="tooltip" title="Behance">
-                          <i className="fa fa-behance"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="teammate-name">Andy Cabana</h3>
-                <p>Designer</p>
-              </div>
-            </div>
-            {/*<!-- Teammate -->*/}
-            <div className="col-lg-3 col-sm-6">
-              <div className="teammate-1 text-center">
-                <div className="thumbnail">
-                  <div className="flipper">
-                    <div className="front">
-                      <img src="img/team/09.jpg" alt="Team"/>
-                    </div>
-                    <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-                        natus,
-                        reiciendis vel exercitationem error.</p>
-                      <div className="social-bar">
-                        <a href="#" className="sb-stackoverflow" data-toggle="tooltip" title="Stack Overflow">
-                          <i className="fa fa-stack-overflow"></i>
-                        </a>
-                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Facebook">
-                          <i className="fa fa-facebook"></i>
-                        </a>
-                        <a href="#" className="sb-google-plus" data-toggle="tooltip" title="Google Plus">
-                          <i className="fa fa-google-plus"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="teammate-name">Kale Lake</h3>
-                <p>Support</p>
-              </div>
-            </div>
-            {/*<!-- Teammate -->*/}
-            <div className="col-lg-3 col-sm-6">
-              <div className="teammate-1 text-center">
-                <div className="thumbnail">
-                  <div className="flipper">
-                    <div className="front">
-                      <img src="img/team/10.jpg" alt="Team"/>
-                    </div>
-                    <div className="back">
-                      <p className="padding-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-                        natus,
-                        reiciendis vel exercitationem error.</p>
-                      <div className="social-bar">
-                        <a href="#" className="sb-skype" data-toggle="tooltip" title="Email">
-                          <i className="fa fa-envelope"></i>
-                        </a>
-                        <a href="#" className="sb-facebook" data-toggle="tooltip" title="Mobile">
-                          <i className="fa fa-mobile"></i>
-                        </a>
-                        <a href="#" className="sb-twitter" data-toggle="tooltip" title="Twitter">
-                          <i className="fa fa-twitter"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="teammate-name">James Birkins</h3>
-                <p>Developer</p>
-              </div>
-            </div>
+
           </div>
           {/*<!-- .row --> */}
           {/*<!-- Quotation -->*/}
