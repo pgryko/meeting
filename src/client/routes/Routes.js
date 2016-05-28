@@ -10,20 +10,35 @@ import Contacts from '../container/Contacts';
 import Login from '../components/Login';
 import Logout from '../components/Logout';
 import Dashboard from '../container/DashBoard';
-// import auth from '../utils/auth';
 
 
+/*
+ * @param {Redux Store}
+ * We require store as an argument here because we wish to get
+ * state from the store after it has been authenticated.
+ */
+export default (store) => {
+  const requireAuth = (nextState, replace, callback) => {
+    const { user: { authenticated }} = store.getState();
+    if (!authenticated) {
+      replace({
+        pathname: '/login',
+        state: { nextPathname: nextState.location.pathname }
+      });
+    }
+    callback();
+  };
 
-function requireAuth(nextState, replace) {
-  // if (!auth.loggedIn()) {
-  //   replace({
-  //     pathname: '/login',
-  //     state: { nextPathname: nextState.location.pathname }
-  //   })
-  // }
-}
-
-module.exports = (
+  const redirectAuth = (nextState, replace, callback) => {
+    const { user: { authenticated }} = store.getState();
+    if (authenticated) {
+      replace({
+        pathname: '/'
+      });
+    }
+    callback();
+  };
+  return (
     // The Header contains the main menu links and will always show on each page
     <Route path="/" component={Header}>
       <IndexRoute component={Home}/>
@@ -40,4 +55,5 @@ module.exports = (
 
       {/*<Route path="/meeting" component={Meeting} /> */}
     </Route>
-);
+  );
+};
