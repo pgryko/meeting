@@ -15,5 +15,9 @@
     },
     "plugins": [
         "react"
-    ]
+    ],
+  "globals": {
+    "__DEVSERVER__": true,
+    "__DEVCLIENT__": true
+  }
 }

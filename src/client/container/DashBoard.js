@@ -53,18 +53,18 @@ export default class DashBoard extends React.Component{
     }
   }
 
-  loadCommentsFromServer() {
-    axios.get('/path/to/user-api').then( response => {
-      this.setState({dashboards: response.data})
-    });
-  }
+  // loadCommentsFromServer() {
+  //   axios.get('/path/to/user-api').then( response => {
+  //     this.setState({dashboards: response.data})
+  //   });
+  // }
 
 
 
-  componentDidMount() {
-    this.loadCommentsFromServer();
-    setInterval(this.loadCommentsFromServer.bind(this), this.state.pollInterval);
-  }
+  // componentDidMount() {
+  //   this.loadCommentsFromServer();
+  //   setInterval(this.loadCommentsFromServer.bind(this), this.state.pollInterval);
+  // }
 
 
   render() {

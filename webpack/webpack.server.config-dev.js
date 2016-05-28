@@ -43,7 +43,7 @@ module.exports = {
         // Reason why we put this here instead of babelrc
         // https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
         query: {
-          "presets": ["es2015", "react"]
+          "presets": ["es2015", "react","stage-0"]
         },
         include: path.join(__dirname, '..', 'src'),
         exclude: path.join(__dirname, '..', 'node_modules')
