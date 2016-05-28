@@ -1,13 +1,10 @@
 import React from 'react'
 import {Link, IndexLink, History} from 'react-router'
-import Home from '../container/Home'
 
 
 export default class PageTitle extends React.Component{
   constructor(props, context, index){
     super(props);
-    this.state = {
-    }
   }
 
   render() {
@@ -28,9 +25,9 @@ export default class PageTitle extends React.Component{
               {/* <!-- .column -->*/}
               <div className="column">
                 <div className="breadcrumbs">
-                  <Link to={"/"}>Home</Link>
+                  <Link to={"/help"}>Help Center</Link>
                   <span className="delimiter"><i className="icon-arrow-right"></i></span>
-                  <span>Help Center</span>
+                  <Link to={"/help/" + this.props.titleName} >{this.props.titleName}</Link>
                 </div>
                 {/* <!-- .breadcrumbs -->*/}
               </div>
@@ -44,8 +41,7 @@ export default class PageTitle extends React.Component{
   }
 
 }
-//        {/*<LinkComponent {...this.props} activeClassName="active" /> */}
 
-// PageTitle.contextTypes = {
-//   router: React.PropTypes.object
-// };
+PageTitle.contextTypes = {
+  titleName: React.PropTypes.string
+};

@@ -7,7 +7,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <PageTitle />
+        <PageTitle  titleName={this.props.params.topicID}/>
         <div className="container padding-bottom">
         {/* <!-- Content --> */}
         <div className="col-lg-8 col-md-8 col-lg-offset-1 col-lg-push-3 col-md-push-4">

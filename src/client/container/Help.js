@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link,Route} from 'react-router'
+import PageTitle from '../components/PageTitle'
 
 class HelpItem extends React.Component {
 
@@ -31,6 +32,26 @@ export default React.createClass({
     return <div>
       {/*<!-- Content -->*/}
       <div className="container">
+
+        {/* <!-- Page Title -->*/}
+        {/* <!--Add modifier className : "pt-fullwidth" to stretch page title and make it occupy 100% of the page width. -->*/}
+        <section className="page-title">
+          <div className="container">
+            <div className="inner">
+              <div className="column">
+                <div className="title">
+                  <h1>Help Center</h1>
+                </div>
+                {/* <!-- .title -->*/}
+              </div>
+              {/* <!-- .column -->*/}
+              <div className="column">
+              </div>
+              {/* <!-- .column -->*/}
+            </div>
+          </div>
+        </section>
+        {/* <!-- .page-title -->*/}
 
         {/*<!-- Help Search -->*/}
         <form method="get" className="help-search">
