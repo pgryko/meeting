@@ -5,8 +5,9 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import configureStore from '../client/store/configureStore';
 import createRoutes from '../client/routes/Routes';
+import configureStore from '../client/store/configureStore';
+import preRenderMiddleware from '../client/middlewares/preRenderMiddleware';
 import { ENV } from './config/appConfig';
 import { connect } from './db';
 
