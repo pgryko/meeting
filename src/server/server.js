@@ -7,7 +7,7 @@ import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import createRoutes from '../client/routes/Routes';
 import configureStore from '../client/store/configureStore';
-import preRenderMiddleware from '../client/middlewares/preRenderMiddleware';
+// import preRenderMiddleware from '../client/middlewares/preRenderMiddleware';
 import { ENV } from './config/appConfig';
 import { connect } from './db';
 
@@ -76,42 +76,47 @@ app.get('*', (req, res) => {
       res.redirect(redirect.pathname + redirect.search);
     } else if (props) {
       // hey we made it!
-      // const appHtml = renderToString(<RouterContext {...props} />);
-      // res.send(renderPage(appHtml));
+      const appHtml = renderToString(
+        <Provider store={store}>
+        <RouterContext {...props}/>
+        </Provider>
+      );
+      res.send(renderPage(appHtml));
+
       // This method waits for all render component
       // promises to resolve before returning to browser
-      preRenderMiddleware(
-        store.dispatch,
-        props.components,
-        props.params
-      )
-        .then(() => {
-          const initialState = store.getState();
-          const componentHTML = renderToString(
-            <Provider store={store}>
-              <RouterContext {...props} />
-            </Provider>
-          );
-
-          res.status(200).send(`
-          <!doctype html>
-          <html ${header.htmlAttributes.toString()}>
-            <head>
-              ${header.title.toString()}
-              ${header.meta.toString()}
-              ${header.link.toString()}
-            </head>
-            <body>
-              <div id="app">${componentHTML}</div>
-              <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-              <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
-            </body>
-          </html>
-        `);
-        })
-        .catch((err) => {
-          res.status(500).json(err);
-        });
+      // preRenderMiddleware(
+      //   store.dispatch,
+      //   props.components,
+      //   props.params
+      // )
+      //   .then(() => {
+      //     const initialState = store.getState();
+      //     const componentHTML = renderToString(
+      //       <Provider store={store}>
+      //         <RouterContext {...props} />
+      //       </Provider>
+      //     );
+      //
+      //     res.status(200).send(`
+      //     <!doctype html>
+      //     <html ${header.htmlAttributes.toString()}>
+      //       <head>
+      //         ${header.title.toString()}
+      //         ${header.meta.toString()}
+      //         ${header.link.toString()}
+      //       </head>
+      //       <body>
+      //         <div id="app">${componentHTML}</div>
+      //         <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
+      //         <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
+      //       </body>
+      //     </html>
+      //   `);
+      //   })
+      //   .catch((err) => {
+      //     res.status(500).json(err);
+      //   });
 
     } else {
       res.status(404).send('Not Found');
