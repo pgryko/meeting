@@ -27,8 +27,8 @@ export default React.createClass({
               <div className="nav-toggle"><span></span></div>
 
               <div className="toolbar">
-                <Link to="#" className="text-sm" data-toggle="modal" data-target="#loginModal">Sign up</Link>
-                <Link to="#" className="btn btn-sm btn-default btn-icon-right waves-effect waves-light"
+                <Link to="/login" className="text-sm" data-toggle="modal" data-target="#loginModal">Sign up</Link>
+                <Link to="/login" className="btn btn-sm btn-default btn-icon-right waves-effect waves-light"
                    data-toggle="modal" data-target="#loginModal">Log In <i className="icon-head" /></Link>
                 <SearchBar/>
                 {/*<!-- .search-btn -->*/}
