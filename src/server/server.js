@@ -1,4 +1,4 @@
-global.navigator = { navigator: 'all' };
+global.navigator = { navigator: 'all', userAgent: 'all' };
 
 import axios from 'axios';
 import compression from 'compression';

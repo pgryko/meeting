@@ -74,6 +74,7 @@ class LoginOrRegister extends Component {
     const { isWaiting, message, isLogin } = this.props.user;
 
     return (
+      <div>
     <MuiThemeProvider muiTheme={getMuiTheme(MeetingTheme)}>
       <div className={classNames('login', {
         waiting: isWaiting
@@ -83,7 +84,7 @@ class LoginOrRegister extends Component {
           <img className='loading' src="/img/hourglass.svg"/>
           <div className='email-container'>
             <form onSubmit={this.handleOnSubmit}>
-              <TextField 
+              <TextField
                      id="email"
                          type="email"
                      ref="email"
@@ -115,6 +116,7 @@ class LoginOrRegister extends Component {
         </div>
       </div>
     </MuiThemeProvider>
+        </div>
 
     );
   }
