@@ -10,7 +10,7 @@ import Contacts from '../container/Contacts';
 import Login from '../components/Login';
 import Logout from '../components/Logout';
 import Dashboard from '../container/DashBoard';
-
+import NoMatch from '../container/NoMatch'
 
 /*
  * @param {Redux Store}
@@ -53,7 +53,7 @@ export default (store) => {
       <Route path="logout" component={Logout} />
       {/*<Route path="dashboard" component={Dashboard} onEnter={requireAuth} /> */}
       <Route path="dashboard" component={Dashboard} />
-
+      <Route path="*" component={NoMatch}/>
       {/*<Route path="/meeting" component={Meeting} /> */}
     </Route>
   );
