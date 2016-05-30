@@ -11,7 +11,6 @@ import Login from '../components/Login';
 import Logout from '../components/Logout';
 import Dashboard from '../container/DashBoard';
 import NoMatch from '../container/NoMatch'
-
 /*
  * @param {Redux Store}
  * We require store as an argument here because we wish to get

@@ -1,3 +1,5 @@
+global.navigator = { navigator: 'all' };
+
 import axios from 'axios';
 import compression from 'compression';
 import express from 'express';
@@ -18,7 +20,6 @@ const clientConfig = {
 
 // configure baseURL for axios requests (for serverside API calls)
 axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
-
 
 const app = module.exports = express();
 

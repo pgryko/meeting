@@ -1,70 +1,29 @@
-/**
- * Created by pgryko on 29/04/16.
- */
 
-import React from 'react';
-import Dialog from 'material-ui/lib/dialog';
-import TextField from 'material-ui/lib/text-field';
-import FlatButton from 'material-ui/lib/flat-button';
+var React         = require('react');
+var InputElement  = require('./Input');
+var SubmitElement = require('./Submit');
 
-export default class Form extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {title: '', url: ''};
-  }
-
-  onTitleChange(value) {
-    this.setState({title: value});
-  }
-
-  onURLChange(value) {
-    this.setState({url: value});
-  }
-
-  handleSubmit() {
-    if (this.props.onSubmit) {
-      this.props.onSubmit(this.state.title, this.state.url);
-    }
-  }
-
-  render() {
-    var self = this;
-
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        secondary={true}
-        onTouchTap={() => this.props.onCancel()} />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={() => this.handleSubmit()} />,
-    ];
-
+var FormElement = React.createClass({
+  render: function() {
+    var props = this.props;
+    var inputNodes = props.inputs.map( function ( item, index  ) {
+      return <InputElement
+        key={index}
+        index={index}
+        item={item}
+        onChangeInputHandler={props.onChangeInputHandler} />;
+    });
     return (
-      <Dialog
-        title="Add item"
-        actions={actions}
-        open={this.props.open}
-        onRequestClose={() => this.props.onCancel()}>
-
-        <TextField
-          ref="title"
-          value={this.state.title}
-          onChange={() => { self.onTitleChange(self.refs.title.getValue()); }}
-          hintText="Title" />
-
-        <br />
-
-        <TextField
-          ref="url"
-          value={this.state.url}
-          onChange={() => { self.onURLChange(self.refs.url.getValue()); }}
-          hintText="URL" />
-
-      </Dialog>
+      <form className="form clearfix" onSubmit={this._onSubmit}>
+        {inputNodes}
+        <SubmitElement percent={this.props.percent}/>
+      </form>
     );
+  },
+  _onSubmit: function (e) {
+    e.preventDefault();
+    this.props.onSubmitFormHandler();
   }
-}
+});
+
+module.exports = FormElement;

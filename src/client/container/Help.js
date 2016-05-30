@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link,Route} from 'react-router'
 import PageTitle from '../components/PageTitle'
+import Footer from './Footer'
 
 class HelpItem extends React.Component {
 
@@ -115,6 +116,7 @@ export default React.createClass({
         <i className="icon-arrow-up"></i>
       </a>
       {/*<!-- .scroll-to-top-btn -->*/}
+      <Footer/>
     </div>
   }
 })

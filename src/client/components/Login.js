@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { manualLogin, signUp, toggleLoginMode } from '../actions/users';
 import classNames from 'classnames';
-
+import MeetingTheme from './MeetingTheme';
+import TextField from 'material-ui/TextField';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class LoginOrRegister extends Component {
   /*
@@ -14,7 +17,17 @@ class LoginOrRegister extends Component {
   constructor(props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.state = {email: '', password: ''};
   }
+
+  onEmailChange(value) {
+    this.setState({email: value});
+  }
+
+  onPasswordChange(value) {
+    this.setState({password: value});
+  }
+
 
   handleOnSubmit(event) {
     event.preventDefault();
@@ -61,6 +74,7 @@ class LoginOrRegister extends Component {
     const { isWaiting, message, isLogin } = this.props.user;
 
     return (
+    <MuiThemeProvider muiTheme={getMuiTheme(MeetingTheme)}>
       <div className={classNames('login', {
         waiting: isWaiting
       })}>
@@ -69,14 +83,18 @@ class LoginOrRegister extends Component {
           <img className='loading' src="/img/hourglass.svg"/>
           <div className='email-container'>
             <form onSubmit={this.handleOnSubmit}>
-              <input className='input'
-                     type="email"
+              <TextField 
+                     id="email"
+                         type="email"
                      ref="email"
-                     placeholder="email" />
-              <input className='input'
-                     type="password"
-                     ref="password"
-                     placeholder="password" />
+                         value={this.state.email}
+                         onChange={()=>{this.onEmailChange()}}/>
+              <TextField className='input'
+                         id="password"
+                         type="password"
+                      ref="password"
+                         value={this.state.password}
+              onChange={()=>{this.onPasswordChange()}}/>
               <div className='hint'>
                 <div>Hint</div>
                 <div>email: example@ninja.com password: ninja</div>
@@ -96,6 +114,8 @@ class LoginOrRegister extends Component {
           </div>
         </div>
       </div>
+    </MuiThemeProvider>
+
     );
   }
 }

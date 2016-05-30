@@ -1,4 +1,5 @@
 import React from 'react'
+import Footer from './Footer'
 
 
 var teamDetails = [
@@ -42,7 +43,7 @@ var teamDetails = [
 export default React.createClass({
 
   Teammate: function(person,index) {
-    
+
 
     return (
       <div key={person.name}>
@@ -110,16 +111,9 @@ export default React.createClass({
             {/*<!-- .col-md-10.col-md-offset-1 -->*/}
           </div>
           {/*<!-- .row -->*/}
-          <p>Its that last part that is hard to bridge for a lot of engineers.
-            The thing that did it for me was sitting through a LOT of formal usability studies.
-            Seeing folks actually use an application you made, where they make mistakes, get stuck,
-            will change your relationship with your code. Even if you work purely on the back end building APIs,
-            you have customers (other developers in this case).
-            Focus on the what the code does, and why someone would use it,
-            care about your customer... the how only matters to your fellow engineer,
-            and if it is that bad they are going to give you grief for it and you can fix it.</p>
         </section>
         {/*<!-- .container --> */}
+        <Footer/>
       </div>
 
     )
