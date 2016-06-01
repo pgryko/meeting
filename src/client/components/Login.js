@@ -22,6 +22,7 @@ class LoginOrRegister extends Component {
     const email = ReactDOM.findDOMNode(this.refs.email).value;
     const password = ReactDOM.findDOMNode(this.refs.password).value;
 
+
     if (isLogin) {
       manualLogin({ email, password });
     } else {
@@ -65,7 +66,7 @@ class LoginOrRegister extends Component {
       })}>
         <div className='container'>
           { this.renderHeader() }
-          <img className='loading' src="/img/hourglass.svg" />
+          <img className='loading' />
           <div className='email-container'>
             <form onSubmit={this.handleOnSubmit}>
               <input className='input'

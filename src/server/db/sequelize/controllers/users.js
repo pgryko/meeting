@@ -37,6 +37,8 @@ export function logout(req, res) {
  * Create a new local account
  */
 export function signUp(req, res, next) {
+  console.log("Email is ");
+  console.log(req.body.email);
   User.findOne({ where: { email: req.body.email } }).then((existingUser) => {
     if (existingUser) {
       return res.status(409).json({ message: 'Account with this email address already exists!' });

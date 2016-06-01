@@ -11,6 +11,9 @@ import createRoutes from '../client/routes/Routes';
 import configureStore from '../client/store/configureStore';
 // import preRenderMiddleware from '../client/middlewares/preRenderMiddleware';
 import { ENV } from './config/appConfig';
+import passportConfig from './config/passport';
+import expressConfig from './config/express';
+import routesConfig from './config/routes';
 import { connect } from './db';
 
 const clientConfig = {
@@ -37,9 +40,10 @@ if (ENV === 'development') {
 console.log("Server running in development mode")
 }
 
+routesConfig(app);
+expressConfig(app);
+passportConfig();
 
-// serve our static stuff like index.css
-app.use(express.static('build/client'));
 
 function renderPage(appHtml) {
   return `
