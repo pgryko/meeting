@@ -1,32 +1,15 @@
-global.navigator = { navigator: 'all', userAgent: 'all' };
-
-import axios from 'axios';
-import compression from 'compression';
 import express from 'express';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { match, RouterContext, createMemoryHistory } from 'react-router';
-import { Provider } from 'react-redux';
-import createRoutes from '../client/routes/Routes';
-import configureStore from '../client/store/configureStore';
-// import preRenderMiddleware from '../client/middlewares/preRenderMiddleware';
 import { ENV } from './config/appConfig';
+import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
-import { connect } from './db';
+const App = require('../client/server');
+const app = express();
 
-const clientConfig = {
-  host: process.env.HOSTNAME || 'localhost',
-  port: process.env.PORT || '8090'
-};
-
-// configure baseURL for axios requests (for serverside API calls)
-axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
-
-const app = module.exports = express();
-
-app.use(compression());
+/*
+Server with api endpoints
+*/
 
 /*
  * Database-specific setup
@@ -35,101 +18,30 @@ app.use(compression());
  */
 connect();
 
-
-if (ENV === 'development') {
-console.log("Server running in development mode")
-}
-
-routesConfig(app);
-expressConfig(app);
+/*
+ * REMOVE if you do not need passport configuration
+ */
 passportConfig();
 
 
-function renderPage(appHtml) {
-  return `
-    <!doctype html public="storage">
-    <html>
-    <meta charset=utf-8/>
-    <title>Unipart Digital Comm Cell</title>
-    <link rel=stylesheet href=/css/index.css>
-    <link rel="icon" href="/img/favicon.ico?v=2" />
+/*
+ * Bootstrap application settings
+ */
+expressConfig(app);
 
-    <div id=app>${appHtml}</div>
-    <script src="/bundle.js"></script>
-   `;
-}
+/*
+ * REMOVE if you do not need any routes
+ *
+ * Note: Some of these routes have passport and database model dependencies
+ */
+routesConfig(app);
 
-// send all requests to index.html so browserHistory works
-app.get('*', (req, res) => {
+/*
+ * This is where the magic happens. We take the locals data we have already
+ * fetched and seed our stores with data.
+ * App is a function that requires store data and url
+ * to initialize and return the React-rendered html string
+ */
+app.get('*', App.default);
 
-  const authenticated = req.isAuthenticated();
-  const history = createMemoryHistory();
-  const store = configureStore({
-    user: {
-      authenticated,
-      isWaiting: false,
-      message: '',
-      isLogin: true
-    }
-  }, history);
-  const routes = createRoutes(store);
-
-  match({ routes, location: req.url }, (err, redirect, props) => {
-    if (err) {
-      res.status(500).send(err.message);
-    } else if (redirect) {
-      res.redirect(redirect.pathname + redirect.search);
-    } else if (props) {
-      // hey we made it!
-      const appHtml = renderToString(
-        <Provider store={store}>
-        <RouterContext {...props}/>
-        </Provider>
-      );
-      res.send(renderPage(appHtml));
-
-      // This method waits for all render component
-      // promises to resolve before returning to browser
-      // preRenderMiddleware(
-      //   store.dispatch,
-      //   props.components,
-      //   props.params
-      // )
-      //   .then(() => {
-      //     const initialState = store.getState();
-      //     const componentHTML = renderToString(
-      //       <Provider store={store}>
-      //         <RouterContext {...props} />
-      //       </Provider>
-      //     );
-      //
-      //     res.status(200).send(`
-      //     <!doctype html>
-      //     <html ${header.htmlAttributes.toString()}>
-      //       <head>
-      //         ${header.title.toString()}
-      //         ${header.meta.toString()}
-      //         ${header.link.toString()}
-      //       </head>
-      //       <body>
-      //         <div id="app">${componentHTML}</div>
-      //         <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-      //         <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
-      //       </body>
-      //     </html>
-      //   `);
-      //   })
-      //   .catch((err) => {
-      //     res.status(500).json(err);
-      //   });
-
-    } else {
-      res.status(404).send('Not Found here');
-    }
-  });
-});
-
-
-app.listen(clientConfig.port, function () {
-  console.log('Express server running at localhost:' + clientConfig.port);
-});
+app.listen(app.get('port'));
