@@ -7,7 +7,7 @@ import Features from '../container/Features';
 import Help from '../container/Help';
 import HelpTopic from '../container/HelpTopic';
 import Contacts from '../container/Contacts';
-import Login from '../components/Login';
+import Login from '../components/LoginOrRegister';
 import Dashboard from '../container/DashBoard';
 import NoMatch from '../container/NoMatch'
 /*
