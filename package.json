@@ -8,6 +8,9 @@
   },
   "dependencies": {
     "axios": "^0.11.1",
+    "babel": "^6.5.2",
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.1",
     "babel-plugin-transform-class-properties": "^6.6.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
@@ -112,6 +115,7 @@
     "build:watch": "parallelshell 'npm run watch:client:dev' 'npm run watch:server:dev'",
     "clean": "rm -r build/*",
     "coverage": "babel-node node_modules/.bin/babel-istanbul cover _mocha -- --timeout 30000 test/**/*.spec.js",
+    "compile": "cross-env NODE_ENV=production npm run babel --presets es2015,stage-0 --ignore node_modules,public -- ./src/server -d ./compiled",
     "start": "parallelshell 'npm run watch:client:dev' 'npm run watch:server:dev' 'cross-env NODE_ENV=development nodemon build/server.bundle.js' ",
     "deploy": "ansible-playbook meeting.yml --ask-become-pass",
     "prod": "npm run build:prod && node build/server.bundle.js",

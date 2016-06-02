@@ -4,7 +4,7 @@ A meeting board with WebRTC integration
 #Installation instructions
 
 Install nodejs v6 from
-https://deb.nodesource.com/setup_6.x
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 
 npm install
 
