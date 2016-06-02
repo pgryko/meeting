@@ -8,7 +8,6 @@ import Help from '../container/Help';
 import HelpTopic from '../container/HelpTopic';
 import Contacts from '../container/Contacts';
 import Login from '../components/Login';
-import Logout from '../components/Logout';
 import Dashboard from '../container/DashBoard';
 import NoMatch from '../container/NoMatch'
 /*
@@ -49,9 +48,8 @@ export default (store) => {
       <Route path="about" component={About}/>
       <Route path="contacts" component={Contacts}/>
       <Route path="login" component={Login} />
-      <Route path="logout" component={Logout} />
       {/*<Route path="dashboard" component={Dashboard} onEnter={requireAuth} /> */}
-      <Route path="dashboard" component={Dashboard} />
+      <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="*" component={NoMatch}/>
       {/*<Route path="/meeting" component={Meeting} /> */}
     </Route>
