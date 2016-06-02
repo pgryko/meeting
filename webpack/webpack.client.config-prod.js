@@ -4,6 +4,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin'); //Currently used to copy static assets such as css and images. At a later stage CSS should be optimised durring build
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webpack-plugin');
+
 
 const sassLoaders = [
   'css-loader',
@@ -18,6 +20,9 @@ const sassLoaders = [
 module.exports = {
   entry: './src/client/index.js',
 
+  // A SourceMap is emitted.
+  devtool: "source-map",
+
   output: {
     path: path.join(__dirname, '..', 'build', 'client'),
     filename: 'bundle.js',
@@ -26,11 +31,6 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env':{
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({
@@ -45,7 +45,12 @@ module.exports = {
     ]),
     new ExtractTextPlugin('css/index.css', {
     allChunks: true
-    })
+    }),
+    new webpack.DefinePlugin({
+      __DEVCLIENT__: false,
+      __DEVSERVER__: false
+    }),
+    new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
   ],
   postcss: [
   autoprefixer({

@@ -1,5 +1,7 @@
 var fs = require('fs');
 var path = require('path');
+var webpack = require("webpack");
+var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webpack-plugin');
 
 /*
  Webpack Production configuration file for server
@@ -35,6 +37,22 @@ module.exports = {
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0' }
     ]
-  }
+  },
+  plugins: [
+    // Order the modules and chunks by occurrence.
+    // This saves space, because often referenced modules
+    // and chunks get smaller ids.
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      __DEVCLIENT__: false,
+      __DEVSERVER__: false
+    }),
+    new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
+  ]
 
 };

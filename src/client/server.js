@@ -3,10 +3,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
-import createRoutes from 'routes';
-import configureStore from 'store/configureStore';
-import preRenderMiddleware from 'middlewares/preRenderMiddleware';
-import header from 'components/Meta';
+import createRoutes from './routes/Routes';
+import configureStore from './store/configureStore';
+import preRenderMiddleware from './middlewares/preRenderMiddleware';
+import header from './components/Meta';
 /*
   Server for serving isomorphic react client
 

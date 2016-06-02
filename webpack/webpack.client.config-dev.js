@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin'); //Currently used to copy static assets such as css and images. At a later stage CSS should be optimised durring build
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webpack-plugin');
 
 /*
   Webpack Development configuration file for client
@@ -24,6 +25,8 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  // A SourceMap is emitted.
+  devtool: "source-map",
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -39,6 +42,10 @@ module.exports = {
     ]),
     new ExtractTextPlugin('css/index.css', {
       allChunks: true
+    }),
+    new webpack.DefinePlugin({
+      __DEVCLIENT__: true,
+      __DEVSERVER__: false
     })
   ],
   postcss: [

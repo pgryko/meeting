@@ -1,5 +1,7 @@
 var fs = require('fs');
 var path = require('path');
+var webpack = require('webpack');
+
 
 /*
  Webpack Development configuration file for server
@@ -51,6 +53,12 @@ module.exports = {
       { test: /\.html$/, loader: 'html-loader' }
 
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __DEVCLIENT__: false,
+      __DEVSERVER__: true
+    })
+  ]
 
 };
