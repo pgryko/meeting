@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import createRoutes from './routes/Routes';
 import configureStore from './store/configureStore';
 import preRenderMiddleware from './middlewares/preRenderMiddleware';
-import header from './components/Meta';
+// import header from './components/Meta';
 /*
   Server for serving isomorphic react client
 

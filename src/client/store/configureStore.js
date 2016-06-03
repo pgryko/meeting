@@ -17,9 +17,9 @@ export default function configureStore(initialState, history) {
   // const middleware = [thunk, promiseMiddleware, routerMiddleware(history)];
   const middleware = [thunk, routerMiddleware(history)];
 
-  // if (__DEVCLIENT__) {
+  if (__DEVCLIENT__) {
     middleware.push(createLogger());
-  // }
+  }
 
   const store = createStore(rootReducer, initialState, compose(
     applyMiddleware(...middleware),

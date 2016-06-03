@@ -5,7 +5,6 @@ import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
 import path from 'path';
-import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
 
 

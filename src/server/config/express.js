@@ -2,7 +2,6 @@ import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-import path from 'path';
 import flash from 'express-flash';
 import methodOverride from 'method-override';
 import unsupportedMessage from '../db/unsupportedMessage';
@@ -94,5 +93,5 @@ export default (app) => {
   app.use(passport.session());
 
   app.use(flash());
-  
+
 };
