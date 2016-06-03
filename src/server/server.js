@@ -1,10 +1,11 @@
+import path from 'path';
 import express from 'express';
 import { ENV } from './config/appConfig';
 import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
-const App = require('../client/server');
+// const App = require('../client/server');
 const app = express();
 
 /*
@@ -36,12 +37,15 @@ expressConfig(app);
  */
 routesConfig(app);
 
+// // send all requests to index.html so browserHistory in React Router works
+// app.get('*', function (req, res) {
+//   res.sendFile(path.resolve(__dirname, '../build/client/index.html'))
+// });
 /*
  * This is where the magic happens. We take the locals data we have already
  * fetched and seed our stores with data.
  * App is a function that requires store data and url
  * to initialize and return the React-rendered html string
  */
-app.get('*', App.default);
 
 app.listen(app.get('port'));

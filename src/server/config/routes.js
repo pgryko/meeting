@@ -4,9 +4,27 @@
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
+import path from 'path';
+import { match, RouterContext } from 'react-router';
+import { renderToString } from 'react-dom/server';
+
 
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
+
+function renderPage(appHtml) {
+  return `
+    <!doctype html public="storage">
+    <html>
+    <meta charset=utf-8/>
+    <title>Unipart Digital Comm Cell</title>
+    <link rel=stylesheet href=/css/index.css>
+    <link rel="icon" href="/img/favicon.ico?v=2" />
+
+    <div id=app>${appHtml}</div>
+    <script src="/bundle.js"></script>
+   `;
+}
 
 export default (app) => {
   // user routes
@@ -52,4 +70,27 @@ export default (app) => {
   } else {
     console.warn(unsupportedMessage('topics routes'));
   }
+
+  // send all requests to index.html so browserHistory in React Router works
+  app.get('*', function (req, res) {
+    res.sendFile(path.resolve(__dirname, '../../build/client/index.html'))
+  });
+  //
+  // console.log("Requests not matched");
+  // // send all requests to index.html so browserHistory works
+  // app.get('*', (req, res) => {
+  //   match({ routes, location: req.url }, (err, redirect, props) => {
+  //     if (err) {
+  //       res.status(500).send(err.message);
+  //     } else if (redirect) {
+  //       res.redirect(redirect.pathname + redirect.search);
+  //     } else if (props) {
+  //       // hey we made it!
+  //       const appHtml = renderToString(<RouterContext {...props} />);
+  //       res.send(renderPage(appHtml));
+  //     } else {
+  //       res.status(404).send('Not Found');
+  //     }
+  //   });
+  // });
 };
