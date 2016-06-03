@@ -8,14 +8,20 @@ import unsupportedMessage from '../db/unsupportedMessage';
 import { sessionSecret } from './secrets';
 import { DB_TYPE, ENV } from './appConfig';
 import { session as dbSession } from '../db';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
 
 export default (app) => {
   app.set('port', (process.env.PORT || 8090));
+
 
   // X-Powered-By header has no functional value.
   // Keeping it makes it easier for an attacker to build the site's profile
   // It can be removed safely
   app.disable('x-powered-by');
+
+  //Enable compression
+  app.use(compression());
 // serve our static stuff like index.css
   app.use(express.static('build/client'));
 
@@ -24,7 +30,6 @@ export default (app) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
   app.use(methodOverride());
-  // app.use(express.static(path.join(__dirname, '../..', 'public')));
 
   // I am adding this here so that the Heroku deploy will work
   // Indicates the app is behind a front-facing proxy,
@@ -36,7 +41,8 @@ export default (app) => {
   // To enable it, use the values described in the trust proxy options table.
   // The trust proxy setting is implemented using the proxy-addr package. For more information, see its documentation.
   // loopback - 127.0.0.1/8, ::1/128
-  app.set('trust proxy', 'loopback');
+  // app.set('trust proxy', 'loopback');
+
   // Create a session middleware with the given options
   // Note session data is not saved in the cookie itself, just the session ID. Session data is stored server-side.
   // Options: resave: forces the session to be saved back to the session store, even if the session was never
@@ -86,6 +92,8 @@ export default (app) => {
     sess.cookie.secure = true; // Serve secure cookies
   }
   console.log('--------------------------');
+
+   app.use(cookieParser());
 
   app.use(session(sess));
 
