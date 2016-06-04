@@ -10,8 +10,6 @@ import { DB_TYPE, ENV } from './appConfig';
 import { session as dbSession } from '../db';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import csrf from 'csurf';
-import csrfUtil from '../middlewares/csrfToken';
 
 export default (app) => {
   app.set('port', (process.env.PORT || 8090));
@@ -33,8 +31,6 @@ export default (app) => {
   app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
   //Add csrf token to our session
-  // app.use(csrf());
-  // app.use(csrfUtil.csrf);
 
   //Csrf token needs to be added to client side post
   //https://auth0.com/blog/2016/01/04/secure-your-react-and-redux-app-with-jwt-authentication/

@@ -1,7 +1,7 @@
 import expect from 'expect';
 import md5 from 'spark-md5';
-import reducer from 'reducers/room';
-import * as types from 'types';
+import reducer from '../../reducers/room';
+import * as types from '../../types';
 
 describe('Rooms reducer', () => {
   const s = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

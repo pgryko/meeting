@@ -7,7 +7,7 @@ import {
   DECREMENT_COUNT,
   GET_ROOMS_REQUEST,
   GET_ROOMS_SUCCESS,
-  GET_ROOMS_FAILURE } from 'types';
+  GET_ROOMS_FAILURE } from '../types';
 
 
 export default function room(state = {

@@ -1,9 +1,9 @@
-import topics from './rooms';
+import rooms from './rooms';
 import users from './users';
 
-export { topics, users };
+export { rooms, users };
 
 export default {
-  topics,
+  rooms,
   users
 };
