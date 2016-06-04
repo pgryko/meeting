@@ -11,20 +11,6 @@ import { renderToString } from 'react-dom/server';
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
 
-function renderPage(appHtml) {
-  return `
-    <!doctype html public="storage">
-    <html>
-    <meta charset=utf-8/>
-    <title>Unipart Digital Comm Cell</title>
-    <link rel=stylesheet href=/css/index.css>
-    <link rel="icon" href="/img/favicon.ico?v=2" />
-
-    <div id=app>${appHtml}</div>
-    <script src="/bundle.js"></script>
-   `;
-}
-
 export default (app) => {
   // user routes
   if (usersController) {

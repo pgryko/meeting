@@ -1,0 +1,6 @@
+{
+  "name": "Meeting application",
+  "description": "Meeting application developed for the Unipart Comm Cell",
+  "repository": "https://github.com/pgryko/meeting",
+  "keywords": ["node", "express", "static", "react", "webpack", "mongodb"],
+}
