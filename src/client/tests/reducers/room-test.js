@@ -1,30 +1,30 @@
 import expect from 'expect';
 import md5 from 'spark-md5';
-import reducer from 'reducers/topic';
+import reducer from 'reducers/room';
 import * as types from 'types';
 
-describe('Topics reducer', () => {
+describe('Rooms reducer', () => {
   const s = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-  function createTopic() {
+  function createRoom() {
     return Array(5).join().split(',').map(() => {
       return s.charAt(Math.floor(Math.random() * s.length));
     }).join('');
   }
 
-  const topic = createTopic();
+  const room = createRoom();
 
   function createData() {
     return {
-      text: createTopic(),
-      id: md5.hash(createTopic()),
+      text: createRoom(),
+      id: md5.hash(createRoom()),
       count: Math.floor(Math.random() * 100)
     };
   }
 
   const data = createData();
 
-  function createTopics(x) {
+  function createRooms(x) {
     const arr = [];
     for (let i = 0; i < x; i++) {
       arr.push(createData());
@@ -37,29 +37,29 @@ describe('Topics reducer', () => {
       reducer(undefined, {})
     ).toEqual(
       {
-        topics: [],
-        newTopic: ''
+        rooms: [],
+        newRoom: ''
       }
     );
   });
 
-  it('Should add a new topic to an empty initial state', () => {
+  it('Should add a new room to an empty initial state', () => {
     expect(
       reducer(undefined, {
-        type: types.CREATE_TOPIC_REQUEST,
+        type: types.CREATE_ROOM_REQUEST,
         id: data.id,
         count: 1,
-        text: topic
+        text: room
       })
     ).toEqual({
-        topics: [
+        rooms: [
           {
             id: data.id,
             count: 1,
-            text: topic
+            text: room
           }
         ],
-        newTopic: ''
+        newRoom: ''
     });
   });
 
@@ -67,157 +67,157 @@ describe('Topics reducer', () => {
     expect(
       reducer(undefined, {
         type: types.TYPING,
-        newTopic: topic
+        newRoom: room
       })
     ).toEqual({
-        topics: [],
-        newTopic: topic
+        rooms: [],
+        newRoom: room
     });
   });
 
-  it('Should handle GET_TOPICS_REQUEST', () => {
+  it('Should handle GET_ROOMS_REQUEST', () => {
     expect(
       reducer(undefined, {
-        type: types.GET_TOPICS_REQUEST
+        type: types.GET_ROOMS_REQUEST
       })
     ).toEqual({
         isFetching: true,
-        topics: [],
-        newTopic: ''
+        rooms: [],
+        newRoom: ''
     });
   });
 
-  it('Should handle GET_TOPICS_SUCCESS', () => {
+  it('Should handle GET_ROOMS_SUCCESS', () => {
     expect(
       reducer(undefined, {
-        type: types.GET_TOPICS_SUCCESS,
+        type: types.GET_ROOMS_SUCCESS,
         req: {
-          data: topic
+          data: room
         }
       })
     ).toEqual({
         isFetching: false,
-        topics: topic,
-        newTopic: ''
+        rooms: room,
+        newRoom: ''
     });
   });
 
-  it('Should handle GET_TOPICS_FAILURE', () => {
+  it('Should handle GET_ROOMS_FAILURE', () => {
     expect(
       reducer(undefined, {
-        type: types.GET_TOPICS_FAILURE,
+        type: types.GET_ROOMS_FAILURE,
         error: 'Error',
         id: data.id
       })
     ).toEqual({
-        topics: [],
-        newTopic: '',
+        rooms: [],
+        newRoom: '',
         error: 'Error',
         isFetching: false
     });
   });
 
-  it('Should handle CREATE_TOPIC_REQUEST', () => {
-    const topics = createTopics(20);
-    const newTopics = [...topics, data];
+  it('Should handle CREATE_ROOM_REQUEST', () => {
+    const rooms = createRooms(20);
+    const newRooms = [...rooms, data];
     expect(
       reducer({
-        topics
+        rooms
       },
       {
-        type: types.CREATE_TOPIC_REQUEST,
+        type: types.CREATE_ROOM_REQUEST,
         id: data.id,
         count: data.count,
         text: data.text
 
       })
     ).toEqual({
-        newTopic: '',
-        topics: newTopics
+        newRoom: '',
+        rooms: newRooms
     });
   });
 
-  it('should handle CREATE_TOPIC_FAILURE', () => {
-    const topics = createTopics(20);
-    topics.push(data);
-    const newTopics = [...topics];
+  it('should handle CREATE_ROOM_FAILURE', () => {
+    const rooms = createRooms(20);
+    rooms.push(data);
+    const newRooms = [...rooms];
     expect(
       reducer({
-        topics,
-        newTopic: topic
+        rooms,
+        newRoom: room
       },
       {
-        type: types.CREATE_TOPIC_FAILURE,
+        type: types.CREATE_ROOM_FAILURE,
         id: data.id
       })
     ).toEqual({
-        topics: newTopics.pop() && newTopics,
-        newTopic: topic
+        rooms: newRooms.pop() && newRooms,
+        newRoom: room
     });
   });
 
-  it('should handle DESTROY_TOPIC', () => {
-    const topics = createTopics(20);
-    topics.push(data);
-    const newTopics = [...topics];
+  it('should handle DESTROY_ROOM', () => {
+    const rooms = createRooms(20);
+    rooms.push(data);
+    const newRooms = [...rooms];
     expect(
       reducer({
-        topics,
-        newTopic: topic
+        rooms,
+        newRoom: room
       },
       {
-        type: types.DESTROY_TOPIC,
-        index: topics.length - 1
+        type: types.DESTROY_ROOM,
+        index: rooms.length - 1
       })
     ).toEqual({
-        topics: newTopics.pop() && newTopics,
-        newTopic: topic
+        rooms: newRooms.pop() && newRooms,
+        newRoom: room
     });
   });
 
   it('should handle INCREMENT_COUNT', () => {
-    const topics = createTopics(20);
-    const newTopics = [...topics];
-    topics.push(data);
+    const rooms = createRooms(20);
+    const newRooms = [...rooms];
+    rooms.push(data);
     const newData = Object.assign({}, data);
     newData.count++;
-    newTopics.push(newData);
+    newRooms.push(newData);
 
     expect(
       reducer({
-        topics,
-        newTopic: topic
+        rooms,
+        newRoom: room
       },
       {
         type: types.INCREMENT_COUNT,
-        index: topics.length - 1,
+        index: rooms.length - 1,
       })
     ).toEqual({
-        topics: newTopics,
-        newTopic: topic
+        rooms: newRooms,
+        newRoom: room
     });
   });
 
   it('should handle DECREMENT_COUNT', () => {
-    const topics = createTopics(20);
-    const newTopics = [...topics];
-    topics.push(data);
+    const rooms = createRooms(20);
+    const newRooms = [...rooms];
+    rooms.push(data);
     const newData = Object.assign({}, data);
     newData.count--;
-    newTopics.push(newData);
+    newRooms.push(newData);
 
     expect(
       reducer({
-        topics,
-        newTopic: topic
+        rooms,
+        newRoom: room
       },
       {
         type: types.DECREMENT_COUNT,
-        index: topics.length - 1
+        index: rooms.length - 1
       })
     ).toEqual({
-        topics: newTopics,
-        newTopic: topic
+        rooms: newRooms,
+        newRoom: room
     });
   });
 });

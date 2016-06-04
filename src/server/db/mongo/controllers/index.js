@@ -1,4 +1,4 @@
-import topics from './topics';
+import topics from './rooms';
 import users from './users';
 
 export { topics, users };

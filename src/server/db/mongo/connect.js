@@ -22,7 +22,7 @@ export default () => {
 
   // Register schema as mongoose model
 
-  require('./models/topics');
+  require('./models/rooms');
   require('./models/user');
 
   // const modelPath = path.join(__dirname, 'models');

@@ -9,7 +9,7 @@ import { renderToString } from 'react-dom/server';
 
 
 const usersController = controllers && controllers.users;
-const topicsController = controllers && controllers.topics;
+const roomsController = controllers && controllers.rooms;
 
 export default (app) => {
   // user routes
@@ -46,14 +46,14 @@ export default (app) => {
     );
   }
 
-  // topic routes
-  if (topicsController) {
-    app.get('/topic', topicsController.all);
-    app.post('/topic/:id', topicsController.add);
-    app.put('/topic/:id', topicsController.update);
-    app.delete('/topic/:id', topicsController.remove);
+  // room routes
+  if (roomsController) {
+    app.get('/room', roomsController.all);
+    app.post('/room/:id', roomsController.add);
+    app.put('/room/:id', roomsController.update);
+    app.delete('/room/:id', roomsController.remove);
   } else {
-    console.warn(unsupportedMessage('topics routes'));
+    console.warn(unsupportedMessage('rooms routes'));
   }
 
   // send all requests to index.html so browserHistory in React Router works
