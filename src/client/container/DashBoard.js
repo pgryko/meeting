@@ -1,6 +1,8 @@
-import React from 'react'
-import axios from 'axios'
-// import auth from '../utils/auth'
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { createRoom, typing, incrementCount,
+  decrementCount, destroyRoom, fetchRooms } from '../actions/rooms';
+import ListRooms from '../components/ListRooms';
 
 class DashBoardItem extends React.Component {
   render() {
@@ -14,36 +16,16 @@ class DashBoardItem extends React.Component {
       </div>;
   }
 }
-/*
-
-Note to self, ideally we wil want to retrieve a list of dashboard items and pass them onto components,
-something along these lines
-
-** A key is required for generating dom from loops**
-
- createListItem: function(user) {
-   return (
-     <li key={user.id}>
-      <Link to="{'/users/' + user.id}">{user.name}</Link>
-     </li>
-   );
-   }
- });
-
- class DashBoardList extends React.Component{
-   render: function() {
-   return (
-     <ul className="user-list">
-     {this.props.users.map(this.createListItem)}
-     </ul>
-   );
- }
- };
-
- */
 
 
 export default class DashBoard extends React.Component{
+
+
+  //Data that needs to be called before rendering the component
+  //This is used for server side rending via the fetchComponentDataBeforeRender() method
+  static need = [  // eslint-disable-line
+    fetchRooms
+  ];
 
   constructor(props){
     super(props);
@@ -53,23 +35,12 @@ export default class DashBoard extends React.Component{
     }
   }
 
-  // loadCommentsFromServer() {
-  //   axios.get('/path/to/user-api').then( response => {
-  //     this.setState({dashboards: response.data})
-  //   });
-  // }
-
-
-
-  // componentDidMount() {
-  //   this.loadCommentsFromServer();
-  //   setInterval(this.loadCommentsFromServer.bind(this), this.state.pollInterval);
-  // }
-
 
   render() {
     // const token = auth.getToken();
     const token = "Our latest works";
+
+    const {newRoom, rooms, typing, createRoom, destroyRoom, incrementCount, decrementCount } = this.props;
 
     return (
       <div>
@@ -79,6 +50,17 @@ export default class DashBoard extends React.Component{
             Dashboard
             <small>{token}</small>
           </h2>
+          {/*
+          <EntryBox room={newRoom}
+                    onEntryChange={typing}
+                    onEntrySave={createRoom} />
+
+          <ListRooms rooms={rooms}
+                       onIncrement={incrementCount}
+                       onDecrement={decrementCount}
+                       onDestroy={destroyRoom} />
+                       /*}
+
 
           {/*<!-- Filters --> */}
           <div className="text-center padding-top">
@@ -117,3 +99,53 @@ export default class DashBoard extends React.Component{
     )
   }
 }
+
+DashBoard.propTypes = {
+  rooms: PropTypes.array.isRequired,
+  typing: PropTypes.func.isRequired,
+  createRoom: PropTypes.func.isRequired,
+  destroyRoom: PropTypes.func.isRequired,
+  incrementCount: PropTypes.func.isRequired,
+  decrementCount: PropTypes.func.isRequired,
+  newRoom: PropTypes.string
+};
+
+function mapStateToProps(state) {
+  return {
+    rooms: state.rooms.rooms,
+    newRoom: state.room.newRoom
+  };
+}
+
+// Read more about where to place `connect` here:
+// https://github.com/rackt/react-redux/issues/75#issuecomment-135436563
+export default connect(mapStateToProps, { createRoom, typing, incrementCount, decrementCount, destroyRoom })(DashBoard);
+
+
+/*
+
+ Note to self, ideally we wil want to retrieve a list of dashboard items and pass them onto components,
+ something along these lines
+
+ ** A key is required for generating dom from loops**
+
+ createListItem: function(user) {
+ return (
+ <li key={user.id}>
+ <Link to="{'/users/' + user.id}">{user.name}</Link>
+ </li>
+ );
+ }
+ });
+
+ class DashBoardList extends React.Component{
+ render: function() {
+ return (
+ <ul className="user-list">
+ {this.props.users.map(this.createListItem)}
+ </ul>
+ );
+ }
+ };
+
+ */

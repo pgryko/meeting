@@ -25,8 +25,6 @@ export default (app) => {
 // serve our static stuff like index.css
   app.use(express.static('build/client'));
 
-  app.set('view cache', false);
-
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
