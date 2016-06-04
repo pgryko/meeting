@@ -18,7 +18,7 @@ class DashBoardItem extends React.Component {
 }
 
 
-export default class DashBoard extends React.Component{
+class DashBoard extends React.Component{
 
 
   //Data that needs to be called before rendering the component
@@ -112,7 +112,7 @@ DashBoard.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    rooms: state.rooms.rooms,
+    rooms: state.room.rooms,
     newRoom: state.room.newRoom
   };
 }
