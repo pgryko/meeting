@@ -137,7 +137,7 @@ export function incrementCount(id, index) {
       isIncrement: true
     })
       .then(() => dispatch(increment(index)))
-      .catch(() => dispatch(createRoomFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
+      .catch(() => dispatch(createRoomFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your room'})));
   };
 }
 
@@ -148,7 +148,7 @@ export function decrementCount(id, index) {
       isIncrement: false
     })
       .then(() => dispatch(decrement(index)))
-      .catch(() => dispatch(createRoomFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
+      .catch(() => dispatch(createRoomFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your room'})));
   };
 }
 
@@ -157,6 +157,6 @@ export function destroyRoom(id, index) {
     return makeRoomRequest('delete', id)
       .then(() => dispatch(destroy(index)))
       .catch(() => dispatch(createRoomFailure({id,
-        error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
+        error: 'Oops! Something went wrong and we couldn\'t add your room'})));
   };
 }
