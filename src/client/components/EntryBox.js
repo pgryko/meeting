@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import TopicTextInput from 'components/RoomTextInput';
+import TopicTextInput from './RoomTextInput';
 
 
 // Takes callback functions from props and passes it down to TopicTextInput
@@ -10,7 +10,7 @@ import TopicTextInput from 'components/RoomTextInput';
 const EntryBox = ({onEntryChange, onEntrySave, room}) => {
   return (
     <div className={'entrybox'}>
-      <h1 className={'header'}>Vote for your top hack idea</h1>
+      <h1 className={'header'}></h1>
       <TopicTextInput
         className={'input'}
         value={room}

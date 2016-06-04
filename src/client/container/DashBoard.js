@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createRoom, typing, incrementCount,
   decrementCount, destroyRoom, fetchRooms } from '../actions/rooms';
 import ListRooms from '../components/ListRooms';
+import EntryBox from '../components/EntryBox'
 
 class DashBoardItem extends React.Component {
   render() {
@@ -50,7 +51,6 @@ class DashBoard extends React.Component{
             Dashboard
             <small>{token}</small>
           </h2>
-          {/*
           <EntryBox room={newRoom}
                     onEntryChange={typing}
                     onEntrySave={createRoom} />
@@ -59,7 +59,6 @@ class DashBoard extends React.Component{
                        onIncrement={incrementCount}
                        onDecrement={decrementCount}
                        onDestroy={destroyRoom} />
-                       /*}
 
 
           {/*<!-- Filters --> */}
