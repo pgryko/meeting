@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import './static/sass/styles.scss';
 import createRoutes from './routes/Routes';
@@ -29,7 +31,9 @@ injectTapEventPlugin();
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 render(
   <Provider store={store}>
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Router history={history}>
       {routes}
     </Router>
+    </MuiThemeProvider>
   </Provider>, document.getElementById('app'));

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import TopicTextInput from './RoomTextInput';
+import TextInput from './TextInput';
 
 
 // Takes callback functions from props and passes it down to TopicTextInput
@@ -9,14 +9,13 @@ import TopicTextInput from './RoomTextInput';
 // 2. Move TopicTextInput up to EntryBox so it's less confusing
 const EntryBox = ({onEntryChange, onEntrySave, room}) => {
   return (
-    <div className={'entrybox'}>
-      <h1 className={'header'}></h1>
-      <TopicTextInput
-        className={'input'}
+    <div className={'help-search'}>
+      <TextInput
         value={room}
-        placeholder="Create A Comm Cell meeting room"
+        placeholder="Add a meeting room"
         onEntryChange={onEntryChange}
-        onEntrySave={onEntrySave} />
+        onEntrySave={onEntrySave}
+        />
     </div>
   );
 };

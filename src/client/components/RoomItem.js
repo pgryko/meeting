@@ -28,18 +28,17 @@ export default class RoomItem extends Component {
 
   render() {
     return (
-      <li className={'room-item'} key={this.props.id}>
-        <span className={'room'}>{this.props.text}</span>
-        <button className={
-          cx('button', 'increment')
-        } onClick={this.onIncrement}>+</button>
-        <button className={
-          cx('button', 'decrement')
-        } onClick={this.onDecrement}>-</button>
-        <button className={
+      <div className="grid-item apps" key={this.props.id}>
+        <a href="#" className="portfolio-item">
+          <div className="thumbnail waves-effect waves-light">
+            <img src={this.props.image} alt={this.props.text}/>
+          </div>
+          <h3 className="portfolio-title">{this.props.text}</h3>
+          <button className={
           cx('button', 'destroy')
         } onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
-      </li>
+        </a>
+      </div>
     );
   }
 }
@@ -52,3 +51,19 @@ RoomItem.propTypes = {
   onDecrement: PropTypes.func.isRequired,
   onDestroy: PropTypes.func.isRequired
 };
+
+/*
+
+ <li className={'room-item'} key={this.props.id}>
+ <span className={'room'}>{this.props.text}</span>
+ <button className={
+ cx('button', 'increment')
+ } onClick={this.onIncrement}>+</button>
+ <button className={
+ cx('button', 'decrement')
+ } onClick={this.onDecrement}>-</button>
+ <button className={
+ cx('button', 'destroy')
+ } onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
+ </li>
+ */

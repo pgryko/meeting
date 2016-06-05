@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { createRoom, typing, incrementCount,
   decrementCount, destroyRoom, fetchRooms } from '../actions/rooms';
 import ListRooms from '../components/ListRooms';
-import EntryBox from '../components/EntryBox'
+import EntryBox from '../components/EntryBox';
+
 
 class DashBoardItem extends React.Component {
   render() {
@@ -39,12 +40,13 @@ class DashBoard extends React.Component{
 
   render() {
     // const token = auth.getToken();
-    const token = "Our latest works";
+    const token = "Add a meeting room";
 
     const {newRoom, rooms, typing, createRoom, destroyRoom, incrementCount, decrementCount } = this.props;
 
     return (
       <div>
+
         {/*<!-- Content --> */}
         <section className="container">
           <h2 className="block-title text-center">
@@ -55,12 +57,6 @@ class DashBoard extends React.Component{
                     onEntryChange={typing}
                     onEntrySave={createRoom} />
 
-          <ListRooms rooms={rooms}
-                       onIncrement={incrementCount}
-                       onDecrement={decrementCount}
-                       onDestroy={destroyRoom} />
-
-
           {/*<!-- Filters --> */}
           <div className="text-center padding-top">
             <ul className="nav-filters space-bottom-2x text-center">
@@ -70,19 +66,11 @@ class DashBoard extends React.Component{
             </ul>{/*<!-- .nav-filters --> */}
           </div>
 
-          {/*<!-- Portfolio Grid --> */}
-          <div className="grid isotope-grid col-3 filter-grid">
-            <div className="grid-sizer"></div>
-            <div className="gutter-sizer"></div>
-
-            <DashBoardItem image="img/portfolio/01.jpg" title="CommCell 1" />
-            <DashBoardItem image="img/portfolio/02.jpg" title="CommCell 2" />
-            <DashBoardItem image="img/portfolio/03.jpg" title="CommCell 3" />
-            <DashBoardItem image="img/portfolio/04.jpg" title="CommCell 4" />
-            <DashBoardItem image="img/portfolio/05.jpg" title="CommCell 5" />
-            <DashBoardItem image="img/portfolio/06.jpg" title="CommCell 6" />
-
-          </div>{/*<!-- .isotope-masonry-grid --> */}
+          <ListRooms rooms={rooms}
+                       onIncrement={incrementCount}
+                       onDecrement={decrementCount}
+                       onDestroy={destroyRoom} />
+          
 
           {/*<!-- Load More Button --> */}
           <div className="text-center padding-top">

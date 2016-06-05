@@ -89,11 +89,6 @@ class LoginOrRegister extends Component {
                      value={isLogin ? 'Login' : 'Register'} />
             </form>
           </div>
-          <div className='google-container'>
-            <h1 className='heading'>Google Login Demo</h1>
-            <a className='button'
-               href="/auth/google">Login with Google</a>
-          </div>
         </div>
       </div>
     );

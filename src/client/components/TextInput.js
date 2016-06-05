@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
+import TextField from 'material-ui/TextField';
 const ENTER_KEY_CODE = 13;
 
 export default class TopicTextInput extends Component {
@@ -8,12 +9,13 @@ export default class TopicTextInput extends Component {
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
   }
+
   /*
    * Invokes the callback passed in as onSave, allowing this component to be
    * used in different ways. I personally think this makes it more reusable.
    */
   onSave() {
-    const { onEntrySave, value } = this.props;
+    const {onEntrySave, value} = this.props;
     onEntrySave(value);
   }
 
@@ -22,7 +24,7 @@ export default class TopicTextInput extends Component {
    * used in different ways. I personally think this makes it more reusable.
    */
   onChange(event) {
-    const { onEntryChange } = this.props;
+    const {onEntryChange} = this.props;
     onEntryChange(event.target.value);
   }
 
@@ -36,14 +38,20 @@ export default class TopicTextInput extends Component {
   }
 
   render() {
-    const { className, placeholder, value } = this.props;
+    const {className, placeholder, value} = this.props;
     return (
-      <input className={className}
-             placeholder={placeholder}
-             onChange={this.onChange}
-             onKeyDown={this.onKeyDown}
-             value={value}
-             autoFocus />
+      <TextField className={className}
+                 placeholder={placeholder}
+                 onChange={this.onChange}
+                 onKeyDown={this.onKeyDown}
+                 value={value}
+                 id={placeholder}
+                 autoFocus
+                 style={{
+                  width: '50%',
+                  margin: '0 auto',
+                }}
+      />
     );
   }
 }

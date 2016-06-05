@@ -9,16 +9,21 @@ const ListRooms = ({onIncrement, onDecrement, onDestroy, rooms}) => {
                  id={room.id}
                  key={key}
                  text={room.text}
+                  image="img/portfolio/01.jpg"
+                  title="CommCell 1"
                  onIncrement={onIncrement}
                  onDecrement={onDecrement}
                  onDestroy={onDestroy} />);
   });
 
   return (
-    <div className={'main-section'}>
-      <h3 className={'header'}>Create a CommCell Meeting Room</h3>
-      <ul className={'list'}>{roomItems}</ul>
-    </div>
+  <div className="grid isotope-grid col-3 filter-grid">
+    <div className="grid-sizer"></div>
+    <div className="gutter-sizer"></div>
+
+    {roomItems}
+
+  </div>
   );
 };
 
