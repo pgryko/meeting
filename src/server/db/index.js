@@ -8,9 +8,6 @@ switch (DB_TYPE) {
   case DB_TYPES.MONGO:
     dbConfig = require('./mongo');
     break;
-  case DB_TYPES.POSTGRES:
-    dbConfig = require('./postgres');
-    break;
   case DB_TYPES.NONE:
     dbConfig = require('./none');
     break;

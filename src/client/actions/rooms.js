@@ -93,6 +93,7 @@ export function createRoom(text) {
       text
     };
 
+
     // Conditional dispatch
     // If the room already exists, make sure we emit a dispatch event
     if (room.rooms.filter(roomItem => roomItem.id === id).length > 0) {
