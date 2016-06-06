@@ -17,7 +17,7 @@ polyfill();
  * @param String endpoint
  * @return Promise
  */
-export function makeRoomRequest(method, id, data, api = '/room') {
+export function makeTopicRequest(method, id, data, api = '/topic') {
   return request[method](api + (id ? ('/' + id) : ''), data);
 }
 
@@ -30,14 +30,14 @@ export function decrement(index) {
 }
 
 export function destroy(index) {
-  return { type: types.DESTROY_ROOM, index };
+  return { type: types.DESTROY_TOPIC, index };
 }
 
 
 export function typing(text) {
   return {
     type: types.TYPING,
-    newRoom: text
+    newTopic: text
   };
 }
 
@@ -45,32 +45,32 @@ export function typing(text) {
  * @param data
  * @return a simple JS object
  */
-export function createRoomRequest(data) {
+export function createTopicRequest(data) {
   return {
-    type: types.CREATE_ROOM_REQUEST,
+    type: types.CREATE_TOPIC_REQUEST,
     id: data.id,
     count: data.count,
     text: data.text
   };
 }
 
-export function createRoomSuccess() {
+export function createTopicSuccess() {
   return {
-    type: types.CREATE_ROOM_SUCCESS
+    type: types.CREATE_TOPIC_SUCCESS
   };
 }
 
-export function createRoomFailure(data) {
+export function createTopicFailure(data) {
   return {
-    type: types.CREATE_ROOM_FAILURE,
+    type: types.CREATE_TOPIC_FAILURE,
     id: data.id,
     error: data.error
   };
 }
 
-export function createRoomDuplicate() {
+export function createTopicDuplicate() {
   return {
-    type: types.CREATE_ROOM_DUPLICATE
+    type: types.CREATE_TOPIC_DUPLICATE
   };
 }
 
@@ -78,7 +78,7 @@ export function createRoomDuplicate() {
 // which will get executed by Redux-Thunk middleware
 // This function does not need to be pure, and thus allowed
 // to have side effects, including executing asynchronous API calls.
-export function createRoom(text) {
+export function createTopic(text) {
   return (dispatch, getState) => {
     // If the text box is empty
     if (text.trim().length <= 0) return;
@@ -86,78 +86,77 @@ export function createRoom(text) {
     const id = md5.hash(text);
     // Redux thunk's middleware receives the store methods `dispatch`
     // and `getState` as parameters
-    const { room } = getState();
+    const { topic } = getState();
     const data = {
       count: 1,
       id,
       text
     };
 
-
     // Conditional dispatch
-    // If the room already exists, make sure we emit a dispatch event
-    if (room.rooms.filter(roomItem => roomItem.id === id).length > 0) {
+    // If the topic already exists, make sure we emit a dispatch event
+    if (topic.topics.filter(topicItem => topicItem.id === id).length > 0) {
       // Currently there is no reducer that changes state for this
       // For production you would ideally have a message reducer that
-      // notifies the user of a duplicate room
-      return dispatch(createRoomDuplicate());
+      // notifies the user of a duplicate topic
+      return dispatch(createTopicDuplicate());
     }
 
     // First dispatch an optimistic update
-    dispatch(createRoomRequest(data));
+    dispatch(createTopicRequest(data));
 
-    return makeRoomRequest('post', id, data)
+    return makeTopicRequest('post', id, data)
       .then(res => {
         if (res.status === 200) {
-          // We can actually dispatch a CREATE_ROOM_SUCCESS
+          // We can actually dispatch a CREATE_TOPIC_SUCCESS
           // on success, but I've opted to leave that out
           // since we already did an optimistic update
           // We could return res.json();
-          return dispatch(createRoomSuccess());
+          return dispatch(createTopicSuccess());
         }
       })
       .catch(() => {
-        return dispatch(createRoomFailure({ id, error: 'Oops! Something went wrong and we couldn\'t create your room'}));
+        return dispatch(createTopicFailure({ id, error: 'Oops! Something went wrong and we couldn\'t create your topic'}));
       });
   };
 }
 
 // Fetch posts logic
-export function fetchRooms() {
+export function fetchTopics() {
   return {
-    type: types.GET_ROOMS,
-    promise: (client) => client.get('/room')
+    type: types.GET_TOPICS,
+    promise: makeTopicRequest('get')
   };
 }
 
 
 export function incrementCount(id, index) {
   return dispatch => {
-    return makeRoomRequest('put', id, {
-      isFull: false,
-      isIncrement: true
-    })
+    return makeTopicRequest('put', id, {
+        isFull: false,
+        isIncrement: true
+      })
       .then(() => dispatch(increment(index)))
-      .catch(() => dispatch(createRoomFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your room'})));
+      .catch(() => dispatch(createTopicFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
   };
 }
 
 export function decrementCount(id, index) {
   return dispatch => {
-    return makeRoomRequest('put', id, {
-      isFull: false,
-      isIncrement: false
-    })
+    return makeTopicRequest('put', id, {
+        isFull: false,
+        isIncrement: false
+      })
       .then(() => dispatch(decrement(index)))
-      .catch(() => dispatch(createRoomFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your room'})));
+      .catch(() => dispatch(createTopicFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
   };
 }
 
-export function destroyRoom(id, index) {
+export function destroyTopic(id, index) {
   return dispatch => {
-    return makeRoomRequest('delete', id)
+    return makeTopicRequest('delete', id)
       .then(() => dispatch(destroy(index)))
-      .catch(() => dispatch(createRoomFailure({id,
-        error: 'Oops! Something went wrong and we couldn\'t add your room'})));
+      .catch(() => dispatch(createTopicFailure({id,
+        error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
   };
 }

@@ -52,6 +52,7 @@ const NavigationMenu = ({ user, logOut }) => {
               <MenuItem to="/help">Help</MenuItem>
               <MenuItem to="/about">About Us</MenuItem>
               <MenuItem to="/dashboard">Dashboard</MenuItem>
+              <MenuItem to="/vote">Vote</MenuItem>
             </ul>
             {/*<!-- .menu -->*/}
           </nav>

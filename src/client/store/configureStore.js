@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
-// import promiseMiddleware from '../middlewares/promiseMiddleware';
+import promiseMiddleware from '../middlewares/promiseMiddleware';
 import createLogger from 'redux-logger';
 
 /*
@@ -14,16 +14,14 @@ import createLogger from 'redux-logger';
 export default function configureStore(initialState, history) {
   // Installs hooks that always keep react-router and redux
   // store in sync
-  // const middleware = [thunk, promiseMiddleware, routerMiddleware(history)];
-  const middleware = [thunk, routerMiddleware(history)];
-
+  const middleware = [thunk, promiseMiddleware, routerMiddleware(history)];
   if (__DEVCLIENT__) {
     middleware.push(createLogger());
   }
 
   const store = createStore(rootReducer, initialState, compose(
     applyMiddleware(...middleware),
-    // typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
+    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
   ));
 
   // if (module.hot) {

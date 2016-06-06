@@ -5,11 +5,12 @@ import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
 import path from 'path';
-import { renderToString } from 'react-dom/server';
+// import { renderToString } from 'react-dom/server';
 
 
 const usersController = controllers && controllers.users;
 const roomsController = controllers && controllers.rooms;
+const topicsController = controllers && controllers.topics;
 
 export default (app) => {
   // user routes
@@ -54,6 +55,16 @@ export default (app) => {
     app.delete('/room/:id', roomsController.remove);
   } else {
     console.warn(unsupportedMessage('rooms routes'));
+  }
+
+  // topic routes
+  if (topicsController) {
+    app.get('/topic', topicsController.all);
+    app.post('/topic/:id', topicsController.add);
+    app.put('/topic/:id', topicsController.update);
+    app.delete('/topic/:id', topicsController.remove);
+  } else {
+    console.warn(unsupportedMessage('topics routes'));
   }
 
   // send all requests to index.html so browserHistory in React Router works

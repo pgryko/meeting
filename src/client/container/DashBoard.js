@@ -70,7 +70,7 @@ class DashBoard extends React.Component{
                        onIncrement={incrementCount}
                        onDecrement={decrementCount}
                        onDestroy={destroyRoom} />
-          
+
 
           {/*<!-- Load More Button --> */}
           <div className="text-center padding-top">

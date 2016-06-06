@@ -9,7 +9,8 @@ import HelpTopic from '../container/HelpTopic';
 import Contacts from '../container/Contacts';
 import Login from '../components/LoginOrRegister';
 import Dashboard from '../container/DashBoard';
-import NoMatch from '../container/NoMatch'
+import NoMatch from '../container/NoMatch';
+import Vote from '../container/Vote';
 /*
  * @param {Redux Store}
  * We require store as an argument here because we wish to get
@@ -45,11 +46,12 @@ export default (store) => {
         <IndexRoute component={Help} />
         <Route path=":topicID" component={HelpTopic}/>
       </Route>
+      <Route path="vote" component={Vote} />
       <Route path="about" component={About}/>
       <Route path="contacts" component={Contacts}/>
       <Route path="login" component={Login} />
       {/*<Route path="dashboard" component={Dashboard} onEnter={requireAuth} /> */}
-      <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
+      <Route path="dashboard" component={Dashboard} />
       <Route path="*" component={NoMatch}/>
       {/*<Route path="/meeting" component={Meeting} /> */}
     </Route>
