@@ -49,7 +49,7 @@ export default (store) => {
       <Route path="contacts" component={Contacts}/>
       <Route path="login" component={Login} />
       {/*<Route path="dashboard" component={Dashboard} onEnter={requireAuth} /> */}
-      <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
+      <Route path="dashboard" component={Dashboard} />
       <Route path="*" component={NoMatch}/>
       {/*<Route path="/meeting" component={Meeting} /> */}
     </Route>

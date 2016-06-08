@@ -31,10 +31,15 @@ class DashBoard extends React.Component{
 
   constructor(props){
     super(props);
-    this.state = {
-      dashboards: [],
-      pollInterval: 2000
-    }
+    // this.state = {
+    //   dashboards: [],
+    //   pollInterval: 2000
+    // }
+  }
+
+  componentDidMount() {
+    const { dispatch} = this.props;
+    dispatch(fetchRooms())
   }
 
 
@@ -70,7 +75,7 @@ class DashBoard extends React.Component{
                        onIncrement={incrementCount}
                        onDecrement={decrementCount}
                        onDestroy={destroyRoom} />
-          
+
 
           {/*<!-- Load More Button --> */}
           <div className="text-center padding-top">
@@ -106,7 +111,7 @@ function mapStateToProps(state) {
 
 // Read more about where to place `connect` here:
 // https://github.com/rackt/react-redux/issues/75#issuecomment-135436563
-export default connect(mapStateToProps, { createRoom, typing, incrementCount, decrementCount, destroyRoom })(DashBoard);
+export default connect(mapStateToProps, { createRoom, typing, incrementCount, decrementCount, destroyRoom, fetchRooms })(DashBoard);
 
 
 /*

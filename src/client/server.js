@@ -13,7 +13,7 @@ import preRenderMiddleware from './middlewares/preRenderMiddleware';
  */
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
-  port: process.env.PORT || '3000'
+  port: process.env.PORT || '8090'
 };
 
 // configure baseURL for axios requests (for serverside API calls)

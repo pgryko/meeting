@@ -5,7 +5,7 @@ import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import axios from 'axios';
 import './static/sass/styles.scss';
 import createRoutes from './routes/Routes';
 import configureStore from './store/configureStore';
@@ -24,7 +24,13 @@ const routes = createRoutes(store);
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+const clientConfig = {
+  host: process.env.HOSTNAME || 'localhost',
+  port: process.env.PORT || '8090'
+};
 
+// configure baseURL for axios requests (for serverside API calls)
+axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
 
 
 // Router converts <Route> element hierarchy to a route config:
