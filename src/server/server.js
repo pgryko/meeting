@@ -5,6 +5,8 @@ import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
+
+const App = require('../client/server');
 const app = express();
 
 /*
@@ -36,11 +38,12 @@ expressConfig(app);
  */
 routesConfig(app);
 
-const clientConfig = {
-  host: process.env.HOSTNAME || 'localhost',
-  port: process.env.PORT || '3000'
-};
-// configure baseURL for axios requests (for serverside API calls)
-axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
+/*
+ * This is where the magic happens. We take the locals data we have already
+ * fetched and seed our stores with data.
+ * App is a function that requires store data and url
+ * to initialize and return the React-rendered html string
+ */
+app.get('*', App.default);
 
 app.listen(app.get('port'));

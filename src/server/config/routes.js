@@ -57,9 +57,9 @@ export default (app) => {
   }
 
   // send all requests to index.html so browserHistory in React Router works
-  app.get('*', function (req, res) {
-    res.sendFile(path.resolve(__dirname, '../../build/client/index.html'))
-  });
+  // app.get('*', function (req, res) {
+  //   res.sendFile(path.resolve(__dirname, '../../build/client/index.html'))
+  // });
   //
   // console.log("Requests not matched");
   // // send all requests to index.html so browserHistory works

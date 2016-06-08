@@ -6,14 +6,13 @@ import { Provider } from 'react-redux';
 import createRoutes from './routes/Routes';
 import configureStore from './store/configureStore';
 import preRenderMiddleware from './middlewares/preRenderMiddleware';
-// import header from './components/Meta';
-/*
-  Server for serving isomorphic react client
+import header from './components/Meta';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
- */
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
-  port: process.env.PORT || '3000'
+  port: process.env.PORT || '8090'
 };
 
 // configure baseURL for axios requests (for serverside API calls)
@@ -75,7 +74,9 @@ export default function render(req, res) {
           const initialState = store.getState();
           const componentHTML = renderToString(
             <Provider store={store}>
+              <MuiThemeProvider muiTheme={getMuiTheme()}>
               <RouterContext {...props} />
+                </MuiThemeProvider>
             </Provider>
           );
 

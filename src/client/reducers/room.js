@@ -26,7 +26,7 @@ export default function room(state = {
     case GET_ROOMS_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        rooms: action.req.data
+        rooms: action.res.data
       });
     case GET_ROOMS_FAILURE:
       return Object.assign({}, state, {
