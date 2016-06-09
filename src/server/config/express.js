@@ -9,7 +9,7 @@ import { sessionSecret } from './secrets';
 import { DB_TYPE, ENV } from './appConfig';
 import { session as dbSession } from '../db';
 import compression from 'compression';
-import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
 export default (app) => {
   app.set('port', (process.env.PORT || 8090));
@@ -98,9 +98,12 @@ export default (app) => {
     console.log('===>           you will need a secure HTTPS connection');
     sess.cookie.secure = true; // Serve secure cookies
   }
+  if (ENV === "development"){
+    console.log("===>  Logging enabled");
+    app.use(logger('dev'));
+  }
   console.log('--------------------------');
 
-  app.use(cookieParser());
 
   app.use(session(sess));
 
@@ -109,12 +112,4 @@ export default (app) => {
 
   app.use(flash());
 
-
-  app.use(function(req, res, next){
-    if(req.session.pageCount)
-      req.session.pageCount++;
-    else
-      req.session.pageCount = 1;
-    next();
-  });
 };

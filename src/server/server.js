@@ -9,6 +9,8 @@ import routesConfig from './config/routes';
 const App = require('../client/server');
 const app = express();
 
+global.navigator = { navigator: 'all' };
+
 /*
 Server with api endpoints
 */
