@@ -71,7 +71,7 @@ function onUpdate() {
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 render(
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={getMuiTheme()}>
+    <MuiThemeProvider muiTheme={getMuiTheme(null, { userAgent: 'all' })}>
       <Router history={history} onUpdate={onUpdate}>
       {routes}
     </Router>

@@ -40,16 +40,16 @@ export default (store) => {
     // The Header contains the main menu links and will always show on each page
     <Route path="/" component={Header}>
       <IndexRoute component={Home}/>
-      <Route path="features" component={Features}/>
-      <Route path="help">
-        <IndexRoute component={Help} />
-        <Route path=":topicID" component={HelpTopic}/>
+      <Route path="/features" component={Features}/>
+      <Route path="/help" component={Help}>
+        {/*<IndexRoute component={Help} /> */}
+        <Route path="help/:topicID" component={HelpTopic}/>
       </Route>
-      <Route path="about" component={About}/>
-      <Route path="contacts" component={Contacts}/>
-      <Route path="login" component={Login} />
+      <Route path="/about" component={About}/>
+      <Route path="/contacts" component={Contacts}/>
+      <Route path="/login" component={Login} />
       {/*<Route path="dashboard" component={Dashboard} onEnter={requireAuth} /> */}
-      <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
+      <Route path="/dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="*" component={NoMatch}/>
       {/*<Route path="/meeting" component={Meeting} /> */}
     </Route>

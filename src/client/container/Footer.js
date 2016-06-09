@@ -25,12 +25,12 @@ export default class Footer extends React.Component {
             <div className="subscribe">
               <div className="subscribe-form">
                 <i><img src="img/footer/icons/envelope.png" alt="Subscribe"/></i>
-                <form action="list-manage.com" method="post" target="_blank" novalidate autocomplete="off">
-                  <label for="subscr_email" className="sr-only">Subscribe to latest news</label>
+                <form action="list-manage.com" method="post" target="_blank" noValidate autoComplete="off">
+                  <label htmlFor="subscr_email" className="sr-only">Subscribe to latest news</label>
                   <input type="email" className="form-control" id="subscr_email" placeholder="Your Email"/>
                     {/*<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups--> */}
                     <div style={{"position": "absolute", "left": "-5000px"}}>
-                      <input type="text" name="b_168a366a98d3248fbc35c0b67_011a3332a0" tabindex="-1" value=""/>
+                      <input type="text" name="b_168a366a98d3248fbc35c0b67_011a3332a0" tabIndex="-1" value=""/>
                     </div>
                     <button type="submit"><i className="icon-mail"></i></button>
                 </form>
