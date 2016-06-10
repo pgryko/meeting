@@ -4,7 +4,6 @@
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
-import path from 'path';
 import { renderToString } from 'react-dom/server';
 
 
@@ -56,26 +55,4 @@ export default (app) => {
     console.warn(unsupportedMessage('rooms routes'));
   }
 
-  // send all requests to index.html so browserHistory in React Router works
-  // app.get('*', function (req, res) {
-  //   res.sendFile(path.resolve(__dirname, '../../build/client/index.html'))
-  // });
-  //
-  // console.log("Requests not matched");
-  // // send all requests to index.html so browserHistory works
-  // app.get('*', (req, res) => {
-  //   match({ routes, location: req.url }, (err, redirect, props) => {
-  //     if (err) {
-  //       res.status(500).send(err.message);
-  //     } else if (redirect) {
-  //       res.redirect(redirect.pathname + redirect.search);
-  //     } else if (props) {
-  //       // hey we made it!
-  //       const appHtml = renderToString(<RouterContext {...props} />);
-  //       res.send(renderPage(appHtml));
-  //     } else {
-  //       res.status(404).send('Not Found');
-  //     }
-  //   });
-  // });
 };

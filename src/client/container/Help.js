@@ -1,5 +1,6 @@
 import React from 'react'
-import {Link,Route} from 'react-router'
+import {Link,Route,browserHistory} from 'react-router'
+import { push } from 'react-router-redux'
 import PageTitle from '../components/PageTitle'
 import Footer from './Footer'
 
@@ -7,6 +8,8 @@ class HelpItem extends React.Component {
 
   constructor(props, context, index){
     super(props);
+    push("/help/" + this.props.title);
+    console.log("/help/" + this.props.title);
   }
 
   render()
@@ -29,6 +32,11 @@ HelpItem.contextTypes = {
 };
 
 export default React.createClass({
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
   render() {
     return <div>
       {/*<!-- Content -->*/}
@@ -68,12 +76,12 @@ export default React.createClass({
         <div className="row padding-top">
           <div className="col-lg-10 col-lg-offset-1">
             <div className="row padding-bottom-2x">
-              <HelpItem title="Manage Account" imgSrc="img/help-center/01.png"/>
-              <HelpItem title="Syncing and uploads" imgSrc="img/help-center/02.png"/>
-              <HelpItem title="DashBoard" imgSrc="img/help-center/03.png"/>
-              <HelpItem title="Security and Privacy" imgSrc="img/help-center/04.png"/>
-              <HelpItem title="HardWare" imgSrc="img/help-center/05.png"/>
-              <HelpItem title="Network and Connectivity" imgSrc="img/help-center/06.png"/>
+              <HelpItem title="ManageAccount" imgSrc="/img/help-center/01.png"/>
+              <HelpItem title="Syncing and uploads" imgSrc="/img/help-center/02.png"/>
+              <HelpItem title="DashBoard" imgSrc="/img/help-center/03.png"/>
+              <HelpItem title="Security and Privacy" imgSrc="/img/help-center/04.png"/>
+              <HelpItem title="HardWare" imgSrc="/img/help-center/05.png"/>
+              <HelpItem title="Network and Connectivity" imgSrc="/img/help-center/06.png"/>
             </div>{/*<!-- .row -->*/}
 
             {/*<!-- FAQ -->*/}

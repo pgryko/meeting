@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
-import { manualLogin, signUp, toggleLoginMode } from '../actions/users';
+import { manualLogin, signUp, toggleLoginMode } from '../../actions/users';
 
 class LoginOrRegister extends Component {
   /*

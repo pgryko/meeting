@@ -7,7 +7,7 @@ import Features from '../container/Features';
 import Help from '../container/Help';
 import HelpTopic from '../container/HelpTopic';
 import Contacts from '../container/Contacts';
-import Login from '../components/LoginOrRegister';
+import Login from '../components/Account/LoginOrRegister';
 import Dashboard from '../container/DashBoard';
 import NoMatch from '../container/NoMatch'
 /*
@@ -41,10 +41,8 @@ export default (store) => {
     <Route path="/" component={Header}>
       <IndexRoute component={Home}/>
       <Route path="/features" component={Features}/>
-      <Route path="/help" component={Help}>
-        {/*<IndexRoute component={Help} /> */}
-        <Route path="help/:topicID" component={HelpTopic}/>
-      </Route>
+      <Route path="/help" component={Help} />
+      <Route path="/help/:topicID" component={HelpTopic}/>
       <Route path="/about" component={About}/>
       <Route path="/contacts" component={Contacts}/>
       <Route path="/login" component={Login} />

@@ -1,10 +1,17 @@
 import axios from 'axios';
+import http from 'http';
 import express from 'express';
 import { ENV } from './config/appConfig';
 import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
+import SocketIo from 'socket.io';
+import dotenv from 'dotenv';
+
+
+// Load environment variables from .env file
+// dotenv.load();
 
 const App = require('../client/server');
 const app = express();
@@ -47,4 +54,14 @@ routesConfig(app);
  */
 app.get('*', App.default);
 
-app.listen(app.get('port'));
+app.listen(app.get('port'), function(err) {
+  if (err) {
+    console.log(err);
+    return;
+  }
+});
+
+var server = require('http').createServer(app);
+const io = new SocketIo(server, {path: '/api/chat'});
+const socketEvents = require('./socketEvents')(io);
+
