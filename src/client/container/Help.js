@@ -8,8 +8,6 @@ class HelpItem extends React.Component {
 
   constructor(props, context, index){
     super(props);
-    push("/help/" + this.props.title);
-    console.log("/help/" + this.props.title);
   }
 
   render()
