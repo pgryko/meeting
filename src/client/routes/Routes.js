@@ -10,6 +10,8 @@ import Contacts from '../container/Contacts';
 import Login from '../components/Account/LoginOrRegister';
 import Dashboard from '../container/DashBoard';
 import NoMatch from '../container/NoMatch'
+import App from '../container/App';
+import Meeting from '../container/Meeting';
 /*
  * @param {Redux Store}
  * We require store as an argument here because we wish to get
@@ -38,18 +40,20 @@ export default (store) => {
   };
   return (
     // The Header contains the main menu links and will always show on each page
-    <Route path="/" component={Header}>
-      <IndexRoute component={Home}/>
-      <Route path="/features" component={Features}/>
-      <Route path="/help" component={Help} />
-      <Route path="/help/:topicID" component={HelpTopic}/>
-      <Route path="/about" component={About}/>
-      <Route path="/contacts" component={Contacts}/>
-      <Route path="/login" component={Login} />
-      {/*<Route path="dashboard" component={Dashboard} onEnter={requireAuth} /> */}
-      <Route path="/dashboard" component={Dashboard} onEnter={requireAuth} />
-      <Route path="*" component={NoMatch}/>
-      {/*<Route path="/meeting" component={Meeting} /> */}
+    <Route path="/" component={App}  >
+      <Route path="/meeting/:roomID" component={Meeting} />
+      <Route component={Header} >
+        <IndexRoute component={Home}/>
+        <Route path="/features" component={Features}/>
+        <Route path="/help" component={Help} />
+        <Route path="/help/:topicID" component={HelpTopic}/>
+        <Route path="/about" component={About}/>
+        <Route path="/contacts" component={Contacts}/>
+        <Route path="/login" component={Login} />
+        {/*<Route path="dashboard" component={Dashboard} onEnter={requireAuth} /> */}
+        <Route path="/dashboard" component={Dashboard} onEnter={requireAuth} />
+        <Route path="*" component={NoMatch}/>
+      </Route>
     </Route>
   );
 };

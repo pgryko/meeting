@@ -1,7 +1,5 @@
 import React from 'react'
 import {Link,Route,browserHistory} from 'react-router'
-import { push } from 'react-router-redux'
-import PageTitle from '../components/PageTitle'
 import Footer from './Footer'
 
 class HelpItem extends React.Component {
