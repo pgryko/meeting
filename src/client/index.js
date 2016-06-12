@@ -11,11 +11,11 @@ import createRoutes from './routes/Routes';
 import configureStore from './store/configureStore';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import preRenderMiddleware from './middlewares/preRenderMiddleware';
+import muiTheme from './static/muiTheme';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
-
 
 // Grab the state from a global injected into
 // server-generated HTML
@@ -45,33 +45,13 @@ function onUpdate() {
   preRenderMiddleware(store.dispatch, components, params);
 }
 
-/**
- * Callback function handling frontend route changes.
- */
-function onUpdate() {
-  // Prevent duplicate fetches when first loaded.
-  // Explanation: On server-side render, we already have __INITIAL_STATE__
-  // So when the client side onUpdate kicks in, we do not need to fetch twice.
-  // We set it to null so that every subsequent client-side navigation will
-  // still trigger a fetch data.
-  // Read more: https://github.com/choonkending/react-webpack-node/pull/203#discussion_r60839356
-  if (window.__INITIAL_STATE__ !== null) {
-    window.__INITIAL_STATE__ = null;
-    return;
-  }
-
-  const { components, params } = this.state;
-
-  preRenderMiddleware(store.dispatch, components, params);
-}
-
 
 
 // Router converts <Route> element hierarchy to a route config:
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 render(
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={getMuiTheme(null, { userAgent: 'all' })}>
+    <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
       <Router history={history} onUpdate={onUpdate}>
       {routes}
     </Router>

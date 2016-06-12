@@ -9,6 +9,8 @@ import preRenderMiddleware from './middlewares/preRenderMiddleware';
 import header from './components/Meta';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import muiTheme from './static/muiTheme';
+
 
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
@@ -74,7 +76,7 @@ export default function render(req, res) {
           const initialState = store.getState();
           const componentHTML = renderToString(
             <Provider store={store}>
-              <MuiThemeProvider muiTheme={getMuiTheme()}>
+              <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
               <RouterContext {...props} />
                 </MuiThemeProvider>
             </Provider>
