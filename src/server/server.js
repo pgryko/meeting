@@ -6,7 +6,6 @@ import { connect } from './db';
 import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
-import SocketIo from 'socket.io';
 import dotenv from 'dotenv';
 
 
@@ -61,7 +60,4 @@ app.listen(app.get('port'), function(err) {
   }
 });
 
-var server = require('http').createServer(app);
-const io = new SocketIo(server, {path: '/api/chat'});
-const socketEvents = require('./socketEvents')(io);
 

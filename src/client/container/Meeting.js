@@ -27,6 +27,8 @@ import MeetingProgressView from '../components/meeting/meeting-progress-view';
 
 import Engine from '../lib/meeting/engine';
 
+var engine = new Engine();
+
 export default class Meeting extends React.Component {
 
   constructor(props) {
@@ -42,12 +44,28 @@ export default class Meeting extends React.Component {
       showAddItemDialog: false,
       showProgress: false,
 
-      // callState: webRTC.UNSUPPORTED,
-      offer: undefined,
-      answer: undefined,
-
     };
 
+  }
+
+  engineStateObserver = (state) => {
+    this.setState(state);
+  };
+
+  componentDidMount() {
+    engine.addStateObserver(this.engineStateObserver);
+    engine.connect();
+  }
+
+  componentWillUnmount() {
+    engine.removeStateObserver(this.engineStateObserver);
+  }
+
+  uploadFiles(files) {
+    this.setState({showProgress: true});
+    engine.uploadFiles(files, () => {
+      this.setState({showProgress: false});
+    });
   }
 
   render() {
@@ -60,3 +78,11 @@ export default class Meeting extends React.Component {
 
   }
 }
+
+Meeting.contextTypes = {
+  history: React.PropTypes.object.isRequired,
+};
+
+Meeting.childContextTypes = {
+  muiTheme: React.PropTypes.object,
+};
