@@ -27,10 +27,36 @@ import MeetingProgressView from '../components/meeting/meeting-progress-view';
 
 import Engine from '../lib/meeting/engine';
 
-export default React.createClass({
-  render() {
-    return <div>
-      Meeting Container
-    </div>
+export default class Meeting extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+
+      title: "",
+      items: [],
+      users: [],
+      selection: undefined,
+
+      showNavigation: false,
+      showAddItemDialog: false,
+      showProgress: false,
+
+      // callState: webRTC.UNSUPPORTED,
+      offer: undefined,
+      answer: undefined,
+
+    };
+
   }
-})
+
+  render() {
+    var self = this;
+    return (
+      <div>
+        Meeting Container
+      </div>
+    );
+
+  }
+}
