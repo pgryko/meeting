@@ -67,8 +67,8 @@ export default class MeetingDocumentViewer extends React.Component {
 
         var width = '100%';
         var height = '100%';
-        var left = 0;
-        var top = 0;
+        var left = '0px';
+        var top = '0px';
 
         if (this.state.contentWidth && this.state.contentHeight) {
 

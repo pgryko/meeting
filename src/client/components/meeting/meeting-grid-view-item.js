@@ -86,8 +86,8 @@ export default class MeetingGridViewItem extends React.Component {
                     <IconButton
                         style={{
                             position: 'absolute',
-                            top: 0,
-                            right: 0,
+                            top: '0px',
+                            right: '0px',
                         }}
                         onTouchTap={() => this.props.onRemove()} >
                             {(() => {
@@ -100,7 +100,7 @@ export default class MeetingGridViewItem extends React.Component {
                     </IconButton>
                 </CardText>
 
-                <CardText style={{padding: '0'}}>
+                <CardText style={{padding: '0px'}}>
                     <div
                         style={{
                             position: "relative",
@@ -111,9 +111,9 @@ export default class MeetingGridViewItem extends React.Component {
                         <iframe
                             style={{
                                 position: "absolute",
-                                top: 0,
-                                left: 0,
-                                border: 0,
+                                top: '0px',
+                                left: '0px',
+                                border: '0px',
                                 width: this.props.frame.width + 'px',
                                 height: frameHeight + 'px',
                             }}
@@ -125,8 +125,8 @@ export default class MeetingGridViewItem extends React.Component {
                         <MeetingProgressView
                             style={{
                                 position: 'absolute',
-                                top: 0,
-                                left: 0,
+                                top: '0px',
+                                left: '0px',
                                 width: this.props.frame.width + 'px',
                                 height: frameHeight + 'px'
                             }}
@@ -138,8 +138,8 @@ export default class MeetingGridViewItem extends React.Component {
                                     <div
                                         style={{
                                             position: "absolute",
-                                            top: 0,
-                                            left: 0,
+                                            top: '0px',
+                                            left: '0px',
                                             width: this.props.frame.width + 'px',
                                             height: frameHeight + 'px',
                                             cursor: 'zoom-in',

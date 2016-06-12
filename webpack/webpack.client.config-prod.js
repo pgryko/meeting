@@ -41,7 +41,9 @@ module.exports = {
         }),
     new CopyWebpackPlugin([
       // { from: 'src/static/css', to: 'build/client/css'},
-      { from: 'src/client/static/img', to: 'img'}
+      { from: 'src/client/static/img', to: 'img'},
+      { from: path.join(__dirname, '..', 'src','client', 'static','uploads'), to: path.join(__dirname, '..', 'build', 'client','uploads')}
+
     ]),
     new ExtractTextPlugin('css/index.css', {
     allChunks: true

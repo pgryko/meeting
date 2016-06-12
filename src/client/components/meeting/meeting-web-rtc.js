@@ -55,7 +55,7 @@ export default class MeetingAppScreen extends React.Component {
                                 return '';
                             case webRTC.CONNECTED:
                                 return (
-                                    <MeetingVideoCall 
+                                    <MeetingVideoCall
                                         localStream={self.props.localStream}
                                         remoteStream={self.props.remoteStream} />
                                 );
@@ -66,7 +66,7 @@ export default class MeetingAppScreen extends React.Component {
                                             position: "fixed",
                                             bottom: "36px",
                                             right: "36px",
-                                            zIndex: 8,
+                                            zIndex: '8px',
                                         }}
                                         onTouchTap={() => self.props.onStartCall()}>
                                         <AVVideocamIcon />

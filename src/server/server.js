@@ -8,7 +8,7 @@ import expressConfig from './config/express';
 import routesConfig from './config/routes';
 import dotenv from 'dotenv';
 import HTTP from 'http';
-import socketio from './config/socketio';
+import socketio from './socketio';
 
 // Load environment variables from .env file
 // dotenv.load();

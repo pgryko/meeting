@@ -33,8 +33,8 @@ export default class MeetingGridView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 0,
-            height: 0,
+            width: '0px',
+            height: '0px',
         };
     }
 
@@ -49,8 +49,8 @@ export default class MeetingGridView extends React.Component {
         var visibleRect = {
             left: scrollLeft,
             top: scrollTop,
-            width: 0,
-            height: 0,
+            width: '0px',
+            height: '0px',
         };
 
         if (this.refs.root) {
@@ -149,10 +149,10 @@ export default class MeetingGridView extends React.Component {
                                         position: 'fixed',
                                         width: '100%',
                                         height: '100%',
-                                        top: 0,
-                                        left: 0,
+                                        top: '0px',
+                                        left: '0px',
                                         backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                                        zIndex: 10,
+                                        zIndex: '10px',
                                     }}
                                     onTouchTap={() => this.props.onDeselect()}/>
                             )

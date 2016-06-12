@@ -110,7 +110,7 @@ export default class MeetingDragTarget extends React.Component {
                                     height: '100%',
                                     opacity: '0.2',
                                     borderRadius: '2px',
-                                    zIndex: 100,
+                                    zIndex: '100px',
                                 }}/>
                         );
                     }

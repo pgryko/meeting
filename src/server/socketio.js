@@ -6,9 +6,11 @@ import busboy from 'connect-busboy';
 import Util from 'util';
 import Gravatar from 'nodejs-gravatar';
 import Update from 'react-addons-update';
+import fs from 'fs';
+import path from 'path';
 
 /*
- Import from Jason's Socket io implemenation, this needs to be refactored
+ Import from Jason's Socket io implementation, this needs to be refactored
  */
 
 // Application state.
@@ -37,6 +39,8 @@ function parse_message(callback) {
 
 export default (app, server) =>{
 
+  app.use(busboy());
+
   var io = new SocketIo(server, {path: '/api/chat'});
 
   // Accept file uploads.
@@ -46,7 +50,7 @@ export default (app, server) =>{
     req.busboy.on('file', function(fieldname, file, filename) {
 
       var uploadWithExtension = function(extension) {
-        return __dirname + '/static/uploads/' + uuid.v4() + extension;
+        return path.resolve(__dirname,'..','build','client','uploads',uuid.v4() + extension);
       };
 
       var extension = path.extname(filename);
@@ -54,6 +58,7 @@ export default (app, server) =>{
 
       var fstream = fs.createWriteStream(uploadPath);
       file.pipe(fstream);
+
       fstream.on('close', function() {
 
         var completion = function(title, filename, cleanup) {
@@ -72,6 +77,7 @@ export default (app, server) =>{
 
         };
 
+
         if (extension == '.jpg' || extension == '.jpeg' || extension == '.png' || extension == '.gif') {
 
           var imagePath = uploadPath;
@@ -79,6 +85,7 @@ export default (app, server) =>{
             completion(path.basename(filename, extension), uploadPath, function() {
               fs.unlink(imagePath, function(error) {
                 if (error) {
+                  console.log("Error occured on gm");
                   console.log(error);
                 }
               });

@@ -2,8 +2,6 @@ import React from 'react';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 
 import Avatar from 'material-ui/Avatar';
-// import Avatar from 'material-ui/avatar';
-// import Divider from 'material-ui/divider';
 import Divider from 'material-ui/Divider';
 import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import FileUpload from 'material-ui/svg-icons/file/file-upload';
@@ -28,6 +26,38 @@ import MeetingProgressView from '../components/meeting/meeting-progress-view';
 import Engine from '../lib/meeting/engine';
 
 var engine = new Engine();
+
+class Live extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {items: []};
+  }
+
+  engineStateObserver = (state) => {
+    this.setState(state);
+  };
+
+  componentDidMount() {
+    engine.addStateObserver(this.engineStateObserver);
+  }
+
+  componentWillUnmount() {
+    engine.removeStateObserver(this.engineStateObserver);
+  }
+
+  render() {
+    return (
+      <MeetingGridView
+        items={this.state.items}
+        onRemoveItem={(index) => engine.removeItem(index)}
+        selection={this.state.selection}
+        onSelect={(uuid) => engine.setSelection(uuid)}
+        onDeselect={() => engine.clearSelection()}/>
+    );
+  }
+
+}
 
 export default class Meeting extends React.Component {
 
@@ -70,9 +100,119 @@ export default class Meeting extends React.Component {
 
   render() {
     var self = this;
+
+    const menuItems = [
+      <MenuItem
+        key="add-url-menu-item"
+        primaryText="Add URL"
+        leftIcon={<InsertLink />}
+        onTouchTap={() => this.setState({showAddItemDialog: true})} />,
+      <MenuItem
+        key="add-file-menu-item"
+        primaryText="Add file"
+        leftIcon={<FileUpload />}
+        onTouchTap={() => this.refs.input.click()} />,
+      <MenuItem
+        key="add-photo-menu-item"
+        primaryText="Add photo"
+        leftIcon={<Photo />}
+        onTouchTap={() => this.refs.input.click()} />,
+      <Divider
+        key="divider-1" />,
+      <MenuItem
+        key="add-shared-notes-menu-item"
+        primaryText="Add shared notes"
+        leftIcon={<ModeEdit />}
+        onTouchTap={() => engine.addItem({
+                    title: "Shared Notes",
+                    url: "https://commcell-etherpad.unipart.digital/p/Mclaren"
+                })} />,
+      <Divider
+        key="divider-2" />,
+      <MenuItem
+        key="leave-meeting-menu-item"
+        primaryText="Log out"
+        leftIcon={<ExitToApp />}
+        onTouchTap={() => {
+                    window.location.href = "/logout";
+                }} />
+    ];
+
+    const defaultNavigationItems = [
+      <MenuItem
+        key="menu-item-navigation-item"
+        primaryText="Live"
+        leftIcon={<RemoveRedEye />}
+        onTouchTap={() => {
+                    this.context.history.push(`/meeting/${this.props.uuid}`);
+                    this.setState({showNavigation: false});
+                }} />,
+      <Divider
+        key="divider-3" />,
+    ];
+
+    var navigationItems = defaultNavigationItems.concat([
+      <List
+        key="connected-users-list">
+        <Subheader>Connected users</Subheader>
+
+        {this.state.users.map(function(item, index) {
+          return (
+            <ListItem
+              key={item.uuid}
+              primaryText={item.name}
+              leftAvatar={<Avatar src={item.avatar} />} />
+          );
+        })}
+      </List>
+    ]);
+
     return (
       <div>
-        Meeting Container
+        <Live/>
+        <input
+          type="file"
+          accept="image/*"
+          id="file"
+          name="file"
+          ref="input"
+          onChange={(event) => this.uploadFiles(event.target.files)}
+          hidden />
+
+        <MeetingDragTarget
+          onDropFile={(files) => this.uploadFiles(files)}/>
+
+        <MeetingProgressView
+          style={{
+                        position: 'fixed',
+                        top: '0px',
+                        left: '0px',
+                        width: '100%',
+                        height: '100%',
+                        zIndex: '1200px',
+                    }}
+          open={this.state.showProgress}/>
+
+        <MeetingAppScreen
+          title={this.state.title}
+          navigationItems={navigationItems}
+          menuItems={menuItems}
+          showNavigation={this.state.showNavigation}
+          onShowNavigation={(show) => this.setState({showNavigation: show})}>
+
+          {this.props.children}
+
+        </MeetingAppScreen>
+
+        <MeetingAddItemDialog
+          open={this.state.showAddItemDialog}
+          onSubmit={(title, url) => {
+                        this.setState({showAddItemDialog: false});
+                        //The http:// prevents localhost from being added to url
+                        engine.addItem({title: title, url: "http://" + url});
+                    }}
+          onCancel={() => this.setState({showAddItemDialog: false})} />
+
       </div>
     );
 

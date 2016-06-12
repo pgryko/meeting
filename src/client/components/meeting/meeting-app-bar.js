@@ -44,12 +44,12 @@ export default class MeetingAppBar extends React.Component {
         ) : undefined;
 
         return (
-            <AppBar 
+            <AppBar
                 title={this.props.title}
                 className="app-bar"
                 style={{
                     position: "fixed",
-                    top: "0"
+                    top: "0px"
                 }}
                 onLeftIconButtonTouchTap={this.props.onLeftIconButtonTouchTap}
                 iconElementRight={iconElementRight} />

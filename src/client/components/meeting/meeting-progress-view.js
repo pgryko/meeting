@@ -53,8 +53,8 @@ export default class MeetingProgressView extends React.Component {
                                     <CircularProgress
                                         mode="indeterminate"
                                         style={{
-                                            margin: 0,
-                                            padding: 0,
+                                            margin: '0px',
+                                            padding: '0px',
                                             top: '50%',
                                             transform: 'translateY(-50%)',
                                         }} />
