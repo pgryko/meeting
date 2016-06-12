@@ -1,5 +1,5 @@
 import axios from 'axios';
-import http from 'http';
+
 import express from 'express';
 import { ENV } from './config/appConfig';
 import { connect } from './db';
@@ -7,7 +7,8 @@ import passportConfig from './config/passport';
 import expressConfig from './config/express';
 import routesConfig from './config/routes';
 import dotenv from 'dotenv';
-
+import HTTP from 'http';
+import socketio from './config/socketio';
 
 // Load environment variables from .env file
 // dotenv.load();
@@ -53,7 +54,12 @@ routesConfig(app);
  */
 app.get('*', App.default);
 
-app.listen(app.get('port'), function(err) {
+var server = HTTP.Server(app);
+
+socketio(app,server);
+
+
+server.listen(app.get('port'), function(err) {
   if (err) {
     console.log(err);
     return;
