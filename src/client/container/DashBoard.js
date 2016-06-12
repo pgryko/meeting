@@ -6,19 +6,6 @@ import ListRooms from '../components/ListRooms';
 import EntryBox from '../components/EntryBox';
 
 
-class DashBoardItem extends React.Component {
-  render() {
-    return <div className="grid-item apps">
-        <a href="#" className="portfolio-item">
-          <div className="thumbnail waves-effect waves-light">
-            <img src={this.props.image} alt={this.props.title}/>
-          </div>
-          <h3 className="portfolio-title">{this.props.title}</h3>
-        </a>
-      </div>;
-  }
-}
-
 
 class DashBoard extends React.Component{
 
@@ -32,8 +19,6 @@ class DashBoard extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      dashboards: [],
-      pollInterval: 2000
     }
   }
 
@@ -70,7 +55,7 @@ class DashBoard extends React.Component{
                        onIncrement={incrementCount}
                        onDecrement={decrementCount}
                        onDestroy={destroyRoom} />
-          
+
 
           {/*<!-- Load More Button --> */}
           <div className="text-center padding-top">

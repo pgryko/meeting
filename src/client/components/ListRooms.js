@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import RoomItem from './RoomItem';
+import Slug from 'slug';
 
 
 const ListRooms = ({onIncrement, onDecrement, onDestroy, rooms}) => {
@@ -9,6 +10,7 @@ const ListRooms = ({onIncrement, onDecrement, onDestroy, rooms}) => {
                  id={room.id}
                  key={key}
                  text={room.text}
+                roomUrl={Slug(room.text)}
                   image="img/portfolio/01.jpg"
                   title="CommCell 1"
                  onIncrement={onIncrement}
@@ -20,9 +22,7 @@ const ListRooms = ({onIncrement, onDecrement, onDestroy, rooms}) => {
   <div className="grid isotope-grid col-3 filter-grid">
     <div className="grid-sizer"></div>
     <div className="gutter-sizer"></div>
-
     {roomItems}
-
   </div>
   );
 };

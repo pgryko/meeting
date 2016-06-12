@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames/bind';
+import { Link } from 'react-router';
 
 const cx = classNames;
 
@@ -29,15 +30,16 @@ export default class RoomItem extends Component {
   render() {
     return (
       <div className="grid-item apps" key={this.props.id}>
-        <a href="#" className="portfolio-item">
+        <Link to={"meeting/" + this.props.roomUrl} className="portfolio-item">
           <div className="thumbnail waves-effect waves-light">
             <img src={this.props.image} alt={this.props.text}/>
           </div>
           <h3 className="portfolio-title">{this.props.text}</h3>
+        </Link>
           <button className={
           cx('button', 'destroy')
         } onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
-        </a>
+
       </div>
     );
   }

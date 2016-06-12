@@ -42,6 +42,7 @@ export default (store) => {
     // The Header contains the main menu links and will always show on each page
     <Route path="/" component={App}  >
       <Route path="/meeting/:roomID" component={Meeting} />
+      <Route path="/meeting/viewer/:roomID" component={Meeting} />
       <Route component={Header} >
         <IndexRoute component={Home}/>
         <Route path="/features" component={Features}/>
