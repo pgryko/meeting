@@ -9,7 +9,7 @@ Install nodejs v6 from
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 
 Install
-sudo apt-get install -Y make g++
+sudo apt-get install -y nodejs make g++
 
 Install Mongodb
 
