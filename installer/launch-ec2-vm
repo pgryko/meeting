@@ -3,7 +3,7 @@
 set -eu
 
 SUBNET_ID=subnet-ef795c8a
-SEC_GROUP_ID_ARGS="-g sg-47fb2223 -g sg-f302a797"
+SEC_GROUP_ID_ARGS="-g sg-47fb2223 -g sg-30ea6657"
 REGION=eu-west-1
 KEYPAIR=commcell
 
