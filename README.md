@@ -1,5 +1,8 @@
 # meeting
-A meeting board with WebRTC integration
+A meeting board with Socketio integration
+
+The project is based on the following template
+https://github.com/choonkending/react-webpack-node
 
 #Installation instructions
 
@@ -30,6 +33,7 @@ Environmental parameters need to be set
 process.env.SESSION_SECRET = 'Your Session Secret goes here';
 process.env.MONGOHQ_URL = 'mongodb://localhost/production'
 process.env.NODE_ENV = 'production'
+process.env.PORT = 8090
 
 process.env.GOOGLE_CLIENTID = 'example',
 process.env.GOOGLE_SECRET = 'Example',
