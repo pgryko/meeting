@@ -15,7 +15,7 @@ Install Mongodb
 
 npm install
 
-sudo npm install -g nodemon
+sudo npm install -g nodemon parallelshell
 
 For development
 
