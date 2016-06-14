@@ -10,7 +10,7 @@ KEYPAIR=commcell
 AMI_ID=ami-edee719e
 
 do_launch () {
-  ec2-run-instances $AMI_ID -t t1.micro --region $REGION \
+  ec2-run-instances $AMI_ID -t t2.large --region $REGION \
     -O $AWS_ACCESS_KEY_ID -W $AWS_SECRET_ACCESS_KEY \
     $SEC_GROUP_ID_ARGS \
     -s $SUBNET_ID \
