@@ -10,7 +10,7 @@ const RoomSchema = new mongoose.Schema({
   count: { type: Number, min: 0 },
   //name: { type:String, unique: true },
   name: { type:String }, // Human readable room name
-  uri: { type:String }, //Slugified room name
+  slugurl: { type:String }, //Slugified room name
   date: { type: Date, default: Date.now }
 });
 
