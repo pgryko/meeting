@@ -5,7 +5,7 @@ set -eu
 
 install-dependencies () {
   curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  sudo apt-get install -y make g++ mongodb-server postgresql postgresql-contrib
+  sudo apt-get install -y nodejs python make g++ mongodb-server
 }
 
 install-commcell () {
@@ -32,4 +32,4 @@ install-commcell
 #setup-postgres-db
 
 cd ~/repos/meeting
-
+npm install
