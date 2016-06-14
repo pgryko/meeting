@@ -49,7 +49,8 @@ export default class MeetingAppBar extends React.Component {
                 className="app-bar"
                 style={{
                     position: "fixed",
-                    top: "0px"
+                    top: 0,
+                    display: 'flex',
                 }}
                 onLeftIconButtonTouchTap={this.props.onLeftIconButtonTouchTap}
                 iconElementRight={iconElementRight} />
