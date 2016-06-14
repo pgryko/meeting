@@ -7,7 +7,7 @@ SEC_GROUP_ID_ARGS="-g sg-47fb2223 -g sg-f302a797"
 REGION=eu-west-1
 KEYPAIR=commcell
 
-AMI_ID=ami-edee719e
+AMI_ID=ami-0ae77879
 
 do_launch () {
   ec2-run-instances $AMI_ID -t t2.large --region $REGION \
