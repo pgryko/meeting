@@ -9,57 +9,32 @@ Install nodejs v6 from
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 
 Install
-sudo apt-get install -Y make g++
+sudo apt-get install -y python nodejs make g++
 
+Install Mongodb
 
 npm install
+
+sudo npm install -g nodemon
+
+For development
 
 npm run start
 - This will build both the client and the server code. It will the start a build watcher.
 
+For Production:
+Environmental parameters need to be set
 
-# Architecture
 
-## Database
-Sequelize is used as on ORM for Database access. The implementation is based on code from
-https://github.com/choonkending/react-webpack-node
+//Environmental params
+process.env.SESSION_SECRET = 'Your Session Secret goes here';
+process.env.MONGOHQ_URL = 'mongodb://localhost/production'
+process.env.NODE_ENV = 'production'
 
-Setting up Postgres
+process.env.GOOGLE_CLIENTID = 'example',
+process.env.GOOGLE_SECRET = 'Example',
+process.env.GOOGLE_CALLBACK = '/auth/google/callback'
 
-Install Postgres as your database:
-
-# Update brew formulae
-brew update
-# Install Postgres
-brew install postgres
-Run your Postgres server
-
-postgres -D /usr/local/var/postgres
-Setup your postgres database
-
-#Postgres Ubuntu installation instructions
-
-- Install postgres
-sudo apt-get install postgresql postgresql-contrib
-
-- Change to user postgress
-sudo su - postgres
-
-- login to postgres
-psql
-
-- Create commcell role
-CREATE ROLE commcell WITH LOGIN PASSWORD 'development';
-
-- Create DB
-CREATE DATABASE commcell;
-
-- Grant privliages
-grant all privileges on database commcell to commcell;
-
-- Exit postgress
-\q
-exit
-
-- Run sequelize migrations
-npm run sequelize db:migrate
+Build project and run server
+npm run build:prod
+node build/server.bundle.js
