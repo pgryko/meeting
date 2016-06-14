@@ -161,3 +161,5 @@ fabric.properties
 
 # MongoDB test data.
 /db
+# Sublime Text Workspace.
+/meeting.sublime-workspace
