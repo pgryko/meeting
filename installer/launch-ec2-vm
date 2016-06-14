@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -eu
+
+SUBNET_ID=subnet-ef795c8a
+SEC_GROUP_ID_ARGS="-g sg-47fb2223 -g sg-f302a797"
+REGION=eu-west-1
+KEYPAIR=commcell
+
+AMI_ID=ami-974ec2e4
+
+do_launch () {
+  ec2-run-instances $AMI_ID -t t1.micro --region $REGION \
+    -O $AWS_ACCESS_KEY_ID -W $AWS_SECRET_ACCESS_KEY \
+    $SEC_GROUP_ID_ARGS \
+    -s $SUBNET_ID \
+    -k $KEYPAIR
+}
+
+get_instance () {
+  do_launch | awk '/^INSTANCE/ { print $2 }'
+}
+
+if [ $# != 1 ]; then
+    echo Usage: $(basename $0) name_of_vm
+    exit 1
+fi
+
+VM_NAME=$1
+
+INSTANCE_ID=$(get_instance)
+
+ec2-create-tags -O $AWS_ACCESS_KEY_ID -W $AWS_SECRET_ACCESS_KEY \
+  --tag Name=$VM_NAME --region $REGION \
+  $INSTANCE_ID
+
+echo In a few minutes, the machine should be accessible on hostname:
+echo ''
+echo ${VM_NAME}.monobit.co.uk
+echo ''
+echo e.g., ssh ubuntu@${VM_NAME}.monobit.co.uk -i ~/.ssh/commcell.pem
+
