@@ -40,6 +40,8 @@ class DashBoard extends React.Component{
   onSubmitChange()
   {
     this.props.createRoom(this.state.newRoom,this.state.newRoomDescription);
+    //Clear contents of form upon submit
+    this.setState({newRoom: "", newRoomDescription : ""});
   };
 
 
@@ -69,8 +71,8 @@ class DashBoard extends React.Component{
               placeholder="Meeting Room Description"
               onEntryChange={this.onChangeDescription}
             /> <br />
+            <RaisedButton label="Submit" onTouchTap={() => {this.onSubmitChange()}} />
           </div>
-          <RaisedButton label="Enter" onTouchTap={() => {this.onSubmitChange()}} />
 
 
           {/*<!-- Filters --> */}
