@@ -152,7 +152,7 @@ export default class MeetingGridView extends React.Component {
                                         top: '0px',
                                         left: '0px',
                                         backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                                        zIndex: '10px',
+                                        zIndex: '10',
                                     }}
                                     onTouchTap={() => this.props.onDeselect()}/>
                             )

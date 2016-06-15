@@ -189,7 +189,7 @@ export default class Meeting extends React.Component {
                         left: '0px',
                         width: '100%',
                         height: '100%',
-                        zIndex: '1200px',
+                        zIndex: '1200',
                     }}
           open={this.state.showProgress}/>
 

@@ -4,6 +4,7 @@ import { createRoom, typing, incrementCount,
   decrementCount, destroyRoom, fetchRooms } from '../actions/rooms';
 import ListRooms from '../components/ListRooms';
 import TextInput from '../components/TextInput';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 
@@ -18,15 +19,22 @@ class DashBoard extends React.Component{
 
   constructor(props){
     super(props);
-    this.onChange = this.onChange.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
     this.state = {
-      newRoom : ""
+      newRoom : "",
+      newRoomDescription : ""
     }
   }
 
-  onChange(value){
+  onChangeName(value){
     this.setState({newRoom: value});
   }
+
+  onChangeDescription(value){
+    this.setState({newRoomDescription: value});
+  }
+
 
 
   render() {
@@ -47,10 +55,17 @@ class DashBoard extends React.Component{
           <div className={'help-search'}>
             <TextInput
               value={this.state.newRoom}
-              placeholder="Add a meeting room"
-              onEntryChange={this.onChange}
+              placeholder="Meeting room Name"
+              onEntryChange={this.onChangeName}
               onEntrySave={createRoom}
-            />
+            /> <br />
+            <TextInput
+              value={this.state.newRoomDescription}
+              placeholder="Meeting Room Description"
+              onEntryChange={this.onChangeDescription}
+              // onEntrySave={ () => {if (this.state.newRoom != "") return createRoom}}
+            /> <br />
+            <RaisedButton label="Add Room" onTouchStart={createRoom}/>
           </div>
 
           {/*<!-- Filters --> */}
