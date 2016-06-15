@@ -18,8 +18,14 @@ class DashBoard extends React.Component{
 
   constructor(props){
     super(props);
+    this.onChange = this.onChange.bind(this);
     this.state = {
+      newRoom : ""
     }
+  }
+
+  onChange(value){
+    this.setState({newRoom: value});
   }
 
 
@@ -27,7 +33,7 @@ class DashBoard extends React.Component{
     // const token = auth.getToken();
     const token = "Add a meeting room";
 
-    const {newRoom, rooms, typing, createRoom, destroyRoom, incrementCount, decrementCount } = this.props;
+    const {rooms, typing, createRoom, destroyRoom, incrementCount, decrementCount } = this.props;
 
     return (
       <div>
@@ -38,8 +44,8 @@ class DashBoard extends React.Component{
             Dashboard
             <small>{token}</small>
           </h2>
-          <EntryBox room={newRoom}
-                    onEntryChange={typing}
+          <EntryBox room={this.state.newRoom}
+                    onEntryChange={this.onChange}
                     onEntrySave={createRoom} />
 
           {/*<!-- Filters --> */}

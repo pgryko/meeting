@@ -21,7 +21,7 @@ const EntryBox = ({onEntryChange, onEntrySave, room}) => {
 };
 
 EntryBox.propTypes = {
-  topic: PropTypes.string,
+  room: PropTypes.string,
   onEntryChange: PropTypes.func.isRequired,
   onEntrySave: PropTypes.func.isRequired
 };
