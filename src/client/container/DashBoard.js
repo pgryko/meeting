@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createRoom, typing, incrementCount,
   decrementCount, destroyRoom, fetchRooms } from '../actions/rooms';
 import ListRooms from '../components/ListRooms';
-import EntryBox from '../components/EntryBox';
+import TextInput from '../components/TextInput';
 
 
 
@@ -44,9 +44,14 @@ class DashBoard extends React.Component{
             Dashboard
             <small>{token}</small>
           </h2>
-          <EntryBox room={this.state.newRoom}
-                    onEntryChange={this.onChange}
-                    onEntrySave={createRoom} />
+          <div className={'help-search'}>
+            <TextInput
+              value={this.state.newRoom}
+              placeholder="Add a meeting room"
+              onEntryChange={this.onChange}
+              onEntrySave={createRoom}
+            />
+          </div>
 
           {/*<!-- Filters --> */}
           <div className="text-center padding-top">
