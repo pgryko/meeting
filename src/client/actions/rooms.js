@@ -78,10 +78,11 @@ export function createRoomDuplicate() {
 // which will get executed by Redux-Thunk middleware
 // This function does not need to be pure, and thus allowed
 // to have side effects, including executing asynchronous API calls.
-export function createRoom(text) {
+export function createRoom(text, description = "") {
   return (dispatch, getState) => {
     // If the text box is empty
     if (text.trim().length <= 0) return;
+    console.log("text: " + text + " description: " + description);
 
     const id = md5.hash(text);
     // Redux thunk's middleware receives the store methods `dispatch`

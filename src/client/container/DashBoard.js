@@ -21,11 +21,13 @@ class DashBoard extends React.Component{
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onSubmitChange = this.onSubmitChange.bind(this);
     this.state = {
       newRoom : "",
       newRoomDescription : ""
     }
   }
+
 
   onChangeName(value){
     this.setState({newRoom: value});
@@ -35,13 +37,16 @@ class DashBoard extends React.Component{
     this.setState({newRoomDescription: value});
   }
 
+  onSubmitChange()
+  {
+    this.props.createRoom(this.state.newRoom,this.state.newRoomDescription);
+  };
 
 
   render() {
-    // const token = auth.getToken();
     const token = "Add a meeting room";
 
-    const {rooms, typing, createRoom, destroyRoom, incrementCount, decrementCount } = this.props;
+    const {rooms, destroyRoom, incrementCount, decrementCount } = this.props;
 
     return (
       <div>
@@ -57,16 +62,16 @@ class DashBoard extends React.Component{
               value={this.state.newRoom}
               placeholder="Meeting room Name"
               onEntryChange={this.onChangeName}
-              onEntrySave={createRoom}
+              onEntrySave={() => {this.onSubmitChange()}}
             /> <br />
             <TextInput
               value={this.state.newRoomDescription}
               placeholder="Meeting Room Description"
               onEntryChange={this.onChangeDescription}
-              // onEntrySave={ () => {if (this.state.newRoom != "") return createRoom}}
             /> <br />
-            <RaisedButton label="Add Room" onTouchStart={createRoom}/>
           </div>
+          <RaisedButton label="Enter" onTouchTap={() => {this.onSubmitChange()}} />
+
 
           {/*<!-- Filters --> */}
           <div className="text-center padding-top">
