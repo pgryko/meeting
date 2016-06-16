@@ -39,9 +39,14 @@ class DashBoard extends React.Component{
 
   onSubmitChange()
   {
-    this.props.createRoom(this.state.newRoom,this.state.newRoomDescription);
-    //Clear contents of form upon submit
-    this.setState({newRoom: "", newRoomDescription : ""});
+    //Name of new room must not be empty
+    //This also checked in the room action and needs to be refactored
+    //To send a message that the input must not be empty
+    if (this.state.newRoom != "") {
+      this.props.createRoom(this.state.newRoom, this.state.newRoomDescription);
+      //Clear contents of form upon submit
+      this.setState({newRoom: "", newRoomDescription: ""});
+    }
   };
 
 
@@ -70,6 +75,7 @@ class DashBoard extends React.Component{
               value={this.state.newRoomDescription}
               placeholder="Meeting Room Description"
               onEntryChange={this.onChangeDescription}
+              onEntrySave={() => {this.onSubmitChange()}}
             /> <br />
             <RaisedButton label="Submit" onTouchTap={() => {this.onSubmitChange()}} />
           </div>
