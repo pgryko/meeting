@@ -35,7 +35,7 @@ export default function room(state = {
       });
     case CREATE_ROOM_REQUEST:
       return {
-        rooms: [...state.rooms, { id: action.id, count: action.count, name: action.name }],
+        rooms: [...state.rooms, { id: action.id, count: action.count, name: action.name, slugURL: action.slugURL, description: action.description }],
         newRoom: ''
       };
     case CREATE_ROOM_FAILURE:

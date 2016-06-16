@@ -3,6 +3,7 @@ import { polyfill } from 'es6-promise';
 import request from 'axios';
 import md5 from 'spark-md5';
 import * as types from '../types';
+import Slug from 'slug';
 
 polyfill();
 
@@ -50,7 +51,10 @@ export function createRoomRequest(data) {
     type: types.CREATE_ROOM_REQUEST,
     id: data.id,
     count: data.count,
-    name: data.name
+    name: data.name,
+    slugURL: data.slugURL,
+    description: data.description
+
   };
 }
 
@@ -85,13 +89,16 @@ export function createRoom(name, description = "") {
     console.log("name: " + name + " description: " + description);
 
     const id = md5.hash(name);
+    const slugURL = Slug(name);
     // Redux thunk's middleware receives the store methods `dispatch`
     // and `getState` as parameters
     const { room } = getState();
     const data = {
       count: 1,
       id,
-      name
+      name,
+      slugURL,
+      description
     };
 
 

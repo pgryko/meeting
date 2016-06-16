@@ -51,7 +51,6 @@ class DashBoard extends React.Component{
 
 
   render() {
-    const token = "Add a meeting room";
 
     const {rooms, destroyRoom, incrementCount, decrementCount } = this.props;
 
@@ -62,7 +61,7 @@ class DashBoard extends React.Component{
         <section className="container">
           <h2 className="block-title text-center">
             Dashboard
-            <small>{token}</small>
+            <small>Add a meeting room</small>
           </h2>
           <div className={'help-search'}>
             <TextInput
