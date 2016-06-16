@@ -6,10 +6,10 @@ import mongoose from 'mongoose';
 
 const RoomSchema = new mongoose.Schema({
   id: {type: String, unique: true},
-  text: String, // Description of the room
+  name: { type:String }, // Human readable room name
   count: { type: Number, min: 0 },
   //name: { type:String, unique: true },
-  name: { type:String }, // Human readable room name
+  description: String, // Description of the room
   slugurl: { type:String }, //Slugified room name
   date: { type: Date, default: Date.now }
 });

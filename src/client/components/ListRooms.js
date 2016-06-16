@@ -9,8 +9,8 @@ const ListRooms = ({onIncrement, onDecrement, onDestroy, rooms}) => {
       <RoomItem index={key}
                  id={room.id}
                  key={key}
-                 text={room.text}
-                roomUrl={Slug(room.text)}
+                 name={room.name}
+                roomUrl={Slug(room.name)}
                   image="img/portfolio/01.jpg"
                   title="CommCell 1"
                  onIncrement={onIncrement}

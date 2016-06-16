@@ -32,9 +32,9 @@ export default class RoomItem extends Component {
       <div className="grid-item apps" key={this.props.id}>
         <Link to={"meeting/" + this.props.roomUrl} className="portfolio-item">
           <div className="thumbnail waves-effect waves-light">
-            <img src={this.props.image} alt={this.props.text}/>
+            <img src={this.props.image} alt={this.props.name}/>
           </div>
-          <h3 className="portfolio-title">{this.props.text}</h3>
+          <h3 className="portfolio-title">{this.props.name}</h3>
         </Link>
           <button className={
           cx('button', 'destroy')
@@ -46,7 +46,7 @@ export default class RoomItem extends Component {
 }
 
 RoomItem.propTypes = {
-  text: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   onIncrement: PropTypes.func.isRequired,
