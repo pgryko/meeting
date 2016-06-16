@@ -127,7 +127,7 @@ describe('Room Actions', () => {
       {
         type: types.CREATE_ROOM_FAILURE,
         id: data.id,
-        error: 'Oops! Something went wrong and we couldn\'t add your vote'
+        error: 'Oops! Something went wrong and we couldn\'t add your room'
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({ status: 400 }));
       const store = mockStore();
@@ -155,7 +155,7 @@ describe('Room Actions', () => {
       const expectedActions = [
       {
         type: types.CREATE_ROOM_FAILURE,
-        error: 'Oops! Something went wrong and we couldn\'t add your vote',
+        error: 'Oops! Something went wrong and we couldn\'t add your room',
         id: data.id
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({ status: 400 }));
@@ -185,7 +185,7 @@ describe('Room Actions', () => {
       {
         type: types.CREATE_ROOM_FAILURE,
         id: data.id,
-        error: 'Oops! Something went wrong and we couldn\'t add your vote'
+        error: 'Oops! Something went wrong and we couldn\'t add your room'
       }];
       sandbox.stub(axios, 'delete').returns(Promise.reject({ status: 400 }));
       const store = mockStore();
@@ -241,14 +241,6 @@ describe('Room Actions', () => {
         index
       };
       expect(actions.destroy(index)).toEqual(expectedAction);
-    });
-
-    it('should create an action object with a new room', () => {
-      const expectedAction = {
-        type: types.TYPING,
-        newRoom: data.name
-      };
-      expect(actions.typing(data.text)).toEqual(expectedAction);
     });
 
     it('should create an action object with a new room request', () => {
