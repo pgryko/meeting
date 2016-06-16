@@ -19,7 +19,6 @@
 import io from 'socket.io-client';
 
 import parse_message from './parse-message';
-import values from './values';
 
 export default class Engine {
 
@@ -79,36 +78,6 @@ export default class Engine {
     this._sendMessage('client-clear-selection', {});
   }
 
-  startCall() {
-    webRTC.startCall();
-  }
-
-  addIceCandidate(candidate) {
-    this._sendMessage('client-call-add-ice-candidate', candidate);
-  }
-
-  setSession(session) {
-    console.log(session);
-    if (session.type == "offer") {
-      this._sendMessage('client-call-set-offer', session);
-    } else if (session.type == "answer") {
-      this._sendMessage('client-call-set-answer', session)
-    } else {
-      alert("Unsupported session type!");
-    }
-  }
-
-  setLocalStream(stream) {
-    // this._meeting.setState({localStream: stream});
-  }
-
-  setRemoteStream(stream) {
-    // this._meeting.setState({remoteStream: stream});
-  }
-
-  setCallState(state) {
-    // this._meeting.setState({callState: state});
-  }
 
   uploadFiles(files, callback) {
 
@@ -126,7 +95,7 @@ export default class Engine {
           callback();
         }
       }
-    }
+    };
     continuation();
 
   }
