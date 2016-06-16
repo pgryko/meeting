@@ -2,6 +2,7 @@ import expect from 'expect';
 import md5 from 'spark-md5';
 import reducer from '../../reducers/room';
 import * as types from '../../types';
+import Slug from 'slug';
 
 describe('Rooms reducer', () => {
   const s = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -16,8 +17,10 @@ describe('Rooms reducer', () => {
 
   function createData() {
     return {
-      text: createRoom(),
+      name: createRoom(),
+      description: createRoom(),
       id: md5.hash(createRoom()),
+      slugURL: Slug(name),
       count: Math.floor(Math.random() * 100)
     };
   }
@@ -49,31 +52,25 @@ describe('Rooms reducer', () => {
         type: types.CREATE_ROOM_REQUEST,
         id: data.id,
         count: 1,
-        text: room
+        name: room,
+        description: room,
+        slugURL: Slug(room)
+
       })
     ).toEqual({
         rooms: [
           {
             id: data.id,
             count: 1,
-            text: room
+            name: room,
+            description: room,
+            slugURL: Slug(room)
           }
         ],
         newRoom: ''
     });
   });
 
-  it('Should handle TYPING', () => {
-    expect(
-      reducer(undefined, {
-        type: types.TYPING,
-        newRoom: room
-      })
-    ).toEqual({
-        rooms: [],
-        newRoom: room
-    });
-  });
 
   it('Should handle GET_ROOMS_REQUEST', () => {
     expect(
@@ -128,7 +125,9 @@ describe('Rooms reducer', () => {
         type: types.CREATE_ROOM_REQUEST,
         id: data.id,
         count: data.count,
-        text: data.text
+        name: data.name,
+        description: data.description,
+        slugURL : data.slugURL
 
       })
     ).toEqual({
