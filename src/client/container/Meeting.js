@@ -144,7 +144,7 @@ export default class Meeting extends React.Component {
         primaryText="Live"
         leftIcon={<RemoveRedEye />}
         onTouchTap={() => {
-                    this.context.history.push(`/meeting/${this.props.uuid}`);
+                    this.context.route.push(`/meeting/${this.props.uuid}`);
                     this.setState({showNavigation: false});
                 }} />,
       <Divider
