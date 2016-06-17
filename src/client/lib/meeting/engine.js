@@ -46,12 +46,16 @@ export default class Engine {
   connect() {
     var self = this;
     self._socket = io('', { path: '/api/chat' });
+
+
     self._socket.on('server-set-state', parse_message(function(state) {
-
       self.setState(state);
-
-
     }));
+    self._socket.on('server-request-user-info', function()
+    {
+      console.log("Sever requested user details");
+      self._sendMessage('client-set-user',JSON.stringify({userName: 'bob', room: 'thelab'}))
+    })
   }
 
   _sendMessage(message, parameters) {

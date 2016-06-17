@@ -147,16 +147,30 @@ export default (app, server) =>{
     io.emit('server-set-state', JSON.stringify(clientState));
   }
 
+  //Requests information on user name and which room their in
+  function requestUserInfo() {
+    io.emit('server-request-user-info' );
+  }
+
 
   io.on('connection', function(socket) {
 
+    //Get socket id
     socket.uuid = uuid.v4(),
       state.users[socket.uuid] = {
         uuid: socket.uuid,
-        name: 'Jason Morley',
-        email: 'jason.morley@inseven.co.uk',
-        avatar: Gravatar.imageUrl('jason.morley@inseven.co.uk', { "size": "128" })
+        name: 'Random Name' + uuid,
+        email: 'Random email' + uuid,
       };
+
+    //Get user info and room name
+
+    requestUserInfo();
+    //Join specific room
+    // socket.join('some room');
+
+    // Update new user and broadcast server state to all users
+
     broadcastState();
     //avatar: {$set: gravatar.imageUrl(user.email, { "size": "128" })},
     //avatar: {$set: gravatar.profile_url(user.email, { "size": "128" })},
@@ -172,8 +186,10 @@ export default (app, server) =>{
 
     }).on('client-set-user', parse_message(function(user) {
 
-      state.users[socket].name = user.name;
-      state.users[socket].email = user.email;
+      console.log("user name is ");
+      console.log(user);
+      // state.users[socket].name = user.name;
+      // state.users[socket].email = user.email;
       broadcastState();
 
     })).on('client-add-item', parse_message(function(item) {
