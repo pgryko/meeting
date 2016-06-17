@@ -8,6 +8,7 @@ import Gravatar from 'nodejs-gravatar';
 import Update from 'react-addons-update';
 import fs from 'fs';
 import path from 'path';
+import SocketEvents from './socketEvents'
 
 /*
  Import from Jason's Socket io implementation, this needs to be refactored
@@ -20,22 +21,6 @@ var state = {
   selection: false,
   users: [],
 };
-
-function values(object) {
-  var items = [];
-  for (var key in object) {
-    if (object.hasOwnProperty(key)) {
-      items.push(Update(object[key], {}));
-    }
-  }
-  return items;
-}
-
-function parse_message(callback) {
-  return function(message) {
-    callback(JSON.parse(message));
-  }
-}
 
 export default (app, server) =>{
 
@@ -138,103 +123,6 @@ export default (app, server) =>{
     })
   });
 
-  var offerSocket = undefined;
-
-  function broadcastState() {
-    var clientState = Update(state, {
-      users: {$set: values(state.users)}
-    });
-    io.emit('server-set-state', JSON.stringify(clientState));
-  }
-
-  //Requests information on user name and which room their in
-  function requestUserInfo() {
-    io.emit('server-request-user-info' );
-  }
-
-
-  io.on('connection', function(socket) {
-
-    //Get socket id
-    socket.uuid = uuid.v4(),
-      state.users[socket.uuid] = {
-        uuid: socket.uuid,
-        name: 'Random Name' + uuid,
-        email: 'Random email' + uuid,
-      };
-
-    //Get user info and room name
-
-    requestUserInfo();
-    //Join specific room
-    // socket.join('some room');
-
-    // Update new user and broadcast server state to all users
-
-    broadcastState();
-    //avatar: {$set: gravatar.imageUrl(user.email, { "size": "128" })},
-    //avatar: {$set: gravatar.profile_url(user.email, { "size": "128" })},
-
-    socket.on('disconnect', function() {
-
-      delete state.users[socket.uuid];
-      if (offerSocket == socket) {
-        state.offer = undefined;
-        state.answer = undefined;
-      }
-      broadcastState();
-
-    }).on('client-set-user', parse_message(function(user) {
-
-      console.log("user name is ");
-      console.log(user);
-      // state.users[socket].name = user.name;
-      // state.users[socket].email = user.email;
-      broadcastState();
-
-    })).on('client-add-item', parse_message(function(item) {
-
-      item.uuid = uuid.v4();
-      state.items.push(item);
-      broadcastState();
-
-    })).on('client-remove-item', parse_message(function(message) {
-
-      var item = state.items[message.index];
-      if (item.cleanup) {
-        item.cleanup();
-      }
-      state.items.splice(message.index, 1);
-      if (state.selection == item.uuid) {
-        state.selection = false;
-      }
-      broadcastState();
-
-    })).on('client-set-selection', parse_message(function(message) {
-
-      state.selection = message.uuid;
-      broadcastState();
-
-    })).on('client-clear-selection', parse_message(function(message) {
-
-      state.selection = false;
-      broadcastState();
-
-    })).on('client-call-add-ice-candidate', function(candidate) {
-
-      socket.broadcast.emit('server-call-add-ice-candidate', candidate);
-
-    }).on('client-call-set-offer', parse_message(function(offer) {
-
-      state.offer = offer;
-      offerSocket = socket;
-      broadcastState();
-
-    })).on('client-call-set-answer', parse_message(function(answer) {
-
-      state.answer = answer;
-      broadcastState();
-
-    }));
-  });
+//socketio
+  SocketEvents(io,state);
 }
