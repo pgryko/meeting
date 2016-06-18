@@ -178,22 +178,31 @@ exports = module.exports = function(io, state, app){
       }
       broadcastState(io,state);
 
-    }).on('disconnect', function () {
+    }).on('client-join-room', parse_message(function (message) {
 
-      delete state.users[socket.uuid];
-      if (offerSocket == socket) {
-        state.offer = undefined;
-        state.answer = undefined;
+      //Check if room exists in memory
+      if ( !(message.room in state) ){
+        //if not, add room to memory state
+        var current_room = {
+          items: [],
+          selection: false,
+          users: [],
+        };
+        state[message.room] = current_room;
       }
-      broadcastState(io,state);
 
-    }).on('client-join-room', parse_message(function (user) {
+      // Then add user to room list
+      // The user details will need to be pulled from session id and mongoose
+      state[message.room].users[socket.uuid] = {
+        uuid: socket.uuid,
+        name: 'Random Name' + uuid,
+        email: 'Random email' + uuid
+      };
 
-      console.log("user name is ");
-      console.log(user);
-      // state.users[socket].name = user.name;
-      // state.users[socket].email = user.email;
-      broadcastState(io,state);
+      console.log("Current state is state ");
+      console.log(parse_message(state));
+
+      broadcastState(io, state,message.room);
 
     })).on('client-add-item', parse_message(function (item) {
 

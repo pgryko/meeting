@@ -53,8 +53,10 @@ export default class Engine {
     }));
     self._socket.on('server-request-room', function () {
       console.log("Sever requested user details");
-      self._sendMessage('client-request-room', JSON.stringify({room: 'thelab'}))
+      self._sendMessage('client-join-room', JSON.stringify({room: 'thelab'}));
     })
+    self._socket.join('thelab');
+
   }
 
   _sendMessage(message, parameters, room = "") {
