@@ -29,15 +29,23 @@ function parse_message(callback) {
 
 
   function broadcastState(io,state, room="") {
-    var clientState = Update(state, {
-      users: {$set: values(state.users)}
-    });
-    io.emit('server-set-state', JSON.stringify(clientState));
-  }
 
-  //Requests information on user name and which room their in
-  function requestUserInfo(io) {
-    io.emit('server-request-user-info' );
+    if (room != ""){
+
+      let clientState = Update(state[room], {
+        users: {$set: values(state.users)}
+      });
+
+      io.to(room).emit('server-set-state', JSON.stringify(clientState));
+    }
+    else {
+      let clientState = Update(state, {
+        users: {$set: values(state.users)}
+      });
+
+      io.emit('server-set-state', JSON.stringify(clientState));
+    }
+
   }
 
 
@@ -143,6 +151,7 @@ exports = module.exports = function(io, state, app){
 
  io.on('connection', function(socket) {
 
+   const roomName = 'room1';
     //Get socket id
     socket.uuid = uuid.v4(),
       state.users[socket.uuid] = {
@@ -151,9 +160,8 @@ exports = module.exports = function(io, state, app){
         email: 'Random email' + uuid,
       };
 
-    //Get user info and room name
-
-    requestUserInfo(io);
+   //Send message to user to ask which room they want to be in
+   io.emit('server-request-room');
     //Join specific room
     // socket.join('some room');
 
@@ -170,7 +178,16 @@ exports = module.exports = function(io, state, app){
       }
       broadcastState(io,state);
 
-    }).on('client-set-user', parse_message(function (user) {
+    }).on('disconnect', function () {
+
+      delete state.users[socket.uuid];
+      if (offerSocket == socket) {
+        state.offer = undefined;
+        state.answer = undefined;
+      }
+      broadcastState(io,state);
+
+    }).on('client-join-room', parse_message(function (user) {
 
       console.log("user name is ");
       console.log(user);

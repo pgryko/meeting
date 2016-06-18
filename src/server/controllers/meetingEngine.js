@@ -11,10 +11,13 @@ import SocketEvents from './socketio'
 
 // Application state.
 var state = {
-  title: 'Unipart Digital Comm Cell',
-  items: [],
-  selection: false,
-  users: [],
+  users : [],
+  'room1': {
+    title: 'Unipart Digital Comm Cell',
+    items: [],
+    selection: false,
+    users: []
+  }
 };
 
 export default (app, server) =>{

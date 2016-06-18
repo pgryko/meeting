@@ -45,21 +45,25 @@ export default class Engine {
 
   connect() {
     var self = this;
-    self._socket = io('', { path: '/api/chat' });
+    self._socket = io('', {path: '/api/chat'});
 
 
-    self._socket.on('server-set-state', parse_message(function(state) {
+    self._socket.on('server-set-state', parse_message(function (state) {
       self.setState(state);
     }));
-    self._socket.on('server-request-user-info', function()
-    {
+    self._socket.on('server-request-room', function () {
       console.log("Sever requested user details");
-      self._sendMessage('client-set-user',JSON.stringify({userName: 'bob', room: 'thelab'}))
+      self._sendMessage('client-request-room', JSON.stringify({room: 'thelab'}))
     })
   }
 
-  _sendMessage(message, parameters) {
-    this._socket.emit(message, JSON.stringify(parameters));
+  _sendMessage(message, parameters, room = "") {
+    if (room != "") {
+      this._socket.to(room).emit(message, JSON.stringify(parameters));
+    }
+    else {
+      this._socket.emit(message, JSON.stringify(parameters));
+    }
   }
 
   setUser(user) {
