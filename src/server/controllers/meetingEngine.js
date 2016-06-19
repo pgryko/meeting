@@ -12,7 +12,6 @@ import SocketEvents from './socketio'
 // Application state.
 var state = {
   'room1': {
-    title: 'Unipart Digital Comm Cell',
     items: [],
     selection: false,
     users: []

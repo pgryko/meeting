@@ -25,6 +25,7 @@ export default class Engine {
   constructor() {
     this.stateObservers = [];
     this.state = {};
+    this.roomName = "";
   }
 
   addStateObserver(observer) {
@@ -45,6 +46,8 @@ export default class Engine {
 
   connect(roomName) {
     var self = this;
+    //Save room name in class constructor
+    this.roomName = roomName;
     self._socket = io('', {path: '/api/chat'});
 
 
@@ -74,19 +77,19 @@ export default class Engine {
   }
 
   addItem(item) {
-    this._sendMessage('client-add-item', item);
+    this._sendMessage('client-add-item', {room: this.roomName ,item: item});
   }
 
   removeItem(index) {
-    this._sendMessage('client-remove-item', {index: index});
+    this._sendMessage('client-remove-item', {room: this.roomName, index: index});
   }
 
   setSelection(uuid) {
-    this._sendMessage('client-set-selection', {uuid: uuid});
+    this._sendMessage('client-set-selection', {room: this.roomName, uuid: uuid});
   }
 
   clearSelection() {
-    this._sendMessage('client-clear-selection', {});
+    this._sendMessage('client-clear-selection', {room: this.roomName});
   }
 
 

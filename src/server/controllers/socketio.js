@@ -197,11 +197,11 @@ exports = module.exports = function(io, state, app){
       // Update new user and broadcast server state to all users
       broadcastState(io, state,roomName);
 
-    })).on('client-add-item', parse_message(function (item) {
-
-      item.uuid = uuid.v4();
-      state.items.push(item);
-      broadcastState(io,state);
+    })).on('client-add-item', parse_message(function (message) {
+      
+      message.item.uuid = uuid.v4();
+      state[message.room].items.push(message.item);
+      broadcastState(io,state,message.room);
 
     })).on('client-remove-item', parse_message(function (message) {
 
