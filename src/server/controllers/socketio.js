@@ -65,7 +65,7 @@ exports = module.exports = function(io, state, app){
     req.busboy.on('file', function(fieldname, file, filename) {
 
       var uploadWithExtension = function(extension) {
-        return path.resolve(__dirname,'..','build','client','uploads',uuid.v4() + extension);
+        return path.resolve(__dirname,'..','..','build','client','uploads',uuid.v4() + extension);
       };
 
       var extension = path.extname(filename);
@@ -77,7 +77,6 @@ exports = module.exports = function(io, state, app){
       fstream.on('close', function() {
 
         var completion = function(title, filename, cleanup) {
-
           // N.B. We explicitly specify the URL here (inc. 'index.html') to ensure this URL is different
           // to the top-level URL of the application itself. For some reason, when the two paths match,
           // Firefox will not load the contents of the iframes.
@@ -119,7 +118,7 @@ exports = module.exports = function(io, state, app){
             if (error) {
               console.log("Encountered an error generating PDF preview.");
               console.log(error);
-              res.sendStatus(500);
+              res.status(500).send('Encountered an error generating PDF preview.');
               return;
             }
 
@@ -167,8 +166,9 @@ exports = module.exports = function(io, state, app){
       // }
       // broadcastState(io,state);
 
-    }).on('client-join-room', parse_message(function (roomName) {
+    }).on('client-join-room', parse_message(function (name) {
 
+      var roomName = JSON.stringify(name);
       //Check if room exists in memory
       if ( !(roomName in state) ){
         //if not, add room to memory state
