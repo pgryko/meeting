@@ -49,11 +49,13 @@ export default class Engine {
 
 
     self._socket.on('server-set-state', parse_message(function (state) {
+      console.log("State updated to ");
+      console.log(state);
       self.setState(state);
     }));
     self._socket.on('server-request-room', function () {
       console.log("Sever requested user details");
-      self._sendMessage('client-join-room', JSON.stringify({room: roomName}));
+      self._sendMessage('client-join-room', roomName);
     })
 
   }

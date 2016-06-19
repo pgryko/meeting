@@ -32,14 +32,10 @@ function parse_message(callback) {
 
     if (room !== ''){
 
-      let clientState = Update(state[room], {
-        users: {$set: values(state.users)}
-      });
-
       console.log("Broadcasting the following to room: " + room);
-      console.log(clientState);
+      console.log(state[room]);
 
-      io.to(room).emit('server-set-state', JSON.stringify(clientState));
+      io.to(room).emit('server-set-state', JSON.stringify(state[room]));
     }
     else {
       let clientState = Update(state, {
@@ -162,37 +158,44 @@ exports = module.exports = function(io, state, app){
 
     socket.on('disconnect', function () {
 
-      delete state.users[socket.uuid];
-      if (offerSocket == socket) {
-        state.offer = undefined;
-        state.answer = undefined;
-      }
-      broadcastState(io,state);
+      // delete state.users[socket.uuid];
+      // if (offerSocket == socket) {
+      //   state.offer = undefined;
+      //   state.answer = undefined;
+      // }
+      // broadcastState(io,state);
 
-    }).on('client-join-room', parse_message(function (message) {
+    }).on('client-join-room', parse_message(function (roomName) {
 
+      console.log("room name is: ");
+      console.log(roomName);
       //Check if room exists in memory
-      if ( !(message['room'] in state) ){
+      if ( !(roomName in state) ){
         //if not, add room to memory state
         var current_room = {
+          title: '',
           items: [],
           selection: false,
           users: [],
         };
-        state[message['room']] = current_room;
+        state[roomName] = current_room;
       }
 
       // Then add user to room list
       // The user details will need to be pulled from session id and mongoose
-      state[message['room']].users[socket.uuid] = {
+      socket.uuid = uuid.v4();
+      state[roomName].users[socket.uuid] = {
         uuid: socket.uuid,
         name: 'Random Name ' + socket.uuid,
         email: 'Random email ' + socket.uuid
       };
 
-      socket.join(message['room']);
+      console.log('Current state is: ');
+      console.log(state);
+
+      socket.join(roomName);
       // Update new user and broadcast server state to all users
-      broadcastState(io, state,message['room']);
+      broadcastState(io, state,roomName);
 
     })).on('client-add-item', parse_message(function (item) {
 
