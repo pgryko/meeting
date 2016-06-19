@@ -56,8 +56,10 @@ exports = module.exports = function(io, state, app){
   var offerSocket = undefined;
 
   // Accept file uploads.
-  // Accept file uploads.
   app.post('/upload', function(req, res) {
+
+    var roomName = JSON.stringify(req.get("room"));
+    //NB add an error check here to see if room exists, else reject upload
     var fstream;
     req.pipe(req.busboy);
     req.busboy.on('file', function(fieldname, file, filename) {
@@ -80,13 +82,13 @@ exports = module.exports = function(io, state, app){
           // to the top-level URL of the application itself. For some reason, when the two paths match,
           // Firefox will not load the contents of the iframes.
           // Doubtless there is 'correct' solution to this, but time is short.
-          state.items.push({
+          state[roomName].items.push({
             uuid: uuid.v4(),
             title: title,
             url: "/uploads/" + path.basename(filename),
             cleanup: cleanup
           });
-          broadcastState();
+          broadcastState(io,state,roomName);
 
         };
 
@@ -167,8 +169,6 @@ exports = module.exports = function(io, state, app){
 
     }).on('client-join-room', parse_message(function (roomName) {
 
-      console.log("room name is: ");
-      console.log(roomName);
       //Check if room exists in memory
       if ( !(roomName in state) ){
         //if not, add room to memory state
@@ -190,55 +190,37 @@ exports = module.exports = function(io, state, app){
         email: 'Random email ' + socket.uuid
       };
 
-      console.log('Current state is: ');
-      console.log(state);
-
       socket.join(roomName);
       // Update new user and broadcast server state to all users
       broadcastState(io, state,roomName);
 
     })).on('client-add-item', parse_message(function (message) {
-      
+
       message.item.uuid = uuid.v4();
       state[message.room].items.push(message.item);
       broadcastState(io,state,message.room);
 
     })).on('client-remove-item', parse_message(function (message) {
 
-      var item = state.items[message.index];
+      var item = state[message.room].items[message.index];
       if (item.cleanup) {
         item.cleanup();
       }
-      state.items.splice(message.index, 1);
-      if (state.selection == item.uuid) {
-        state.selection = false;
+      state[message.room].items.splice(message.index, 1);
+      if (state[message.room].selection == item.uuid) {
+        state[message.room].selection = false;
       }
-      broadcastState(io,state);
+      broadcastState(io,state,message.room);
 
     })).on('client-set-selection', parse_message(function (message) {
 
-      state.selection = message.uuid;
-      broadcastState(io,state);
+      state[message.room].selection = message[message.room].uuid;
+      broadcastState(io,state,message.room);
 
     })).on('client-clear-selection', parse_message(function (message) {
 
-      state.selection = false;
-      broadcastState(io,state);
-
-    })).on('client-call-add-ice-candidate', function (candidate) {
-
-      socket.broadcast.emit('server-call-add-ice-candidate', candidate);
-
-    }).on('client-call-set-offer', parse_message(function (offer) {
-
-      state.offer = offer;
-      offerSocket = socket;
-      broadcastState(io,state);
-
-    })).on('client-call-set-answer', parse_message(function (answer) {
-
-      state.answer = answer;
-      broadcastState(io,state);
+      state[message.room].selection = false;
+      broadcastState(io,state,message.room);
 
     }));
   })

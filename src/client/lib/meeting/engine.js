@@ -124,6 +124,8 @@ export default class Engine {
       }
     });
     xhr.open("POST", "/upload");
+    //Add room name to request header
+    xhr.setRequestHeader("room",this.roomName);
     xhr.send(formData);
   }
 
