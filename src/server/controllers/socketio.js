@@ -168,8 +168,6 @@ exports = module.exports = function(io, state, app){
 
         if( typeof state[room].users[socket.uuid] != 'undefined'  )
         {
-          console.log("Removing the following user upon disconnect");
-          console.log(socket.uuid);
           delete state[room].users[socket.uuid];
           broadcastState(io,state[room],room);
           break;
