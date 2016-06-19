@@ -1,5 +1,5 @@
-import React from 'react';
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
+import React, {PropTypes} from 'react';
+import { connect } from 'react-redux';
 
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
@@ -22,7 +22,6 @@ import MeetingDocumentViewer from '../components/meeting/meeting-document-viewer
 import MeetingDragTarget from '../components/meeting/meeting-drag-target';
 import MeetingGridView from '../components/meeting/meeting-grid-view';
 import MeetingProgressView from '../components/meeting/meeting-progress-view';
-import { connect } from 'react-redux';
 
 import Engine from '../lib/meeting/engine';
 
@@ -60,6 +59,7 @@ class Live extends React.Component {
 
 }
 
+
 class Meeting extends React.Component {
 
   constructor(props) {
@@ -76,21 +76,34 @@ class Meeting extends React.Component {
       showProgress: false,
 
     };
-
   }
 
   engineStateObserver = (state) => {
     this.setState(state);
   };
 
+
   componentDidMount() {
     engine.addStateObserver(this.engineStateObserver);
     engine.connect(this.props.routeParams.roomID);
+    console.log("Rooms array contains");
+    console.log(this.props.rooms);
+
   }
 
   componentWillUnmount() {
     engine.removeStateObserver(this.engineStateObserver);
   }
+
+  //Used to extract room name from slugURL
+  mapSlugURLToRoomTitle = (rooms,slugURL) => {
+    let roomTitle = rooms.map((room) => {
+      if (room.slugURL === slugURL) {
+        return (room.name);
+      }
+    });
+    return roomTitle;
+  };
 
   uploadFiles(files) {
     this.setState({showProgress: true});
@@ -195,7 +208,7 @@ class Meeting extends React.Component {
           open={this.state.showProgress}/>
 
         <MeetingAppScreen
-          title={this.state.title}
+          title={this.mapSlugURLToRoomTitle(this.props.rooms,this.props.routeParams.roomID)}
           navigationItems={navigationItems}
           menuItems={menuItems}
           showNavigation={this.state.showNavigation}
@@ -223,7 +236,8 @@ class Meeting extends React.Component {
 function mapStateToProps(state, ownProps) {
   return {
     id: ownProps.params.id,
-    filter: ownProps.location.query.filter
+    filter: ownProps.location.query.filter,
+    rooms: state.room.rooms
   };
 }
 
@@ -236,6 +250,10 @@ export default connect(mapStateToProps)(Meeting);
 
 Meeting.contextTypes = {
   history: React.PropTypes.object.isRequired,
+};
+
+Meeting.propTypes = {
+  rooms: PropTypes.array.isRequired
 };
 
 Meeting.childContextTypes = {
