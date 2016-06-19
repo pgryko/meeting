@@ -93,6 +93,7 @@ class Meeting extends React.Component {
 
   componentWillUnmount() {
     engine.removeStateObserver(this.engineStateObserver);
+    engine.disconnect();
   }
 
   //Used to extract room name from slugURL

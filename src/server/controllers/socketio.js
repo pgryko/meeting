@@ -159,12 +159,22 @@ exports = module.exports = function(io, state, app){
 
     socket.on('disconnect', function () {
 
-      // delete state.users[socket.uuid];
-      // if (offerSocket == socket) {
-      //   state.offer = undefined;
-      //   state.answer = undefined;
-      // }
-      // broadcastState(io,state);
+      //Inefficient way of removing user from state
+      //I suspect that this is handled automatically by socket io
+      for (var room in state)
+      {
+        // skip loop if the property is from prototype
+        if (!state.hasOwnProperty(room)) continue;
+
+        if( typeof state[room].users[socket.uuid] != 'undefined'  )
+        {
+          console.log("Removing the following user upon disconnect");
+          console.log(socket.uuid);
+          delete state[room].users[socket.uuid];
+          broadcastState(io,state[room],room);
+          break;
+        }
+      }
 
     }).on('client-join-room', parse_message(function (name) {
 

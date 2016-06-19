@@ -63,6 +63,11 @@ export default class Engine {
 
   }
 
+  disconnect()
+  {
+    this._socket.disconnect();
+  }
+
   _sendMessage(message, parameters, room = "") {
     if (room != "") {
       this._socket.to(room).emit(message, JSON.stringify(parameters));
