@@ -22,6 +22,7 @@ import MeetingDocumentViewer from '../components/meeting/meeting-document-viewer
 import MeetingDragTarget from '../components/meeting/meeting-drag-target';
 import MeetingGridView from '../components/meeting/meeting-grid-view';
 import MeetingProgressView from '../components/meeting/meeting-progress-view';
+import { connect } from 'react-redux';
 
 import Engine from '../lib/meeting/engine';
 
@@ -59,7 +60,7 @@ class Live extends React.Component {
 
 }
 
-export default class Meeting extends React.Component {
+class Meeting extends React.Component {
 
   constructor(props) {
     super(props);
@@ -84,7 +85,7 @@ export default class Meeting extends React.Component {
 
   componentDidMount() {
     engine.addStateObserver(this.engineStateObserver);
-    engine.connect();
+    engine.connect(this.props.routeParams.roomID);
   }
 
   componentWillUnmount() {
@@ -218,6 +219,20 @@ export default class Meeting extends React.Component {
 
   }
 }
+
+function mapStateToProps(state, ownProps) {
+  return {
+    id: ownProps.params.id,
+    filter: ownProps.location.query.filter
+  };
+}
+
+// Connects React component to the redux store
+// It does not modify the component class passed to it
+// Instead, it returns a new, connected component class, for you to use.
+export default connect(mapStateToProps)(Meeting);
+
+
 
 Meeting.contextTypes = {
   history: React.PropTypes.object.isRequired,

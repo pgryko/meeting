@@ -28,13 +28,16 @@ function parse_message(callback) {
 }
 
 
-  function broadcastState(io,state, room="") {
+  function broadcastState(io,state, room='') {
 
-    if (room != ""){
+    if (room !== ''){
 
       let clientState = Update(state[room], {
         users: {$set: values(state.users)}
       });
+
+      console.log("Broadcasting the following to room: " + room);
+      console.log(clientState);
 
       io.to(room).emit('server-set-state', JSON.stringify(clientState));
     }
@@ -42,6 +45,9 @@ function parse_message(callback) {
       let clientState = Update(state, {
         users: {$set: values(state.users)}
       });
+
+      console.log("Broadcasting the following to all clients: ");
+      console.log(clientState);
 
       io.emit('server-set-state', JSON.stringify(clientState));
     }
@@ -151,23 +157,8 @@ exports = module.exports = function(io, state, app){
 
  io.on('connection', function(socket) {
 
-   const roomName = 'room1';
-    //Get socket id
-    socket.uuid = uuid.v4(),
-      state.users[socket.uuid] = {
-        uuid: socket.uuid,
-        name: 'Random Name' + uuid,
-        email: 'Random email' + uuid,
-      };
-
    //Send message to user to ask which room they want to be in
    io.emit('server-request-room');
-    //Join specific room
-    // socket.join('some room');
-
-    // Update new user and broadcast server state to all users
-
-    broadcastState(io,state);
 
     socket.on('disconnect', function () {
 
@@ -181,28 +172,27 @@ exports = module.exports = function(io, state, app){
     }).on('client-join-room', parse_message(function (message) {
 
       //Check if room exists in memory
-      if ( !(message.room in state) ){
+      if ( !(message['room'] in state) ){
         //if not, add room to memory state
         var current_room = {
           items: [],
           selection: false,
           users: [],
         };
-        state[message.room] = current_room;
+        state[message['room']] = current_room;
       }
 
       // Then add user to room list
       // The user details will need to be pulled from session id and mongoose
-      state[message.room].users[socket.uuid] = {
+      state[message['room']].users[socket.uuid] = {
         uuid: socket.uuid,
-        name: 'Random Name' + uuid,
-        email: 'Random email' + uuid
+        name: 'Random Name ' + socket.uuid,
+        email: 'Random email ' + socket.uuid
       };
 
-      console.log("Current state is state ");
-      console.log(parse_message(state));
-
-      broadcastState(io, state,message.room);
+      socket.join(message['room']);
+      // Update new user and broadcast server state to all users
+      broadcastState(io, state,message['room']);
 
     })).on('client-add-item', parse_message(function (item) {
 

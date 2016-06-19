@@ -43,7 +43,7 @@ export default class Engine {
     }
   }
 
-  connect() {
+  connect(roomName) {
     var self = this;
     self._socket = io('', {path: '/api/chat'});
 
@@ -53,9 +53,8 @@ export default class Engine {
     }));
     self._socket.on('server-request-room', function () {
       console.log("Sever requested user details");
-      self._sendMessage('client-join-room', JSON.stringify({room: 'thelab'}));
+      self._sendMessage('client-join-room', JSON.stringify({room: roomName}));
     })
-    self._socket.join('thelab');
 
   }
 
