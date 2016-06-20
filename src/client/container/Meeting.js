@@ -140,7 +140,7 @@ class Meeting extends React.Component {
         leftIcon={<ModeEdit />}
         onTouchTap={() => engine.addItem({
                     title: "Shared Notes",
-                    url: "https://commcell-etherpad.unipart.digital/p/Mclaren"
+                    url: "https://commcell-etherpad.unipart.digital/p/development"
                 })} />,
       <Divider
         key="divider-2" />,
