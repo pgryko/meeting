@@ -18,7 +18,6 @@
 
 import io from 'socket.io-client';
 
-import parse_message from './parse-message';
 
 export default class Engine {
 
@@ -38,6 +37,10 @@ export default class Engine {
   }
 
   setState(state) {
+    console.log("State contents are");
+    console.log(state);
+    console.log("And type is");
+    console.log(typeof state);
     this.state = state;
     for (var i in this.stateObservers) {
       this.stateObservers[i](state);
@@ -51,13 +54,10 @@ export default class Engine {
     self._socket = io('', {path: '/api/chat'});
 
 
-    self._socket.on('server-set-state', parse_message(function (state) {
-      console.log("State updated to ");
-      console.log(state);
+    self._socket.on('server-set-state', function (state) {
       self.setState(state);
-    }));
+    });
     self._socket.on('server-request-room', function () {
-      console.log("Sever requested user details");
       self._sendMessage('client-join-room', roomName);
     })
 
@@ -70,10 +70,10 @@ export default class Engine {
 
   _sendMessage(message, parameters, room = "") {
     if (room != "") {
-      this._socket.to(room).emit(message, JSON.stringify(parameters));
+      this._socket.to(room).emit(message, parameters);
     }
     else {
-      this._socket.emit(message, JSON.stringify(parameters));
+      this._socket.emit(message, parameters);
     }
   }
 

@@ -21,13 +21,6 @@ function values(object) {
   return items;
 }
 
-function parse_message(callback) {
-  return function(message) {
-    callback(JSON.parse(message));
-  }
-}
-
-
   function broadcastState(io,state, room='') {
 
     if (room !== ''){
@@ -35,7 +28,7 @@ function parse_message(callback) {
       console.log("Broadcasting the following to room: " + room);
       console.log(state[room]);
 
-      io.to(room).emit('server-set-state', JSON.stringify(state[room]));
+      io.to(room).emit('server-set-state', state[room]);
     }
     else {
       let clientState = Update(state, {
@@ -45,7 +38,7 @@ function parse_message(callback) {
       console.log("Broadcasting the following to all clients: ");
       console.log(clientState);
 
-      io.emit('server-set-state', JSON.stringify(clientState));
+      io.emit('server-set-state', clientState);
     }
 
   }
@@ -58,7 +51,7 @@ exports = module.exports = function(io, state, app){
   // Accept file uploads.
   app.post('/upload', function(req, res) {
 
-    var roomName = JSON.stringify(req.get("room"));
+    var roomName = req.get("room");
     //NB add an error check here to see if room exists, else reject upload
     var fstream;
     req.pipe(req.busboy);
@@ -174,9 +167,10 @@ exports = module.exports = function(io, state, app){
         }
       }
 
-    }).on('client-join-room', parse_message(function (name) {
+    }).on('client-join-room', function (roomName) {
 
-      var roomName = JSON.stringify(name);
+      // var roomName = JSON.stringify(name);
+
       //Check if room exists in memory
       if ( !(roomName in state) ){
         //if not, add room to memory state
@@ -202,13 +196,13 @@ exports = module.exports = function(io, state, app){
       // Update new user and broadcast server state to all users
       broadcastState(io, state,roomName);
 
-    })).on('client-add-item', parse_message(function (message) {
+    }).on('client-add-item', function (message) {
 
       message.item.uuid = uuid.v4();
       state[message.room].items.push(message.item);
       broadcastState(io,state,message.room);
 
-    })).on('client-remove-item', parse_message(function (message) {
+    }).on('client-remove-item', function (message) {
 
       var item = state[message.room].items[message.index];
       if (item.cleanup) {
@@ -220,16 +214,16 @@ exports = module.exports = function(io, state, app){
       }
       broadcastState(io,state,message.room);
 
-    })).on('client-set-selection', parse_message(function (message) {
+    }).on('client-set-selection', function (message) {
 
-      state[message.room].selection = message[message.room].uuid;
+      state[message.room].selection = message.uuid;
       broadcastState(io,state,message.room);
 
-    })).on('client-clear-selection', parse_message(function (message) {
+    }).on('client-clear-selection', function (message) {
 
       state[message.room].selection = false;
       broadcastState(io,state,message.room);
 
-    }));
+    });
   })
-}
+};
