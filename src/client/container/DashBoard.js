@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { createRoom, typing, incrementCount,
   decrementCount, destroyRoom, fetchRooms } from '../actions/rooms';
 import ListRooms from '../components/ListRooms';
-import EntryBox from '../components/EntryBox';
+import TextInput from '../components/TextInput';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 
@@ -18,16 +19,40 @@ class DashBoard extends React.Component{
 
   constructor(props){
     super(props);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onSubmitChange = this.onSubmitChange.bind(this);
     this.state = {
+      newRoom : "",
+      newRoomDescription : ""
     }
   }
 
 
-  render() {
-    // const token = auth.getToken();
-    const token = "Add a meeting room";
+  onChangeName(value){
+    this.setState({newRoom: value});
+  }
 
-    const {newRoom, rooms, typing, createRoom, destroyRoom, incrementCount, decrementCount } = this.props;
+  onChangeDescription(value){
+    this.setState({newRoomDescription: value});
+  }
+
+  onSubmitChange()
+  {
+    //Name of new room must not be empty
+    //This also checked in the room action and needs to be refactored
+    //To send a message that the input must not be empty
+    if (this.state.newRoom != "") {
+      this.props.createRoom(this.state.newRoom, this.state.newRoomDescription);
+      //Clear contents of form upon submit
+      this.setState({newRoom: "", newRoomDescription: ""});
+    }
+  };
+
+
+  render() {
+
+    const {rooms, destroyRoom, incrementCount, decrementCount } = this.props;
 
     return (
       <div>
@@ -36,11 +61,24 @@ class DashBoard extends React.Component{
         <section className="container">
           <h2 className="block-title text-center">
             Dashboard
-            <small>{token}</small>
+            <small>Add a meeting room</small>
           </h2>
-          <EntryBox room={newRoom}
-                    onEntryChange={typing}
-                    onEntrySave={createRoom} />
+          <div className={'help-search'}>
+            <TextInput
+              value={this.state.newRoom}
+              placeholder="Meeting room Name"
+              onEntryChange={this.onChangeName}
+              onEntrySave={() => {this.onSubmitChange()}}
+            /> <br />
+            <TextInput
+              value={this.state.newRoomDescription}
+              placeholder="Meeting Room Description"
+              onEntryChange={this.onChangeDescription}
+              onEntrySave={() => {this.onSubmitChange()}}
+            /> <br />
+            <RaisedButton label="Submit" onTouchTap={() => {this.onSubmitChange()}} />
+          </div>
+
 
           {/*<!-- Filters --> */}
           <div className="text-center padding-top">

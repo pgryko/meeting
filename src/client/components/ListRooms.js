@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import RoomItem from './RoomItem';
-import Slug from 'slug';
 
 
 const ListRooms = ({onIncrement, onDecrement, onDestroy, rooms}) => {
@@ -9,8 +8,8 @@ const ListRooms = ({onIncrement, onDecrement, onDestroy, rooms}) => {
       <RoomItem index={key}
                  id={room.id}
                  key={key}
-                 text={room.text}
-                roomUrl={Slug(room.text)}
+                 name={room.name}
+                roomUrl={room.slugURL} // Pull slug URL from server
                   image="img/portfolio/01.jpg"
                   title="CommCell 1"
                  onIncrement={onIncrement}

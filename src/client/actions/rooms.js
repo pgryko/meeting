@@ -3,6 +3,7 @@ import { polyfill } from 'es6-promise';
 import request from 'axios';
 import md5 from 'spark-md5';
 import * as types from '../types';
+import Slug from 'slug';
 
 polyfill();
 
@@ -50,7 +51,10 @@ export function createRoomRequest(data) {
     type: types.CREATE_ROOM_REQUEST,
     id: data.id,
     count: data.count,
-    text: data.text
+    name: data.name,
+    slugURL: data.slugURL,
+    description: data.description
+
   };
 }
 
@@ -78,19 +82,23 @@ export function createRoomDuplicate() {
 // which will get executed by Redux-Thunk middleware
 // This function does not need to be pure, and thus allowed
 // to have side effects, including executing asynchronous API calls.
-export function createRoom(text) {
+export function createRoom(name, description = "") {
   return (dispatch, getState) => {
-    // If the text box is empty
-    if (text.trim().length <= 0) return;
+    // If the name box is empty
+    if (name.trim().length <= 0) return;
+    console.log("name: " + name + " description: " + description);
 
-    const id = md5.hash(text);
+    const id = md5.hash(name);
+    const slugURL = Slug(name);
     // Redux thunk's middleware receives the store methods `dispatch`
     // and `getState` as parameters
     const { room } = getState();
     const data = {
       count: 1,
       id,
-      text
+      name,
+      slugURL,
+      description
     };
 
 

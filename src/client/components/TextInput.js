@@ -41,11 +41,11 @@ export default class TopicTextInput extends Component {
     const {className, placeholder, value} = this.props;
     return (
       <TextField className={className}
-                 placeholder={placeholder}
                  onChange={this.onChange}
                  onKeyDown={this.onKeyDown}
                  value={value}
                  id={placeholder}
+                 floatingLabelText={placeholder}
                  autoFocus
                  style={{
                   width: '50%',

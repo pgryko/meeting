@@ -18,14 +18,13 @@
 
 import io from 'socket.io-client';
 
-import parse_message from './parse-message';
-import values from './values';
 
 export default class Engine {
 
   constructor() {
     this.stateObservers = [];
     this.state = {};
+    this.roomName = "";
   }
 
   addStateObserver(observer) {
@@ -38,25 +37,44 @@ export default class Engine {
   }
 
   setState(state) {
+    console.log("State contents are");
+    console.log(state);
+    console.log("And type is");
+    console.log(typeof state);
     this.state = state;
     for (var i in this.stateObservers) {
       this.stateObservers[i](state);
     }
   }
 
-  connect() {
+  connect(roomName) {
     var self = this;
-    self._socket = io('', { path: '/api/chat' });
-    self._socket.on('server-set-state', parse_message(function(state) {
+    //Save room name in class constructor
+    this.roomName = roomName;
+    self._socket = io('', {path: '/api/chat'});
 
+
+    self._socket.on('server-set-state', function (state) {
       self.setState(state);
+    });
+    self._socket.on('server-request-room', function () {
+      self._sendMessage('client-join-room', roomName);
+    })
 
-
-    }));
   }
 
-  _sendMessage(message, parameters) {
-    this._socket.emit(message, JSON.stringify(parameters));
+  disconnect()
+  {
+    this._socket.disconnect();
+  }
+
+  _sendMessage(message, parameters, room = "") {
+    if (room != "") {
+      this._socket.to(room).emit(message, parameters);
+    }
+    else {
+      this._socket.emit(message, parameters);
+    }
   }
 
   setUser(user) {
@@ -64,51 +82,21 @@ export default class Engine {
   }
 
   addItem(item) {
-    this._sendMessage('client-add-item', item);
+    this._sendMessage('client-add-item', {room: this.roomName ,item: item});
   }
 
   removeItem(index) {
-    this._sendMessage('client-remove-item', {index: index});
+    this._sendMessage('client-remove-item', {room: this.roomName, index: index});
   }
 
   setSelection(uuid) {
-    this._sendMessage('client-set-selection', {uuid: uuid});
+    this._sendMessage('client-set-selection', {room: this.roomName, uuid: uuid});
   }
 
   clearSelection() {
-    this._sendMessage('client-clear-selection', {});
+    this._sendMessage('client-clear-selection', {room: this.roomName});
   }
 
-  startCall() {
-    webRTC.startCall();
-  }
-
-  addIceCandidate(candidate) {
-    this._sendMessage('client-call-add-ice-candidate', candidate);
-  }
-
-  setSession(session) {
-    console.log(session);
-    if (session.type == "offer") {
-      this._sendMessage('client-call-set-offer', session);
-    } else if (session.type == "answer") {
-      this._sendMessage('client-call-set-answer', session)
-    } else {
-      alert("Unsupported session type!");
-    }
-  }
-
-  setLocalStream(stream) {
-    // this._meeting.setState({localStream: stream});
-  }
-
-  setRemoteStream(stream) {
-    // this._meeting.setState({remoteStream: stream});
-  }
-
-  setCallState(state) {
-    // this._meeting.setState({callState: state});
-  }
 
   uploadFiles(files, callback) {
 
@@ -126,7 +114,7 @@ export default class Engine {
           callback();
         }
       }
-    }
+    };
     continuation();
 
   }
@@ -141,6 +129,8 @@ export default class Engine {
       }
     });
     xhr.open("POST", "/upload");
+    //Add room name to request header
+    xhr.setRequestHeader("room",this.roomName);
     xhr.send(formData);
   }
 

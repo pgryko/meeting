@@ -66,7 +66,7 @@ export default class MeetingAppScreen extends React.Component {
                                             position: "fixed",
                                             bottom: "36px",
                                             right: "36px",
-                                            zIndex: '8px',
+                                            zIndex: '8',
                                         }}
                                         onTouchTap={() => self.props.onStartCall()}>
                                         <AVVideocamIcon />

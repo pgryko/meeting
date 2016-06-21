@@ -1,5 +1,5 @@
-import React from 'react';
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
+import React, {PropTypes} from 'react';
+import { connect } from 'react-redux';
 
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
@@ -59,7 +59,8 @@ class Live extends React.Component {
 
 }
 
-export default class Meeting extends React.Component {
+
+class Meeting extends React.Component {
 
   constructor(props) {
     super(props);
@@ -75,21 +76,35 @@ export default class Meeting extends React.Component {
       showProgress: false,
 
     };
-
   }
 
   engineStateObserver = (state) => {
     this.setState(state);
   };
 
+
   componentDidMount() {
     engine.addStateObserver(this.engineStateObserver);
-    engine.connect();
+    engine.connect(this.props.routeParams.roomID);
+    console.log("Rooms array contains");
+    console.log(this.props.rooms);
+
   }
 
   componentWillUnmount() {
     engine.removeStateObserver(this.engineStateObserver);
+    engine.disconnect();
   }
+
+  //Used to extract room name from slugURL
+  mapSlugURLToRoomTitle = (rooms,slugURL) => {
+    let roomTitle = rooms.map((room) => {
+      if (room.slugURL === slugURL) {
+        return (room.name);
+      }
+    });
+    return roomTitle;
+  };
 
   uploadFiles(files) {
     this.setState({showProgress: true});
@@ -125,7 +140,7 @@ export default class Meeting extends React.Component {
         leftIcon={<ModeEdit />}
         onTouchTap={() => engine.addItem({
                     title: "Shared Notes",
-                    url: "https://commcell-etherpad.unipart.digital/p/Mclaren"
+                    url: "https://commcell-etherpad.unipart.digital/p/development"
                 })} />,
       <Divider
         key="divider-2" />,
@@ -144,7 +159,7 @@ export default class Meeting extends React.Component {
         primaryText="Live"
         leftIcon={<RemoveRedEye />}
         onTouchTap={() => {
-                    this.context.history.push(`/meeting/${this.props.uuid}`);
+                    this.context.route.push(`/meeting/${this.props.uuid}`);
                     this.setState({showNavigation: false});
                 }} />,
       <Divider
@@ -189,12 +204,12 @@ export default class Meeting extends React.Component {
                         left: '0px',
                         width: '100%',
                         height: '100%',
-                        zIndex: '1200px',
+                        zIndex: '1200',
                     }}
           open={this.state.showProgress}/>
 
         <MeetingAppScreen
-          title={this.state.title}
+          title={this.mapSlugURLToRoomTitle(this.props.rooms,this.props.routeParams.roomID)}
           navigationItems={navigationItems}
           menuItems={menuItems}
           showNavigation={this.state.showNavigation}
@@ -219,8 +234,27 @@ export default class Meeting extends React.Component {
   }
 }
 
+function mapStateToProps(state, ownProps) {
+  return {
+    id: ownProps.params.id,
+    filter: ownProps.location.query.filter,
+    rooms: state.room.rooms
+  };
+}
+
+// Connects React component to the redux store
+// It does not modify the component class passed to it
+// Instead, it returns a new, connected component class, for you to use.
+export default connect(mapStateToProps)(Meeting);
+
+
+
 Meeting.contextTypes = {
   history: React.PropTypes.object.isRequired,
+};
+
+Meeting.propTypes = {
+  rooms: PropTypes.array.isRequired
 };
 
 Meeting.childContextTypes = {

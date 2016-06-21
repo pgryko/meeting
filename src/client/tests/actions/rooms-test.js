@@ -7,6 +7,7 @@ import axios from 'axios';
 import expect from 'expect';
 import * as actions from '../../actions/rooms';
 import * as types from '../../types';
+import Slug from  'slug';
 
 polyfill();
 
@@ -18,12 +19,16 @@ describe('Room Actions', () => {
     let sandbox;
 
     const index = 0;
-    const room = 'A time machine';
-    const id = md5.hash(room);
+    const name = 'A time machine';
+    const slugURL = Slug(name);
+    const description = 'A mad man in a blue box, who goes around kidnaping women';
+    const id = md5.hash(name);
     const data = {
       id,
       count: 1,
-      text: room
+      name: name,
+      slugURL: slugURL,
+      description: description
     };
 
     const initialState = {
@@ -47,7 +52,9 @@ describe('Room Actions', () => {
           type: types.CREATE_ROOM_REQUEST,
           id,
           count: 1,
-          text: data.text
+          name: data.name,
+          slugURL: data.slugURL,
+          description: data.description
         }, {
           type: types.CREATE_ROOM_SUCCESS
         }
@@ -56,7 +63,7 @@ describe('Room Actions', () => {
       sandbox.stub(axios, 'post').returns(Promise.resolve({ status: 200 }));
 
       const store = mockStore(initialState);
-      store.dispatch(actions.createRoom(room))
+      store.dispatch(actions.createRoom(name,description))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         }).then(done).catch(done);
@@ -68,7 +75,9 @@ describe('Room Actions', () => {
           type: types.CREATE_ROOM_REQUEST,
           id,
           count: 1,
-          text: data.text
+          name: data.name,
+          slugURL: data.slugURL,
+          description: data.description
         }, {
           type: types.CREATE_ROOM_FAILURE,
           id,
@@ -78,7 +87,7 @@ describe('Room Actions', () => {
       sandbox.stub(axios, 'post').returns(Promise.reject({status: 404, data: 'Oops! Something went wrong and we couldn\'t create your room'}));
 
       const store = mockStore(initialState);
-      store.dispatch(actions.createRoom(room))
+      store.dispatch(actions.createRoom(name,description))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         }).then(done).catch(done);
@@ -94,7 +103,7 @@ describe('Room Actions', () => {
       ];
 
       const store = mockStore(initialState);
-      store.dispatch(actions.createRoom(room));
+      store.dispatch(actions.createRoom(name,description));
       expect(store.getActions()).toEqual(expectedActions);
       initialState.room.rooms.pop();
     });
@@ -118,7 +127,7 @@ describe('Room Actions', () => {
       {
         type: types.CREATE_ROOM_FAILURE,
         id: data.id,
-        error: 'Oops! Something went wrong and we couldn\'t add your vote'
+        error: 'Oops! Something went wrong and we couldn\'t add your room'
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({ status: 400 }));
       const store = mockStore();
@@ -146,7 +155,7 @@ describe('Room Actions', () => {
       const expectedActions = [
       {
         type: types.CREATE_ROOM_FAILURE,
-        error: 'Oops! Something went wrong and we couldn\'t add your vote',
+        error: 'Oops! Something went wrong and we couldn\'t add your room',
         id: data.id
       }];
       sandbox.stub(axios, 'put').returns(Promise.reject({ status: 400 }));
@@ -176,7 +185,7 @@ describe('Room Actions', () => {
       {
         type: types.CREATE_ROOM_FAILURE,
         id: data.id,
-        error: 'Oops! Something went wrong and we couldn\'t add your vote'
+        error: 'Oops! Something went wrong and we couldn\'t add your room'
       }];
       sandbox.stub(axios, 'delete').returns(Promise.reject({ status: 400 }));
       const store = mockStore();
@@ -186,14 +195,19 @@ describe('Room Actions', () => {
         }).then(done).catch(done);
     });
   });
+  //
   describe('Action creator unit tests', () => {
     const index = 0;
-    const room = 'A time machine';
-    const id = md5.hash(room);
+    const name = 'A time machine';
+    const slugURL = Slug(name);
+    const description = 'A mad man in a blue box, who goes around kidnaping women';
+    const id = md5.hash(name);
     const data = {
       id,
       count: 1,
-      text: room
+      name: name,
+      slugURL: slugURL,
+      description: description
     };
     let sandbox;
 
@@ -229,20 +243,14 @@ describe('Room Actions', () => {
       expect(actions.destroy(index)).toEqual(expectedAction);
     });
 
-    it('should create an action object with a new room', () => {
-      const expectedAction = {
-        type: types.TYPING,
-        newRoom: data.text
-      };
-      expect(actions.typing(data.text)).toEqual(expectedAction);
-    });
-
     it('should create an action object with a new room request', () => {
       const expectedAction = {
         type: types.CREATE_ROOM_REQUEST,
         id: data.id,
         count: data.count,
-        text: data.text
+        name: data.name,
+        slugURL: data.slugURL,
+        description: data.description
       };
       expect(actions.createRoomRequest(data)).toEqual(expectedAction);
     });

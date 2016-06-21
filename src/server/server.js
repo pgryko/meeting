@@ -4,17 +4,18 @@ import express from 'express';
 import { ENV } from './config/appConfig';
 import { connect } from './db';
 import passportConfig from './config/passport';
-import expressConfig from './config/express';
-import routesConfig from './config/routes';
+import expressConfig from './controllers/express';
+import routesConfig from './controllers/routes';
 import dotenv from 'dotenv';
 import HTTP from 'http';
-import socketio from './socketio';
+import socketio from './controllers/meetingEngine';
 
 // Load environment variables from .env file
 // dotenv.load();
 
 const App = require('../client/server');
 const app = express();
+var server = HTTP.Server(app);
 
 
 /*
@@ -40,11 +41,15 @@ passportConfig();
 expressConfig(app);
 
 /*
- * REMOVE if you do not need any routes
  *
  * Note: Some of these routes have passport and database model dependencies
  */
 routesConfig(app);
+
+//Routes for Socketio
+
+socketio(app,server);
+
 
 /*
  * This is where the magic happens. We take the locals data we have already
@@ -53,10 +58,6 @@ routesConfig(app);
  * to initialize and return the React-rendered html string
  */
 app.get('*', App.default);
-
-var server = HTTP.Server(app);
-
-socketio(app,server);
 
 
 server.listen(app.get('port'), function(err) {
