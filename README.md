@@ -117,3 +117,123 @@ Build project and run server:
 npm run build:prod
 node build/server.bundle.js
 ```
+
+##Configuring node to run with pm2
+Based on https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
+
+sudo npm install -g pm2
+pm2 start build/server.build.js --watch
+pm2 startup systemd
+/ run the output command that the terminal asks for, it'll be something anlong the lines of
+
+sudo su -c "env PATH=$PATH:/usr/bin pm2 startup systemd -u sammy --hp /home/sammy"
+
+where sammy is your user name
+
+
+##Configuring apache2 with letsencrypt on ubuntu 16.04
+
+sudo apt-get install apache2
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo service apache2 restart
+sudo apt-get install python-letsencrypt-apache 
+letsencrypt --apache
+
+##Enable port forwarding with apache to port 8090
+
+in /etc/apache2/sites-available change
+
+000-default.conf to contain:
+
+ <VirtualHost *:80>
+	# The ServerName directive sets the request scheme, hostname and port that
+	# the server uses to identify itself. This is used when creating
+	# redirection URLs. In the context of virtual hosts, the ServerName
+	# specifies what hostname must appear in the request's Host: header to
+	# match this virtual host. For the default virtual host (this file) this
+	# value is not decisive as it is used as a last resort host regardless.
+	# However, you must set it for any further virtual host explicitly.
+	#ServerName www.example.com
+
+	ServerAdmin admin.email@something.com
+	ServerName example.com
+  #DocumentRoot /var/www/html
+
+	# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+	# error, crit, alert, emerg.
+	# It is also possible to configure the loglevel for particular
+	# modules, e.g.
+	#LogLevel info ssl:warn
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	# For most configuration files from conf-available/, which are
+	# enabled or disabled at a global level, it is possible to
+	# include a line for only one particular virtual host. For example the
+	# following line enables the CGI configuration for this host only
+	# after it has been globally disabled with "a2disconf".
+	#Include conf-available/serve-cgi-bin.conf
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =example.com
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+
+and change 000-default-le-ssl.conf  to
+
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+	# The ServerName directive sets the request scheme, hostname and port that
+	# the server uses to identify itself. This is used when creating
+	# redirection URLs. In the context of virtual hosts, the ServerName
+	# specifies what hostname must appear in the request's Host: header to
+	# match this virtual host. For the default virtual host (this file) this
+	# value is not decisive as it is used as a last resort host regardless.
+	# However, you must set it for any further virtual host explicitly.
+	#ServerName www.example.com
+
+	ServerAdmin admin.email@something.com
+	ServerName example.com
+  #DocumentRoot /var/www/html
+	
+  ProxyRequests Off
+  ProxyPreserveHost On
+  <Proxy *>
+    Order allow,deny
+    Allow from all
+  </Proxy>
+  SSLEngine On
+  SSLProxyEngine On
+
+  ProxyPass / http://localhost:8090/ Keepalive=On
+  ProxyPassReverse / http://localhost:8090/ Keepalive=On
+  # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+	# error, crit, alert, emerg.
+	# It is also possible to configure the loglevel for particular
+	# modules, e.g.
+	#LogLevel info ssl:warn
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+  RewriteEngine on
+  RewriteCond %{SERVER_NAME} =dev.commcell.unipart.digital
+
+	# For most configuration files from conf-available/, which are
+	# enabled or disabled at a global level, it is possible to
+	# include a line for only one particular virtual host. For example the
+	# following line enables the CGI configuration for this host only
+	# after it has been globally disabled with "a2disconf".
+	#Include conf-available/serve-cgi-bin.conf
+SSLCertificateFile /etc/letsencrypt/live/example.com/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
+Include /etc/letsencrypt/options-ssl-apache.conf
+ServerName example.com
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+</IfModule>
