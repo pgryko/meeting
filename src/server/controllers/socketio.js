@@ -6,6 +6,7 @@ import gm from 'gm';
 import Util from 'util';
 import fs from 'fs';
 import path from 'path';
+import {exec} from 'child_process';
 
 /*
  Import from Jason's Socket io implementation, this needs to be refactored
@@ -106,6 +107,7 @@ exports = module.exports = function(io, state, app){
           var command = Util.format(
             'gs -dBATCH -dNOPAUSE -sDEVICE=jpeg -r200 -sOutputFile=%s %s',
             thumbnailPath, uploadPath);
+
           exec(command, function(error) {
 
             if (error) {
