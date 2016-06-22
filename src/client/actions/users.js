@@ -87,6 +87,7 @@ export function manualLogin(data) {
     return makeUserRequest('post', data, '/login')
       .then(response => {
         if (response.status === 200) {
+          if (typeof window !== 'undefined') sessionStorage.setItem('authenticated', true);
           dispatch(loginSuccess(response.data.message));
           dispatch(push('/dashboard'));
         } else {
@@ -125,6 +126,7 @@ export function logOut() {
     return makeUserRequest('post', null, '/logout')
       .then(response => {
         if (response.status === 200) {
+          if (typeof window !== 'undefined') sessionStorage.removeItem('authenticated');
           dispatch(logoutSuccess());
         } else {
           dispatch(logoutError());

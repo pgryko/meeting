@@ -14,7 +14,7 @@ export default function user(state = {
   isLogin: true,
   message: '',
   isWaiting: false,
-  authenticated: false }, action = {}) {
+  authenticated: typeof window !== 'undefined' ? sessionStorage.getItem('authenticated') : false }, action = {}) {
   switch (action.type) {
     case TOGGLE_LOGIN_MODE:
       return Object.assign({}, state, {
