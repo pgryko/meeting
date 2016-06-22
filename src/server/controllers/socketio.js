@@ -86,7 +86,7 @@ exports = module.exports = function(io, state, app){
         };
 
 
-        if (extension == '.jpg' || extension == '.jpeg' || extension == '.png' || extension == '.gif') {
+        if (extension == '.jpg' || extension == '.jpeg' || extension == '.png' || extension == '.gif' || extension == '.pdf') {
 
           var imagePath = uploadPath;
           gm(uploadPath).autoOrient().write(uploadPath, function() {
@@ -99,49 +99,6 @@ exports = module.exports = function(io, state, app){
               });
             });
             res.sendStatus(200);
-          });
-
-        } else if (extension == '.pdf') {
-
-          try {
-
-            var thumbnailPath = uploadWithExtension('.jpg');
-            var command = Util.format(
-              'gs -dBATCH -dNOPAUSE -sDEVICE=jpeg -r200 -sOutputFile=%s %s',
-              thumbnailPath, uploadPath);
-          }
-          catch (err)
-          {
-            console.log("Encountered an error generating PDF preview.");
-            console.log(err);
-            res.status(500).send('Encountered an error generating PDF preview.');
-            return;
-          }
-
-          exec(command, function(error) {
-
-            if (error) {
-              console.log("Encountered an error generating PDF preview.");
-              console.log(error);
-              res.status(500).send('Encountered an error generating PDF preview.');
-              return;
-            }
-
-            completion(path.basename(filename, extension), thumbnailPath, function() {
-              fs.unlink(uploadPath, function(error) {
-                if (error) {
-                  console.log(error);
-                }
-              });
-              fs.unlink(thumbnailPath, function(error) {
-                if (error) {
-                  console.log(error);
-                }
-              });
-            });
-
-            res.sendStatus(200);
-
           });
 
         } else {
