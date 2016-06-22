@@ -103,10 +103,20 @@ exports = module.exports = function(io, state, app){
 
         } else if (extension == '.pdf') {
 
-          var thumbnailPath = uploadWithExtension('.jpg');
-          var command = Util.format(
-            'gs -dBATCH -dNOPAUSE -sDEVICE=jpeg -r200 -sOutputFile=%s %s',
-            thumbnailPath, uploadPath);
+          try {
+
+            var thumbnailPath = uploadWithExtension('.jpg');
+            var command = Util.format(
+              'gs -dBATCH -dNOPAUSE -sDEVICE=jpeg -r200 -sOutputFile=%s %s',
+              thumbnailPath, uploadPath);
+          }
+          catch (err)
+          {
+            console.log("Encountered an error generating PDF preview.");
+            console.log(err);
+            res.status(500).send('Encountered an error generating PDF preview.');
+            return;
+          }
 
           exec(command, function(error) {
 
