@@ -81,13 +81,15 @@ class DashBoard extends React.Component{
 
 
           {/*<!-- Filters --> */}
-          <div className="text-center padding-top">
+
+          {/*<div className="text-center padding-top">
             <ul className="nav-filters space-bottom-2x text-center">
               <li className="active"><a href="#" data-filter="*">Show All</a></li>
               <li><a href="#" data-filter=".apps">Recent</a></li>
               <li><a href="#" data-filter=".identity">Art Room</a></li>
-            </ul>{/*<!-- .nav-filters --> */}
+            </ul>
           </div>
+          */}
 
           <ListRooms rooms={rooms}
                        onIncrement={incrementCount}
@@ -96,15 +98,19 @@ class DashBoard extends React.Component{
 
 
           {/*<!-- Load More Button --> */}
-          <div className="text-center padding-top">
+
+          {/*<div className="text-center padding-top">
             <a href="#" className="btn btn-default btn-ghost waves-effect">Load More</a>
           </div>
-        </section>{/*<!-- .container --> */}
+          */}
+        </section>{/*<!-- .container */}
 
-        {/*<!-- Scroll To Top Button --> */}
+        {/* Scroll To Top Button */}
+        {/*
         <a href="#" className="scroll-to-top-btn">
           <i className="icon-arrow-up"></i>
-        </a>{/*<!-- .scroll-to-top-btn --> */}
+        </a>
+        */}
       </div>
     )
   }

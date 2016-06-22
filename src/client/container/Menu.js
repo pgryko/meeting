@@ -48,9 +48,9 @@ const NavigationMenu = ({ user, logOut }) => {
           <nav className="main-navigation">
             <ul className="menu">
               <MenuItem onlyActiveOnIndex={false} index={true} to="/">Home</MenuItem>
-              <MenuItem to="/features">Features</MenuItem>
+              {/*<MenuItem to="/features">Features</MenuItem>
               <MenuItem to="/help">Help</MenuItem>
-              <MenuItem to="/about">About Us</MenuItem>
+              <MenuItem to="/about">About Us</MenuItem> */}
               <MenuItem to="/dashboard">Dashboard</MenuItem>
             </ul>
             {/*<!-- .menu -->*/}
