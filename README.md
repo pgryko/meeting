@@ -19,9 +19,10 @@ https://github.com/choonkending/react-webpack-node
 2. Install package dependencies:
 
 	```bash
-	sudo apt-get install -y python nodejs make g++
+	sudo apt-get install -y python nodejs make g++ imagemagick ghostscript poppler-utils
 	```
 
+  Imagemagick ghostscript poppler-utils are used for image formating i.e. conversion of pdf to jpeg
 3. Install the project dependencies:
 
 	```bash
@@ -44,7 +45,7 @@ The OS X developer setup makes use of [Homebrew](https://brew.sh), so please ins
    brew install node
    npm install -g nodemon parallelshell cross-env
 	```
-	
+
 2. Install and configure MongoDB; run the following command from the root of the project:
 
    ```bash
@@ -54,9 +55,9 @@ The OS X developer setup makes use of [Homebrew](https://brew.sh), so please ins
    ```
 
    You can find more detailed instructions [here](https://docs.mongodb.com/master/tutorial/install-mongodb-on-os-x/?_ga=1.153956344.1906756264.1465927705).
-   
+
    N.B. This does not configure `mongod` to start on system start, so you will need to run it each time you wish to run the project.
-   
+
 3. Install the local package dependencies:
 
 	```bash
@@ -137,7 +138,7 @@ sudo apt-get install apache2
 sudo a2enmod proxy
 sudo a2enmod proxy_http
 sudo service apache2 restart
-sudo apt-get install python-letsencrypt-apache 
+sudo apt-get install python-letsencrypt-apache
 letsencrypt --apache
 
 ##Enable port forwarding with apache to port 8090
@@ -199,7 +200,7 @@ and change 000-default-le-ssl.conf  to
 	ServerAdmin admin.email@something.com
 	ServerName example.com
   #DocumentRoot /var/www/html
-	
+
   ProxyRequests Off
   ProxyPreserveHost On
   <Proxy *>
