@@ -154,11 +154,24 @@ export function remove(req, res) {
   });
 }
 
+/**
+ * Get room
+ */
+export  function roomExists(roomName){
+  Room.find({slugURL:roomName}, (err,room) =>{
+      return !(Object.keys(room).length === 0) ;
+  }
+  ).limit(1);
+
+}
 export default {
   all,
   addRoom,
   update,
   remove,
   addItem,
-  removeItem
+  removeItem,
+  getRoomItems,
+  getRoomItem,
+  roomExists,
 };

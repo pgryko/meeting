@@ -151,6 +151,12 @@ exports = module.exports = function(io, state, app){
 
       // var roomName = JSON.stringify(name);
 
+      //Check if room exists in DB
+      console.log("This room should exist");
+      console.log(roomsController.roomExists(roomName));
+
+      console.log("This room should not exist");
+      console.log(roomsController.roomExists("gfaff"));
       //Check if room exists in memory
       if ( !(roomName in state) ){
         //if not, add room to memory state
@@ -162,6 +168,9 @@ exports = module.exports = function(io, state, app){
         };
         state[roomName] = current_room;
       }
+
+      console.log("Room items are");
+      roomsController.getRoomItems(roomName);
 
       // Then add user to room list
       // The user details will need to be pulled from session id and mongoose
