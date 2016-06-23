@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import Room from '../models/rooms';
+import fs from 'fs';
+import Document from '../models/document';
 
 /**
  * List
@@ -18,7 +20,7 @@ export function all(req, res) {
 /**
  * Add a Room
  */
-export function add(req, res) {
+export function addRoom(req, res) {
   Room.create(req.body, (err) => {
     if (err) {
       console.log(err);
@@ -61,6 +63,69 @@ export function update(req, res) {
 }
 
 /**
+ * Add an item to the room
+ */
+export function addItem(roomName,id,contentType,title,filePath,url){
+  console.log("Running add item");
+  Room.findOne( {slugURL:roomName},
+    function (err, room) {
+      var item = Document.create({
+        _id: id, //File id
+        contentType: contentType,
+        title:title,
+        date: Date.now(),
+        data:  fs.readFileSync(filePath),
+        url: url
+      });
+      console.log("Found room");
+      console.log(room);
+      if(!err){
+        room.items.push(item);
+        console.log("Setting modifiedOn");
+        room.modifiedOn = Date.now();
+        console.log("Saving room");
+        room.save(function (err, room){
+          if(err){
+            console.log('Oh dear', err);
+          } else {
+            console.log('Item saved: ' + id);
+            // res.redirect( '/project/' + req.body.projectID );
+          }
+        });
+      }
+    }
+  );
+}
+
+/**
+ * Get room items
+ */
+export function getRoomItems(roomName){
+  Room.findById( roomName,
+    function (err, room) {
+      if(!err){
+        console.log(room.items); // array of tasks
+        // var thisTask = room.items.id(req.params.taskID);
+        // console.log(thisTask); // individual task document
+      }});
+}
+
+/**
+ * Get room items
+ */
+export function getRoomItem(roomName,fileid){
+  Room.findById( roomName,
+    function (err, room) {
+      if(!err){
+        console.log(room.items); // array of tasks
+        var thisTask = room.items._id(fileid);
+        console.log(thisTask); // individual task document
+      }});
+}
+
+
+
+/**
  * Remove a room
  */
 export function remove(req, res) {
@@ -77,7 +142,8 @@ export function remove(req, res) {
 
 export default {
   all,
-  add,
+  addRoom,
   update,
-  remove
+  remove,
+  addItem
 };

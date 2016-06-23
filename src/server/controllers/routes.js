@@ -48,7 +48,7 @@ export default (app) => {
   // room routes
   if (roomsController) {
     app.get('/room', roomsController.all);
-    app.post('/room/:id', roomsController.add);
+    app.post('/room/:id', roomsController.addRoom);
     app.put('/room/:id', roomsController.update);
     app.delete('/room/:id', roomsController.remove);
   } else {

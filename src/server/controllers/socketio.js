@@ -7,6 +7,10 @@ import Util from 'util';
 import fs from 'fs';
 import path from 'path';
 import {exec} from 'child_process';
+import xm from 'xmimetype';
+import { controllers } from '../db';
+
+const roomsController = controllers && controllers.rooms;
 
 /*
  Import from Jason's Socket io implementation, this needs to be refactored
@@ -53,13 +57,17 @@ exports = module.exports = function(io, state, app){
   app.post('/upload', function(req, res) {
 
     var roomName = req.get("room");
+
     //NB add an error check here to see if room exists, else reject upload
     var fstream;
     req.pipe(req.busboy);
-    req.busboy.on('file', function(fieldname, file, filename) {
+    req.busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+
+      var fileUuid = uuid.v4();
+
 
       var uploadWithExtension = function(extension) {
-        return path.resolve(__dirname,'..','..','build','client','uploads',uuid.v4() + extension);
+        return path.resolve(__dirname,'..','..','build','client','uploads',fileUuid + extension);
       };
 
       var extension = path.extname(filename);
@@ -76,7 +84,7 @@ exports = module.exports = function(io, state, app){
           // Firefox will not load the contents of the iframes.
           // Doubtless there is 'correct' solution to this, but time is short.
           state[roomName].items.push({
-            uuid: uuid.v4(),
+            uuid: fileUuid,
             title: title,
             url: "/uploads/" + path.basename(filename),
             cleanup: cleanup
@@ -86,7 +94,7 @@ exports = module.exports = function(io, state, app){
         };
 
 
-        if (extension == '.jpg' || extension == '.jpeg' || extension == '.png' || extension == '.gif' || extension == '.pdf') {
+        if (mimetype == xm.mimetypeOf('jpg') || mimetype == xm.mimetypeOf('png') || mimetype == xm.mimetypeOf('gif') || mimetype == xm.mimetypeOf('pdf')) {
 
           var imagePath = uploadPath;
           gm(uploadPath).autoOrient().write(uploadPath, function() {
@@ -102,15 +110,18 @@ exports = module.exports = function(io, state, app){
           });
 
         } else {
-          console.log(Util.format("Unsupported file with extension '%s'", extension));
+          console.log(Util.format("Unsupported file of type '%s'", mimetype));
           fs.unlink(uploadPath, function(error) {
             if (error) {
               console.log(error);
             }
           });
+          res.status(400).send(Util.format("Unsupported file of type '%s'", mimetype));
         }
 
-      })
+      });
+
+      roomsController.addItem(roomName,fileUuid,mimetype,'title',uploadPath,"/uploads/");
     })
   });
 
