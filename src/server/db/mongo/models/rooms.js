@@ -11,7 +11,8 @@ const RoomSchema = new mongoose.Schema({
   //name: { type:String, unique: true },
   description: String, // Description of the room
   slugURL: { type:String }, //Slugified room name
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  contents: Array
 });
 
 // Compiles the schema into a model, opening (or creating, if
