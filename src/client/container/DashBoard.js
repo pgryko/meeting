@@ -5,7 +5,7 @@ import { createRoom, typing, incrementCount,
 import ListRooms from '../components/ListRooms';
 import TextInput from '../components/TextInput';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import Divider from 'material-ui/Divider';
 
 
 class DashBoard extends React.Component{
@@ -58,12 +58,12 @@ class DashBoard extends React.Component{
       <div>
 
         {/*<!-- Content --> */}
-        <section className="container">
+        <section className="container ">
           <h2 className="block-title text-center">
             Dashboard
             <small>Add a meeting room</small>
           </h2>
-          <div className={'help-search'}>
+          <div className={'text-center help-search'}>
             <TextInput
               value={this.state.newRoom}
               placeholder="Meeting room Name"
@@ -82,14 +82,15 @@ class DashBoard extends React.Component{
 
           {/*<!-- Filters --> */}
 
-          {/*<div className="text-center padding-top">
+          <div className="text-center padding-top">
             <ul className="nav-filters space-bottom-2x text-center">
-              <li className="active"><a href="#" data-filter="*">Show All</a></li>
+              {/*<li className="active"><a href="#" data-filter="*">Show All</a></li>
               <li><a href="#" data-filter=".apps">Recent</a></li>
               <li><a href="#" data-filter=".identity">Art Room</a></li>
+               */}
             </ul>
           </div>
-          */}
+
 
           <ListRooms rooms={rooms}
                        onIncrement={incrementCount}

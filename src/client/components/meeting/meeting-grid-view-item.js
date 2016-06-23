@@ -21,7 +21,6 @@ import React from 'react';
 import Card from 'material-ui/Card';
 import CardText from 'material-ui/Card';
 import Close from 'material-ui/svg-icons/navigation/close';
-import FullscreenExit from 'material-ui/svg-icons/navigation/fullscreen-exit';
 import Remove from 'material-ui/svg-icons/content/remove'
 import IconButton from 'material-ui/IconButton';
 
