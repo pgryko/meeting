@@ -120,14 +120,24 @@ export function getRoomItem(roomName,fileid){
 /**
  * Get room item
  */
-export function removeRoomItem(roomName,fileid){
-  Room.findOne( {slugURL:roomName},
-    function (err, room) {
+export function removeItem(roomName,fileid){
+  Room.findOne( {slugURL:roomName}, (err, room) => {
+
+      if (err) {
+        console.log('Failed to find item');
+        return res.status(500).send('We failed to find item for some reason');
+      }
+
       if(!err){
-        var thisTask = room.items._id(fileid).remove();
+        room.items.pull(fileid).remove();
+        room.save();
+        if (err) {
+          console.log('Error on delete');
+          return res.status(500).send('We failed to delete item for some reason');
+        }
+        console.log("Removed item from db");
       }});
 }
-
 
 /**
  * Remove a room
@@ -149,5 +159,6 @@ export default {
   addRoom,
   update,
   remove,
-  addItem
+  addItem,
+  removeItem
 };

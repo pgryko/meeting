@@ -192,6 +192,7 @@ exports = module.exports = function(io, state, app){
       if (state[message.room].selection == item.uuid) {
         state[message.room].selection = false;
       }
+      roomsController.removeItem(message.room,item.uuid);
       broadcastState(io,state,message.room);
 
     }).on('client-set-selection', function (message) {
