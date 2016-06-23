@@ -184,7 +184,6 @@ class Meeting extends React.Component {
 
     return (
       <div>
-        <Live/>
         <input
           type="file"
           accept="image/*"
@@ -215,7 +214,7 @@ class Meeting extends React.Component {
           showNavigation={this.state.showNavigation}
           onShowNavigation={(show) => this.setState({showNavigation: show})}>
 
-          {this.props.children}
+          <Live/>
 
         </MeetingAppScreen>
 

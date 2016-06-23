@@ -33,12 +33,14 @@ export default class MeetingAppScreen extends React.Component {
         return (
             <div>
 
-                <LeftNav
+              {/* Remove list of users
+              <LeftNav
                     open={this.props.showNavigation}
                     docked={false}
                     onRequestChange={open => this.props.onShowNavigation(open)}>
                     {this.props.navigationItems}
                 </LeftNav>
+                */}
 
                 <MeetingAppBar
                     title={this.props.title}
