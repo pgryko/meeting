@@ -69,16 +69,6 @@ export function addItem(roomName,id,contentType,title,filePath,url){
   console.log("Running add item");
   Room.findOne( {slugURL:roomName},
     function (err, room) {
-      // var item = Document.create({
-      //   _id: id, //File id
-      //   contentType: contentType,
-      //   title:title,
-      //   date: Date.now(),
-      //   data:  fs.readFileSync(filePath),
-      //   url: url
-      // });
-      console.log("Found room");
-      console.log(room);
       if(!err){
         room.items.push({
           _id: id, //File id
@@ -88,15 +78,12 @@ export function addItem(roomName,id,contentType,title,filePath,url){
           data:  fs.readFileSync(filePath),
           url: url
         });
-        console.log("Setting modifiedOn");
         room.modifiedOn = Date.now();
-        console.log("Saving room");
         room.save(function (err, room){
           if(err){
-            console.log('Oh dear', err);
+            console.log('Error occurred on file save', err);
           } else {
             console.log('Item saved: ' + id);
-            // res.redirect( '/project/' + req.body.projectID );
           }
         });
       }
@@ -108,7 +95,7 @@ export function addItem(roomName,id,contentType,title,filePath,url){
  * Get room items
  */
 export function getRoomItems(roomName){
-  Room.findById( roomName,
+  Room.findOne( {slugURL:roomName},
     function (err, room) {
       if(!err){
         console.log(room.items); // array of tasks
@@ -118,10 +105,10 @@ export function getRoomItems(roomName){
 }
 
 /**
- * Get room items
+ * Get room item
  */
 export function getRoomItem(roomName,fileid){
-  Room.findById( roomName,
+  Room.findOne( {slugURL:roomName},
     function (err, room) {
       if(!err){
         console.log(room.items); // array of tasks
@@ -130,6 +117,16 @@ export function getRoomItem(roomName,fileid){
       }});
 }
 
+/**
+ * Get room item
+ */
+export function removeRoomItem(roomName,fileid){
+  Room.findOne( {slugURL:roomName},
+    function (err, room) {
+      if(!err){
+        var thisTask = room.items._id(fileid).remove();
+      }});
+}
 
 
 /**

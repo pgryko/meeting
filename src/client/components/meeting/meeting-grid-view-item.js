@@ -22,6 +22,7 @@ import Card from 'material-ui/Card';
 import CardText from 'material-ui/Card';
 import Close from 'material-ui/svg-icons/navigation/close';
 import FullscreenExit from 'material-ui/svg-icons/navigation/fullscreen-exit';
+import Remove from 'material-ui/svg-icons/content/remove'
 import IconButton from 'material-ui/IconButton';
 
 import MeetingProgressView from './meeting-progress-view';
@@ -92,7 +93,7 @@ export default class MeetingGridViewItem extends React.Component {
                         onTouchTap={() => this.props.onRemove()} >
                             {(() => {
                                 if (this.props.selected) {
-                                    return (<FullscreenExit />);
+                                    return (<Remove />);
                                 } else {
                                     return (<Close />);
                                 }

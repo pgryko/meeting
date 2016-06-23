@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router';
+import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
+
 
 const cx = classNames;
 
@@ -38,8 +40,7 @@ export default class RoomItem extends Component {
         </Link>
           <button className={
           cx('button', 'destroy')
-        } onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
-
+        } onClick={this.onDestroyClick}><DeleteForever/></button>
       </div>
     );
   }
