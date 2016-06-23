@@ -69,18 +69,25 @@ export function addItem(roomName,id,contentType,title,filePath,url){
   console.log("Running add item");
   Room.findOne( {slugURL:roomName},
     function (err, room) {
-      var item = Document.create({
-        _id: id, //File id
-        contentType: contentType,
-        title:title,
-        date: Date.now(),
-        data:  fs.readFileSync(filePath),
-        url: url
-      });
+      // var item = Document.create({
+      //   _id: id, //File id
+      //   contentType: contentType,
+      //   title:title,
+      //   date: Date.now(),
+      //   data:  fs.readFileSync(filePath),
+      //   url: url
+      // });
       console.log("Found room");
       console.log(room);
       if(!err){
-        room.items.push(item);
+        room.items.push({
+          _id: id, //File id
+          contentType: contentType,
+          title:title,
+          date: Date.now(),
+          data:  fs.readFileSync(filePath),
+          url: url
+        });
         console.log("Setting modifiedOn");
         room.modifiedOn = Date.now();
         console.log("Saving room");
