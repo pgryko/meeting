@@ -75,7 +75,7 @@ export function addItem(roomName,id,contentType,title,filePath,url){
           contentType: contentType,
           title:title,
           date: Date.now(),
-          data:  fs.readFileSync(filePath),
+          data:  fs.readFile(filePath),
           url: url
         });
         room.modifiedOn = Date.now();
@@ -157,13 +157,22 @@ export function remove(req, res) {
 /**
  * Get room
  */
-export  function roomExists(roomName){
-  Room.find({slugURL:roomName}, (err,room) =>{
-      return !(Object.keys(room).length === 0) ;
+export  function roomExists(roomName,callback){
+  Room.findOne({slugURL:roomName}, (err,room) =>{
+      var b_exists = !(Object.keys(room).length === 0);
+      callback(err,b_exists);
   }
-  ).limit(1);
+  );
 
 }
+
+// export  function roomExists(roomName,callback){
+//   Room.find({slugURL:roomName}, (err,room) =>{
+//       callback(null, !(Object.keys(room).length === 0) ) ;
+//     }
+//   ).limit(1);
+//
+// }
 export default {
   all,
   addRoom,
