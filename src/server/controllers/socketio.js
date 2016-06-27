@@ -6,7 +6,7 @@ import {exec} from 'child_process';
 import {handleUpload, initialiseRoomState, addUserToState} from './roomState';
 
 //NB these need to be removed when disconnect is refactored
-import { controllers } from '../db';
+import {controllers} from '../db';
 const roomsController = controllers && controllers.rooms;
 
 /*
@@ -28,7 +28,16 @@ function broadcastState(io, state, room = '') {
   if (room !== '') {
 
     console.log("Broadcasting the following to room: " + room);
-    console.log(state[room]);
+    try {
+      io.to(room).emit('server-set-state', state[room]);
+      console.log(state[room]);
+    }
+    catch (err) {
+      if (err) {
+        console.log(err);
+      }
+    }
+
 
     io.to(room).emit('server-set-state', state[room]);
   }
@@ -52,7 +61,9 @@ exports = module.exports = function (io, state, app) {
 
   // Accept file uploads. File uploads are currently controlled by REST/POST
   // Rather than socketio stream
-  app.post('/upload', (res,req) => {handleUpload(res,req,state,io,broadcastState)});
+  app.post('/upload', (res, req) => {
+    handleUpload(res, req, state, io, broadcastState)
+  });
 
   io.on('connection', function (socket) {
 
@@ -88,7 +99,7 @@ exports = module.exports = function (io, state, app) {
 
       //Check if room exists in memory
       if ((roomName in state)) {
-        console.log("Room " + roomName + " exists in state" );
+        console.log("Room " + roomName + " exists in state");
         addUserToState(socket, state, roomName, (err) => {
           if (err) console.log("Error occured in adding user");
           else {
@@ -106,7 +117,7 @@ exports = module.exports = function (io, state, app) {
           users: [],
         };
         state[roomName] = current_room;
-        console.log("Room " + roomName + " added to state state" );
+        console.log("Room " + roomName + " added to state state");
 
         //Load room state from db to memory
         initialiseRoomState(roomName, state,
