@@ -31,9 +31,18 @@ function values(object) {
     if (room !== ''){
 
       console.log("Broadcasting the following to room: " + room);
-      console.log(state[room]);
 
-      io.to(room).emit('server-set-state', state[room]);
+      try{
+        io.to(room).emit('server-set-state', state[room]);
+        console.log(state[room]);
+      }
+      catch(err)
+      {
+        if(err){
+          console.log(err);
+        }
+      }
+
     }
     else {
       let clientState = Update(state, {

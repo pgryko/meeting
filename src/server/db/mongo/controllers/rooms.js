@@ -98,7 +98,13 @@ export function getRoomItems(roomName){
   Room.findOne( {slugURL:roomName},
     function (err, room) {
       if(!err){
-        console.log(room.items); // array of tasks
+        try {
+          console.log(room.items); // array of tasks
+        }
+        catch(err)
+        {
+          console.log(err);
+        }
         // var thisTask = room.items.id(req.params.taskID);
         // console.log(thisTask); // individual task document
       }});
