@@ -67,6 +67,7 @@ export function update(req, res) {
  */
 export function addItem(roomName,id,contentType,title,filePath,url,callback){
   console.log("Running add item");
+  console.log(filePath);
   Room.findOne( {slugURL:roomName},
     function (err, room) {
       if(!err){
