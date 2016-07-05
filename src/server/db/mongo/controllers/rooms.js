@@ -65,7 +65,7 @@ export function update(req, res) {
 /**
  * Add an item to the room
  */
-export function addItem(roomName,id,contentType,title,filePath,url){
+export function addItem(roomName,id,contentType,title,filePath,url,callback){
   console.log("Running add item");
   Room.findOne( {slugURL:roomName},
     function (err, room) {
@@ -84,6 +84,7 @@ export function addItem(roomName,id,contentType,title,filePath,url){
             console.log('Error occurred on file save', err);
           } else {
             console.log('Item saved: ' + id);
+            callback
           }
         });
       }

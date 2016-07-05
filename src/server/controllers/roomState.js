@@ -33,7 +33,7 @@ const roomsController = controllers && controllers.rooms;
 export function addItemsToRoomState(roomstate,itemslist)
 {
   console.log("Adding items to state");
-  console.log("Recieved the following items");
+  console.log("Received the following items");
   console.log(itemslist);
   for (var key in itemslist)
   {
@@ -119,7 +119,7 @@ export function addUserToRoom(socket,state,roomName)
  * Function to handle file upload
  */
 
-export function handleUpload(req, res, state, callback) {
+export function handleUpload(req, res, state, io, broadCastState) {
 
   var roomName = req.get("room");
 
@@ -184,7 +184,7 @@ export function handleUpload(req, res, state, callback) {
             });
           });
           res.sendStatus(200);
-          roomsController.addItem(roomName,fileUuid,mimetype,title,uploadPath,url);
+          roomsController.addItem(roomName,fileUuid,mimetype,title,uploadPath,url,broadCastState(io,state,roomName));
         });
 
       }
@@ -206,7 +206,7 @@ export function handleUpload(req, res, state, callback) {
             });
           });
           res.sendStatus(200);
-          roomsController.addItem(roomName,fileUuid,mimetype,title,uploadPath,url);
+          roomsController.addItem(roomName,fileUuid,mimetype,title,uploadPath,url,broadCastState(io,state,roomName));
         });
 
       }
