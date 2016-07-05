@@ -3,7 +3,7 @@ import uuid from 'node-uuid';
 import Update from 'react-addons-update';
 // import uploadMeetingDocument from '../models/uploadMeetingDocument';
 import {exec} from 'child_process';
-import {handleUpload, initialiseRoomState, addUserToState} from './roomState';
+import {handleUpload, initialiseRoomState, addUserToRoom} from './roomState';
 
 //NB these need to be removed when disconnect is refactored
 import {controllers} from '../db';
@@ -38,8 +38,6 @@ function broadcastState(io, state, room = '') {
       }
     }
 
-
-    io.to(room).emit('server-set-state', state[room]);
   }
   else {
     let clientState = Update(state, {
@@ -100,13 +98,9 @@ exports = module.exports = function (io, state, app) {
       //Check if room exists in memory
       if ((roomName in state)) {
         console.log("Room " + roomName + " exists in state");
-        addUserToState(socket, state, roomName, (err) => {
-          if (err) console.log("Error occured in adding user");
-          else {
+        addUserToRoom(socket, state, roomName);
             broadcastState(io, state, roomName);
             console.log("User added to state")
-          }
-        });
       }
       else {
         //if not, add room to memory state
@@ -123,11 +117,9 @@ exports = module.exports = function (io, state, app) {
         initialiseRoomState(roomName, state,
           (err, data)=> {
             console.log("Initialise room state finished");
-
             if (err) console.log("Error occured in initalising room" + error);
             else {
-              addUserToState(socket, state, roomName,
-                (err) => {
+              addUserToRoom(socket, state, roomName);
                   console.log("User added to state");
                   if (err) console.log("Error occured in adding user to state" + error);
                   else {
@@ -135,7 +127,6 @@ exports = module.exports = function (io, state, app) {
                     broadcastState(io, state, roomName);
                     console.log("User added to state")
                   }
-                });
             }
           });
       }
@@ -149,15 +140,14 @@ exports = module.exports = function (io, state, app) {
     }).on('client-remove-item', function (message) {
 
       var item = state[message.room].items[message.index];
-      if (item.cleanup) {
-        item.cleanup();
-      }
+
+      console.log("Item is " + item);
+
       state[message.room].items.splice(message.index, 1);
       if (state[message.room].selection == item.uuid) {
         state[message.room].selection = false;
       }
-      roomsController.removeItem(message.room, item.uuid);
-      broadcastState(io, state, message.room);
+      roomsController.removeItem(message.room, item.uuid, broadcastState(io, state, message.room));
 
     }).on('client-set-selection', function (message) {
 

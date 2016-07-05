@@ -94,19 +94,19 @@ export function addItem(roomName,id,contentType,title,filePath,url){
 /**
  * Get room items
  */
-export function getRoomItems(roomName){
+export function getRoomItems(roomName,callback){
+  //Find room
   Room.findOne( {slugURL:roomName},
     function (err, room) {
       if(!err){
         try {
-          console.log(room.items); // array of tasks
+          //Pass list of items to callback
+          callback(room.items);
         }
         catch(err)
         {
           console.log(err);
         }
-        // var thisTask = room.items.id(req.params.taskID);
-        // console.log(thisTask); // individual task document
       }});
 }
 
@@ -126,7 +126,7 @@ export function getRoomItem(roomName,fileid){
 /**
  * Get room item
  */
-export function removeItem(roomName,fileid){
+export function removeItem(roomName,fileid, callback){
   Room.findOne( {slugURL:roomName}, (err, room) => {
 
       if (err) {
@@ -136,12 +136,12 @@ export function removeItem(roomName,fileid){
 
       if(!err){
         room.items.pull(fileid).remove();
-        room.save();
+        room.save(callback);
+        console.log("Removed item from db with id " + fileid);
         if (err) {
           console.log('Error on delete');
           return res.status(500).send('We failed to delete item for some reason');
         }
-        console.log("Removed item from db");
       }});
 }
 

@@ -27,6 +27,34 @@ import { controllers } from '../db';
 const roomsController = controllers && controllers.rooms;
 
 /**
+ * Function to add list of items to state
+ */
+
+export function addItemsToRoomState(roomstate,itemslist)
+{
+  console.log("Adding items to state");
+  console.log("Recieved the following items");
+  console.log(itemslist);
+  for (var key in itemslist)
+  {
+    if (!itemslist.hasOwnProperty(key)) {
+      //The current property is not a direct property of itemslist
+      continue;
+    }
+    //Do your logic with the property here
+    console.log(itemslist[key]);
+    roomstate.items.push({
+      uuid: itemslist[key]._id,
+      title: itemslist[key].title,
+      data: itemslist[key].date,
+      url: itemslist[key].url
+    });
+    console.log("RoomState now contains");
+    console.log( roomstate);
+  }
+}
+
+/**
  * Function to initialise a room state
  *
  *  Check if room exists in memory
@@ -48,9 +76,15 @@ export function initialiseRoomState(roomName,state,callback)
       //Room exists, sync files in db with those on disk
       if(result){
         console.log("Getting room list");
-        roomsController.getRoomItems(roomName);
-        console.log("Got room list");
-        callback
+        roomsController.getRoomItems(roomName,
+          (roomitems)=>{
+            //TODO Load items to disk if necceary
+
+            //Add items to state
+            addItemsToRoomState(state[roomName],roomitems);
+            callback();
+          }
+        );
       }
         //Else throw an error
       else{
@@ -61,10 +95,10 @@ export function initialiseRoomState(roomName,state,callback)
 }
 
 /**
- * Add user and provide callback to broadcaste state
+ * Add user to state and to a specific room
  */
 
-export function addUserToState(socket,state,roomName,callback)
+export function addUserToRoom(socket,state,roomName)
 {
   //Add user & brodcast state
   // Then add user to room list
@@ -77,8 +111,6 @@ export function addUserToState(socket,state,roomName,callback)
   };
 
   socket.join(roomName);
-  // Update new user and broadcast server state to all users
-  callback
 
 }
 
@@ -99,6 +131,8 @@ export function handleUpload(req, res, state, callback) {
   req.busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
 
     var fileUuid = uuid.v4();
+    console.log("File uuid is");
+    console.log(fileUuid);
 
     var uploadWithExtension = function(extension) {
       return path.resolve(__dirname,'..','..','build','client','uploads',fileUuid + extension);
@@ -106,6 +140,8 @@ export function handleUpload(req, res, state, callback) {
 
     var extension = path.extname(filename);
     var uploadPath = uploadWithExtension(extension);
+    var title = path.basename(filename,extension);
+    var url = "/uploads/" + fileUuid + extension;
 
     var fstream = fs.createWriteStream(uploadPath);
     file.pipe(fstream);
@@ -124,11 +160,11 @@ export function handleUpload(req, res, state, callback) {
         state[roomName].items.push({
           uuid: fileUuid,
           title: title,
-          url: "/uploads/" + path.basename(filename),
+          url: url
         });
       };
 
-
+      console.log("Checking mine tyoe");
       if (mimetype == xm.mimetypeOf('jpg') || mimetype == xm.mimetypeOf('png') || mimetype == xm.mimetypeOf('gif')) {
 
         var imagePath = uploadPath;
@@ -148,7 +184,7 @@ export function handleUpload(req, res, state, callback) {
             });
           });
           res.sendStatus(200);
-          roomsController.addItem(roomName,fileUuid,mimetype,'title',uploadPath,"/uploads/");
+          roomsController.addItem(roomName,fileUuid,mimetype,title,uploadPath,url);
         });
 
       }
@@ -158,7 +194,6 @@ export function handleUpload(req, res, state, callback) {
         fs.write(uploadPath, ()=> {
 
           completion(path.basename(filename, extension), uploadPath, ()=>{
-
             console.log("Completion finished");
             fs.unlink(imagePath, function(error) {
               console.log("Filesyem unliked");
@@ -171,7 +206,7 @@ export function handleUpload(req, res, state, callback) {
             });
           });
           res.sendStatus(200);
-          roomsController.addItem(roomName,fileUuid,mimetype,'title',uploadPath,"/uploads/");
+          roomsController.addItem(roomName,fileUuid,mimetype,title,uploadPath,url);
         });
 
       }
@@ -193,5 +228,5 @@ export function handleUpload(req, res, state, callback) {
 export default{
   initialiseRoomState,
   handleUpload,
-  addUserToState
+  addUserToRoom
 };
