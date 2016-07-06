@@ -64,6 +64,7 @@ export function update(req, res) {
 
 /**
  * Add an item to the room
+ * Note - the readFileSync needs to be replaced with the async readfile and a callback
  */
 export function addItem(roomName,id,contentType,title,filePath,url,callback){
   console.log("Running add item");
@@ -76,7 +77,7 @@ export function addItem(roomName,id,contentType,title,filePath,url,callback){
           contentType: contentType,
           title:title,
           date: Date.now(),
-          data:  fs.readFile(filePath),
+          data:  fs.readFileSync(filePath),
           url: url
         });
         room.modifiedOn = Date.now();
