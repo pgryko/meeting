@@ -164,7 +164,7 @@ export function handleUpload(req, res, state, io, broadCastState) {
         });
       };
 
-      console.log("Checking mine tyoe");
+      console.log("Checking mine type");
       if (mimetype == xm.mimetypeOf('jpg') || mimetype == xm.mimetypeOf('png') || mimetype == xm.mimetypeOf('gif')) {
 
         var imagePath = uploadPath;
@@ -191,7 +191,7 @@ export function handleUpload(req, res, state, io, broadCastState) {
       else if(mimetype == xm.mimetypeOf('pdf'))
       {
         var imagePath = uploadPath;
-        fs.write(uploadPath, ()=> {
+        gm(uploadPath).autoOrient().write(uploadPath, ()=> {
 
           completion(path.basename(filename, extension), uploadPath, ()=>{
             console.log("Completion finished");
