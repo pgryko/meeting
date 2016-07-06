@@ -16,6 +16,7 @@ export function all(req, res) {
   });
 }
 
+
 /**
  * Add a Room
  */
@@ -66,7 +67,6 @@ export function update(req, res) {
  * Note - the readFileSync needs to be replaced with the async readfile and a callback
  */
 export function addItem(roomName,id,contentType,title,filePath,url,callback){
-  console.log("Running add item");
   console.log(filePath);
   Room.findOne( {slugURL:roomName},
     function (err, room) {

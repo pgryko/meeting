@@ -21,6 +21,7 @@ import xm from 'xmimetype';
 //For adding user to state
 import uuid from 'node-uuid';
 
+const fileUploadPath = require('../config/appConfig').UPLOAD_PATH;
 
 import { controllers } from '../db';
 
@@ -32,9 +33,6 @@ const roomsController = controllers && controllers.rooms;
 
 export function addItemsToRoomState(roomstate,itemslist)
 {
-  console.log("Adding items to state");
-  console.log("Received the following items");
-  console.log(itemslist);
   for (var key in itemslist)
   {
     if (!itemslist.hasOwnProperty(key)) {
@@ -46,13 +44,46 @@ export function addItemsToRoomState(roomstate,itemslist)
     roomstate.items.push({
       uuid: itemslist[key]._id,
       title: itemslist[key].title,
-      data: itemslist[key].date,
+      date: itemslist[key].date,
       url: itemslist[key].url
     });
-    console.log("RoomState now contains");
-    console.log( roomstate);
   }
 }
+
+export function loadFilesToDisk(roomitem)
+{
+  console.log("room item name passed to loadFilesToDisk is");
+  var filename;
+  if(roomitem.url)
+  {
+    filename = roomitem._id + path.extname(roomitem.url);
+  } else {
+    //TODO generate extension from mimtype
+    filename = roomitem._id;
+  }
+
+  var filePath = path.resolve(fileUploadPath,filename);
+
+  console.log("looking for file at");
+
+  try {
+    fs.access(filePath, 'F_OK', function (err) {
+      if (!err) {
+        //File exists pass
+        console.log("File exits");
+      }
+      else {
+        //file doesn't exist
+        console.log("File doesn't exist");
+      }
+    })
+  }
+  catch (err) {
+    console.log("Loading file to disk failed" + err);
+  }
+
+}
+
 
 /**
  * Function to initialise a room state
@@ -78,8 +109,11 @@ export function initialiseRoomState(roomName,state,callback)
         console.log("Getting room list");
         roomsController.getRoomItems(roomName,
           (roomitems)=>{
-            //TODO Load items to disk if necceary
-
+            console.log("Room items are");
+            console.log(roomitems);
+            roomitems.map(loadFilesToDisk);
+            //TODO Load items to disk if necessary
+            console.log(roomitems);
             //Add items to state
             addItemsToRoomState(state[roomName],roomitems);
             callback();
@@ -123,8 +157,6 @@ export function handleUpload(req, res, state, io, broadCastState) {
 
   var roomName = req.get("room");
 
-  console.log("Handle upload started, getting room name " + roomName);
-
   //NB add an error check here to see if room exists, else reject upload
   req.pipe(req.busboy);
   req.busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
@@ -145,10 +177,7 @@ export function handleUpload(req, res, state, io, broadCastState) {
     var fstream = fs.createWriteStream(uploadPath);
     file.pipe(fstream);
 
-    console.log("Piping upload started");
-
     fstream.on('close', function() {
-      console.log("Filestream close event");
 
       var completion = function(title, filename) {
         // N.B. We explicitly specify the URL here (inc. 'index.html') to ensure this URL is different
@@ -163,7 +192,6 @@ export function handleUpload(req, res, state, io, broadCastState) {
         });
       };
 
-      console.log("Checking mine type");
       if (mimetype == xm.mimetypeOf('jpg') || mimetype == xm.mimetypeOf('png') || mimetype == xm.mimetypeOf('gif')) {
 
         var imagePath = uploadPath;
@@ -171,9 +199,7 @@ export function handleUpload(req, res, state, io, broadCastState) {
 
           completion(path.basename(filename, extension), uploadPath, ()=>{
 
-            console.log("Completion finished");
             fs.unlink(imagePath, function(error) {
-              console.log("Filesyem unliked");
 
               if (error) {
                 console.log("Error occured on gm");
@@ -194,9 +220,7 @@ export function handleUpload(req, res, state, io, broadCastState) {
         gm(uploadPath).autoOrient().write(uploadPath, ()=> {
 
           completion(path.basename(filename, extension), uploadPath, ()=>{
-            console.log("Completion finished");
             fs.unlink(imagePath, function(error) {
-              console.log("Filesyem unliked");
 
               if (error) {
                 console.log("Error occured on gm");

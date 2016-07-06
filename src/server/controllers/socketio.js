@@ -55,7 +55,6 @@ function broadcastState(io, state, room = '') {
 
 //Pass state application state
 exports = module.exports = function (io, state, app) {
-  var offerSocket = undefined;
 
   // Accept file uploads. File uploads are currently controlled by REST/POST
   // Rather than socketio stream
@@ -97,7 +96,7 @@ exports = module.exports = function (io, state, app) {
 
       //Check if room exists in memory
       if ((roomName in state)) {
-        console.log("Room " + roomName + " exists in state");
+        // console.log("Room " + roomName + " exists in state");
         addUserToRoom(socket, state, roomName);
             broadcastState(io, state, roomName);
             console.log("User added to state")
@@ -111,21 +110,18 @@ exports = module.exports = function (io, state, app) {
           users: [],
         };
         state[roomName] = current_room;
-        console.log("Room " + roomName + " added to state state");
+        // console.log("Room " + roomName + " added to state state");
 
         //Load room state from db to memory
         initialiseRoomState(roomName, state,
           (err, data)=> {
-            console.log("Initialise room state finished");
             if (err) console.log("Error occured in initalising room" + error);
             else {
               addUserToRoom(socket, state, roomName);
-                  console.log("User added to state");
+                  // console.log("User added to state");
                   if (err) console.log("Error occured in adding user to state" + error);
                   else {
-                    console.log("Broadcasting state");
                     broadcastState(io, state, roomName);
-                    console.log("User added to state")
                   }
             }
           });
