@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import Room from '../models/rooms';
 import fs from 'fs';
-import Document from '../models/document';
 
 /**
  * List
@@ -71,6 +70,8 @@ export function addItem(roomName,id,contentType,title,filePath,url,callback){
   console.log(filePath);
   Room.findOne( {slugURL:roomName},
     function (err, room) {
+      //TODO replace readFileSync with readFile and provide neccary callback
+      //Does fs.close need to be called?
       if(!err){
         room.items.push({
           _id: id, //File id

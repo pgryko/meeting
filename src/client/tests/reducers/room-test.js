@@ -84,20 +84,20 @@ describe('Rooms reducer', () => {
     });
   });
 
-  it('Should handle GET_ROOMS_SUCCESS', () => {
-    expect(
-      reducer(undefined, {
-        type: types.GET_ROOMS_SUCCESS,
-        req: {
-          data: room
-        }
-      })
-    ).toEqual({
-        isFetching: false,
-        rooms: room,
-        newRoom: ''
-    });
-  });
+  // it('Should handle GET_ROOMS_SUCCESS', () => {
+  //   expect(
+  //     reducer(undefined, {
+  //       type: types.GET_ROOMS_SUCCESS,
+  //       req: {
+  //         data: room
+  //       }
+  //     })
+  //   ).toEqual({
+  //       isFetching: false,
+  //       rooms: room,
+  //       newRoom: ''
+  //   });
+  // });
 
   it('Should handle GET_ROOMS_FAILURE', () => {
     expect(

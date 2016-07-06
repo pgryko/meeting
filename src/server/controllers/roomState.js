@@ -126,7 +126,6 @@ export function handleUpload(req, res, state, io, broadCastState) {
   console.log("Handle upload started, getting room name " + roomName);
 
   //NB add an error check here to see if room exists, else reject upload
-  var fstream;
   req.pipe(req.busboy);
   req.busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
 
@@ -191,6 +190,7 @@ export function handleUpload(req, res, state, io, broadCastState) {
       else if(mimetype == xm.mimetypeOf('pdf'))
       {
         var imagePath = uploadPath;
+        //ToDo Remove gm, as gm should only be used with image types
         gm(uploadPath).autoOrient().write(uploadPath, ()=> {
 
           completion(path.basename(filename, extension), uploadPath, ()=>{
