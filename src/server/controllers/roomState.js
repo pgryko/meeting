@@ -50,6 +50,10 @@ export function addItemsToRoomState(roomstate,itemslist)
   }
 }
 
+/**
+ * Function to load
+ */
+
 export function loadFilesToDisk(roomitem)
 {
   console.log("room item name passed to loadFilesToDisk is");
@@ -75,6 +79,8 @@ export function loadFilesToDisk(roomitem)
       else {
         //file doesn't exist
         console.log("File doesn't exist");
+        //TODO Load file from database
+        // fs.write(path,data)
       }
     })
   }
