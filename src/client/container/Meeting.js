@@ -223,7 +223,7 @@ class Meeting extends React.Component {
           onSubmit={(title, url) => {
                         this.setState({showAddItemDialog: false});
                         //The http:// prevents localhost from being added to url
-                        engine.addItem({title: title, url: "http://" + url});
+                        engine.addItem({title: title, url: "https://" + url});
                     }}
           onCancel={() => this.setState({showAddItemDialog: false})} />
 
